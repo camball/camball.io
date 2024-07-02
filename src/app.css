@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+@theme {
+    --font-family-serif: "Crimson Pro", "serif";
+}
+
+/* Default font for site */
+body {
+    font-family: 'Crimson Pro', serif;
+}
