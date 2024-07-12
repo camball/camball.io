@@ -12,3 +12,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
+
+.binary-text-overlay {
+    mask-image: linear-gradient(to top,
+            transparent 25%,
+            black 75%);
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 25px var(--color-neutral-500, #737373);
+}
