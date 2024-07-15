@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+    --font-family-serif: "IM Fell English", "serif";
+}
+
+/* Default font for site */
+body {
+    font-family: 'IM Fell English', serif;
+
+    /* To correct inconsistent font weights across browsers */
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+.binary-text-overlay {
+    mask-image: linear-gradient(to top,
+            transparent 25%,
+            black 75%);
+}
+
+.text-shadow {
+    text-shadow: 1px 1px 25px var(--color-neutral-500, #737373);
+}
