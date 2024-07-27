@@ -1,16 +1,17 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-    --font-family-serif: "IM Fell English", "serif";
-}
+@layer base {
 
-/* Default font for site */
-body {
-    font-family: 'IM Fell English', serif;
+    /* Default font for site */
+    html {
+        font-family: 'IM Fell English', serif;
 
-    /* To correct inconsistent font weights across browsers */
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
+        /* To correct inconsistent font weights across browsers */
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+    }
 }
 
 .binary-text-overlay {

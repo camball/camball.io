@@ -7,7 +7,7 @@
 - Front End
   - [SvelteKit](https://kit.svelte.dev) ([Svelte](https://svelte.dev), [Vite](https://vitejs.dev))
   - [shadcn-svelte](https://www.shadcn-svelte.com) Component Library
-  - [Tailwind 4](https://tailwindcss.com) for Styling
+  - [TailwindCSS](https://tailwindcss.com) for Styling
 - Deployed on [Vercel](https://vercel.com/home)
 - Registered the `camball.io` domain with [Cloudflare Registrar](https://www.cloudflare.com/en-gb/products/registrar/)
 
