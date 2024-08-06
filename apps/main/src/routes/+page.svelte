@@ -30,7 +30,7 @@
 		class="object-cover sm:ml-auto sm:py-4 sm:pr-3"
 	/>
 	<div class="fixed bottom-3 left-3 flex flex-col space-y-1.5">
-		<Button on:click={toggleMode} variant="outline" size="icon">
+		<Button on:click={toggleMode} variant="secondary" size="icon">
 			<Sun
 				class="absolute h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
 			/>
