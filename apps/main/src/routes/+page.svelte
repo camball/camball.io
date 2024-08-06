@@ -15,9 +15,13 @@
 	>
 		<h1 class="mt-20 text-7xl font-bold tracking-tighter sm:text-9xl">camball.io</h1>
 		<div class="pl-1 text-lg sm:dark:text-neutral-400">
-			<p>is still under development.</p>
-			<p>check back soon :)</p>
-			<Clock />
+			<div class="inline-block backdrop-blur sm:backdrop-blur-none">
+				<p>is still under development.</p>
+				<p>check back soon :)</p>
+			</div>
+			<div>
+				<Clock />
+			</div>
 		</div>
 	</div>
 	<img
