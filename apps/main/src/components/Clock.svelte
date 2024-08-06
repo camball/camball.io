@@ -10,4 +10,4 @@
 	});
 </script>
 
-<p class="text-right text-2xl">{time}</p>
+<p class="float-right text-2xl backdrop-blur sm:backdrop-blur-none">{time}</p>
