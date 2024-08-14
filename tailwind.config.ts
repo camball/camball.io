@@ -57,6 +57,7 @@ export default {
       },
       fontFamily: {
         'serif': ['"IM Fell English"', '"serif"'],
+        'sans': ['"Hind"', '"sans"'],
       },
     },
   },

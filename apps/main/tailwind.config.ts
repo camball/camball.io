@@ -1,3 +1,3 @@
-import baseConfig from '../../tailwind.config'
+import baseConfig from '../../tailwind.config.ts'
 
 export default baseConfig;
