@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Clock from '../components/Clock.svelte';
 	import BinaryTextOverlay from '../components/BinaryTextOverlay.svelte';
-	import { Badge, Button } from '$lib/components/ui';
-	import { Moon, Sun } from 'lucide-svelte/icons';
-	import { toggleMode, mode } from 'mode-watcher';
+	import { Badge } from '$lib/components/ui';
+	import { mode } from 'mode-watcher';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 </script>
 
 <div class="flex h-screen bg-neutral-50 dark:bg-neutral-900">
@@ -30,15 +30,7 @@
 		class="object-cover sm:ml-auto sm:py-4 sm:pr-3"
 	/>
 	<div class="fixed bottom-3 left-3 flex flex-col space-y-1.5">
-		<Button on:click={toggleMode} variant="secondary" size="icon">
-			<Sun
-				class="absolute h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
-			/>
-			<Moon
-				class="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
-			/>
-			<span class="sr-only">Toggle theme</span>
-		</Button>
+		<ThemeToggle variant="secondary" />
 		<Badge variant="secondary">
 			<div class="my-1 flex space-x-2">
 				<a href="https://github.com/camball">
