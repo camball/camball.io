@@ -2,7 +2,7 @@
 	export let data;
 
 	import BinaryTextOverlay from '../components/BinaryTextOverlay.svelte';
-	import { Card } from '$lib/components/ui';
+	import { Card, Separator } from '$lib/components/ui';
 	import { Header } from '../lib';
 	import Tags from '../components/Tags.svelte';
 	import moment from 'moment';
@@ -24,7 +24,7 @@
 		<h1 class="mb-4 mt-20 font-serif text-6xl font-bold tracking-tighter sm:text-9xl">
 			blog.camball.io
 		</h1>
-		<hr />
+		<Separator />
 		<div class="ml-1 text-lg sm:dark:text-neutral-400">
 			<div class="inline-block space-y-2">
 				{#each data.articles as article}
