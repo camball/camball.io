@@ -5,6 +5,7 @@
 	export let data;
 
 	import Header from '../../lib/header.svelte';
+	import { Separator } from '$lib/components/ui';
 	import { Footer } from '$lib/components';
 	import Tags from '../../components/Tags.svelte';
 	import { fade } from 'svelte/transition';
@@ -44,7 +45,7 @@
 		</button>
 	</div>
 </header>
-<hr />
+<Separator />
 <div
 	in:fade|global={{ delay: 150, duration: 350 }}
 	out:fade|global={{ duration: 100 }}
