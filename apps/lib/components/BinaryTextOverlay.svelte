@@ -11,10 +11,10 @@
 	onMount(() => setInterval(sparkle, 2000));
 </script>
 
-<div class="binary-text-overlay font-serif">
+<div class="binary-text-overlay sm:binary-text-overlay-lg">
 	<!-- grid-cols-8 corresponds to 8 bits in a byte -->
 	<div
-		class="grid grid-cols-8 gap-x-9 gap-y-5 pl-1 text-4xl tracking-widest text-neutral-700 sm:gap-1.5 sm:pl-0 sm:text-neutral-900 sm:dark:text-neutral-500"
+		class="grid grid-cols-8 gap-x-9 gap-y-5 pl-1 font-serif text-4xl tracking-widest text-neutral-700 sm:gap-1.5 sm:pl-0 sm:text-neutral-900 sm:dark:text-neutral-500"
 	>
 		{#each text
 			.split('')

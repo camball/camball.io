@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let data;
 
-	import BinaryTextOverlay from '../components/BinaryTextOverlay.svelte';
+	import BinaryTextOverlay from '$lib/components/BinaryTextOverlay.svelte';
 	import { Card, Separator } from '$lib/components/ui';
 	import { Header } from '../lib';
 	import Tags from '../components/Tags.svelte';
@@ -50,6 +50,6 @@
 	<img
 		src="$lib/assets/sitting-on-couch.jpeg"
 		alt="Cameron, sitting on a couch in a tall, well-lit room, wearing a ball cap and crossing one leg over the other, looking out a large window."
-		class="object-cover sm:ml-auto sm:py-4 sm:pr-3"
+		class="object-cover sm:ml-auto"
 	/>
 </div>
