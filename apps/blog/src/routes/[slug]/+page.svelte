@@ -16,7 +16,7 @@
 	const dateCreated = new Date(created);
 	const dateModified = new Date(modified);
 
-	let date = dateModified;
+	let date = dateCreated;
 
 	const CREATED = 'Created';
 	const LAST_MODIFIED = 'Last modified';
