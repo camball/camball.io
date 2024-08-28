@@ -49,7 +49,7 @@
 <div
 	in:fade|global={{ delay: 150, duration: 350 }}
 	out:fade|global={{ duration: 100 }}
-	class="m-5 sm:mx-60 sm:flex sm:flex-row"
+	class="m-5 mb-10 mt-7 sm:mx-60 sm:flex sm:flex-row"
 >
 	<svelte:component this={data.mdxComponent} />
 </div>
