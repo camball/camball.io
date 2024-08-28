@@ -1,0 +1,37 @@
+---
+title: How to Learn as a Software Engineer
+tags:
+    - Learning
+    - Career
+author: Cameron Ball
+created: 2024-05-03
+modified: 2024-08-27
+---
+
+Learning is undoubtedly one of the largest parts of our jobs as software engineers. It is critical to our careers to stay up to date with industry trends, maintain foundational knowledge of coding, math, and software principles, establish technical depth and breadth... the list goes on. With that said, I write this article to share how I have learned to learn new technologies, as a software engineer.
+
+## Learning Sequence
+
+This is an **ordered** list of how I learn technologies, from initial knowledge discovery to deeply learning a technology.
+
+1. ChatGPT is excellent for asking super targeted questions that Google would give too broad of results for. ChatGPT is also excellent for learning _what_ to learn. It's hard to know what you don’t know. Sometimes Google works for this use case as well (general knowledge discovery).
+    - I've also heard that [Claude](https://claude.ai) is even better than ChatGPT for coding-specific issues, but have yet to try it. I formerly used [Phind](https://www.phind.com) which also did an excellent job for coding-specific help.
+2. If you've heard some terms but really don’t know much about them, my go-to strategy is to type "this vs that" into Google or ChatGPT, where "this" and "that" are terms or technologies I have heard of. This usually this returns blog posts, or even Reddit or StackOverflow results.
+    - An example would be searching "HAProxy vs reverse proxy". This stage would reveal that HAProxy is simply a type of reverse proxy, and lead to me instead searching "HAProxy vs nginx".
+3. Similar to the last point, another strategy is to type the technology you’re trying to learn into Google, plus "vs" at the end, letting Google suggest common searches.
+    - An example would be typing "HAProxy vs" into Google, and in my case showed things like "haproxy vs nginx" and "haproxy vs f5", all of which are helpful comparisons that are good to read about. This is especially true if you end up being familiar with other technologies that Google suggests for comparison. Say you’re familiar with Envoy; in that case if you type "haproxy vs" and it shows "haproxy vs envoy", then you immediately have a starting point that’s easily digestible. Learning new technologies with this approach gets exponentially easier as you have more technologies to compare to.
+4. Use Google search operators. This isn’t new information to many of you, but I feel like many don’t realise its power, or simply forget about it. Want to only see results from Reddit? "site:reddit.com nginx". Boom.
+5. Follow tutorials, if available (e.g., [Tour of Go](https://go.dev/tour)). I personally learn best from written tutorials, so I try and find those first, but some may learn better from YouTube; whatever works for you.
+6. At this point, you hopefully know _what_ technologies you’re using, so it’s time to work with them.
+    1. Do a "hello world". A hello world reduces the mental stress of working on a full blown project in a new technology down to something much less intimidating. For Docker, for example, this might mean creating a minimal Dockerfile, creating an image from it, and starting a container with that image.
+    2. Once you’ve done a hello world, either work on an existing project with the technologies or create your own. This is singlehandedly the most important part of learning—doing the thing itself.
+7. [**RTFM**](https://en.wikipedia.org/wiki/RTFM) (i.e., read the docs). This is huge.
+8. Search StackOverflow/Reddit/Google for existing answers.
+9. Really stuck?
+    1. Ask someone you know that knows the technology. They very well might come back to you and say "Why are you even using that technology in the first place? That’s a poor use case, just do xyz instead."
+    2. Post a question to StackOverflow/Reddit.
+    3. Contact project maintainers or open an issue in the repo.
+
+## Staying up to Date
+
+Another thing I do is stay up to date with developer news. This is critical for advancing your career by learning about big updates to technologies, trends in the SWE job market, exciting new technologies, and any other industry news. See my blog article on [how I stay informed as a dev](https://blog.camball.io/how-i-stay-informed-as-a-dev) for how I manage this.

@@ -2,7 +2,7 @@
 	export let data;
 
 	import BinaryTextOverlay from '$lib/components/BinaryTextOverlay.svelte';
-	import { Card, Separator } from '$lib/components/ui';
+	import { Card, ScrollArea, Separator } from '$lib/components/ui';
 	import { Header } from '../lib';
 	import Tags from '../components/Tags.svelte';
 	import moment from 'moment';
@@ -25,10 +25,13 @@
 			blog.camball.io
 		</h1>
 		<Separator />
-		<div class="ml-1 text-lg sm:dark:text-neutral-400">
-			<div class="inline-block space-y-2">
+		<ScrollArea
+			class="mx-1 h-[30rem] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(90vh-18rem)] sm:dark:text-neutral-400"
+			scrollbarYClasses="hidden"
+		>
+			<div class="space-y-2">
 				{#each data.articles as article}
-					<Card.Root class="opacity-90">
+					<Card.Root class="max-w-[22rem] opacity-90">
 						<a href={getFilenameFromPath(article.filePath)}>
 							<Card.Header class="pb-3">
 								<Card.Title class="font-medium tracking-[0.023em]">
@@ -45,7 +48,7 @@
 					</Card.Root>
 				{/each}
 			</div>
-		</div>
+		</ScrollArea>
 	</div>
 	<img
 		src="$lib/assets/sitting-on-couch.jpeg"
