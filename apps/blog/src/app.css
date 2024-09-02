@@ -40,7 +40,7 @@
 }
 
 .toc-level {
-    @apply sm:sticky sm:top-48;
+    @apply sm:sticky sm:top-48 sm:max-h-[calc(100vh-12rem)] sm:overflow-y-auto;
 }
 
 .toc-level-2,
