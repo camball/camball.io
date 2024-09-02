@@ -29,7 +29,7 @@ modified: 2024-09-02
     - Say we need to do some chores around the house; we need to wash the dishes and clean the kitchen countertops.
     - A naïve (sequential) solution to getting both chores done would be for me to load my dishwasher, then wait for the dishwasher to complete, then unload the dishwasher, then finally clean my countertops.
     - We could reduce the total time it takes to finish our chores with a *concurrent* solution: if I first load the dishwasher, then clean the countertops *while the dishwasher is taking time to run*, then finally unload the dishwasher, we'll have sped up the process significantly.
-    - We can do even better by employing a *parallel* solution: if I work on getting the countertops cleaned while you focus on getting the dishwasher loaded, we could be completing those manual tasks *at the same time*. You and I would be
+    - We can do even better by employing a *parallel* solution: if I work on getting the countertops cleaned while you focus on getting the dishwasher loaded, we could be completing those manual tasks *at the same time*.
   - Corollary: Parallel code is always concurrent, but concurrent code is not always parallel.
   - ["Concurrency is not Parallelism"](https://www.youtube.com/watch?v=oV9rvDllKEg), by Rob Pike (co-creator of [Go](https://go.dev)). Some great quotes from the talk:
     - "Concurrency is about **dealing** with lot of things at once, Parallelism is about **doing** a lot of things at once"
