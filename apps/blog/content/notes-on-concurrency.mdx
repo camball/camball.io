@@ -1,0 +1,259 @@
+---
+title: Notes on Concurrency
+tags:
+    - Concurrency & Parallelism
+    - Threading
+author: Cameron Ball
+created: 2024-09-01
+modified: 2024-09-02
+---
+
+*My personal notes following Chapter 13 – Concurrency, of 'Clean Code' by Robert C. Martin, for my software engineering book club.*
+
+*Reader's note: Italicised text and text under italicised headings are my own commentary or added content, as opposed to paraphrased content following Chapter 13 of 'Clean Code'.*
+
+## *Prerequisites*
+
+- **Processes** vs **Threads**
+  - Thread
+    - The smallest unit of code execution
+    - Subset of a process
+    - Threads share the same memory/address space
+  - Process
+    - May contain multiple threads (oft running concurrently) in a single process
+    - A running computer program may have many processes (and subprocesses, background processes (e.g., [daemons](https://en.wikipedia.org/wiki/Daemon_(computing))), etc.)
+- **Concurrency** vs **Parallelism**
+  - Concurrency — being in-progress on multiple things at the same time. These things don't have to be being worked on simultaneously in the same instant, just that they are both in progress at once.
+  - Parallelism — doing multiple things *literally* simultaneously, or "in parallel".
+  - Best explained with an example:
+    - Say we need to do some chores around the house; we need to wash the dishes and clean the kitchen countertops.
+    - A naïve (sequential) solution to getting both chores done would be for me to load my dishwasher, then wait for the dishwasher to complete, then unload the dishwasher, then finally clean my countertops.
+    - We could reduce the total time it takes to finish our chores with a *concurrent* solution: if I first load the dishwasher, then clean the countertops *while the dishwasher is taking time to run*, then finally unload the dishwasher, we'll have sped up the process significantly.
+    - We can do even better by employing a *parallel* solution: if I work on getting the countertops cleaned while you focus on getting the dishwasher loaded, we could be completing those manual tasks *at the same time*. You and I would be
+  - Corollary: Parallel code is always concurrent, but concurrent code is not always parallel.
+  - ["Concurrency is not Parallelism"](https://www.youtube.com/watch?v=oV9rvDllKEg), by Rob Pike (co-creator of [Go](https://go.dev)). Some great quotes from the talk:
+    - "Concurrency is about **dealing** with lot of things at once, Parallelism is about **doing** a lot of things at once"
+    - "These ideas are not deep, they're just good"
+- Thinking point: **single-threaded concurrency**. See: [JavaScript's concurrency model](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop).
+  - "JavaScript: a high-level, **single threaded**, garbage collected, interpreted || JIT-compiled, prototyped based, multi-paradigm, dynamic language, **with a non-blocking event loop**." ~Jeff Delaney (Fireship)'s ["JavaScript in 100 Seconds"](https://www.youtube.com/watch?v=DHjqpvDnNGE)
+
+## Why Concurrency?
+
+> \[Concurrency] helps us decouple *what* gets done from *when* it gets done.
+
+A few example use cases:
+
+- A web scraper that needs to scrape a bunch of sites every 24 hours. As the bunch of websites that must be scraped within the 24-hour time period grows, a single-threaded program would quickly not be able to handle all the data within the required time. The single-threaded program does a lot of waiting at web sockets for I/O to complete.
+- System handles one user at a time. If each user only takes one second to handle, even only 30 users means that 31st user now has to wait a full 30 seconds to get their request served.
+- System that interprets large data sets; can only give a complete answer after all data sets are finished processing. If we could split the load between a bunch of computers, that'd speed things up significantly.
+
+### Myths and Misconceptions
+
+- "Concurrency always improves performance"
+- "Design does not change when writing concurrent programs"
+- *...one more which I didn't find relevant*
+
+Difficulties when creating concurrent programs:
+
+- Concurrency incurs some overhead, both in amount of code written and in performance
+- Correct concurrency is complex, even for simple problems
+- Concurrency bugs aren't usually repeatable, so they are often ignored as one-offs instead of the true defects they are
+- Concurrency often requires a fundamental change in design strategy
+
+## Challenges
+
+Just saying that for sharing even an instance of a trivially-small class between two threads, concurrency must be taken care of. Even if many possible execution paths produce correct results, some don't produce correct results (due to a race condition), which is a very non-trivial problem.
+
+## Concurrency Defence Principles
+
+### Single Responsibility Principle (SRP)
+
+SRP states that methods/classes/etc. should only have a single reason to change. Concurrency design is complex enough to be a reason to change in its own right, and therefore should be separate from the rest of the code.
+
+- Concurrency-related code has its own lifecycle of development, change, and tuning
+- Concurrency-related code has its own challenges
+- Concurrency-related code is complex enough on its own; don't try and handle coding that while intermixed with business logic
+
+**Keep your concurrency-related code separate from other code.**
+
+### Corollary: Limit the Scope of Data
+
+**Limit the amount of places that access objects/data shared across threads** (*Minimise the number of places using `synchronized` blocks, in Java*). The more places that can access shared data...
+
+- The more easily it will be to forget to protect one or more of those places,
+- The harder it will be to find the source of errors and failures, and
+- The more places you'll have to update. This last bullet point might seem obvious, but the point is that it's a violation of *DRY*; the ideal solution would be to refactor to a single place of synchronised access of the shared data.
+
+### Corollary: Use Copies of Data
+
+One way to avoid shared data between threads is to simply use copies of the data, avoiding sharing altogether. Potential solutions using this thinking:
+
+- Copy objects and treat them as read-only
+- Copy an object to multiple threads, collect results from each thread in the copies, then merge the results in a single thread
+
+If you're worried about the potential cost of the extra object creation, test it to find out if that's really an issue.
+
+### Corollary: Threads Should Be as Independent as Possible
+
+Threaded code should "live in its own world". *Aside: recall our prior discussion of functional programming, and how pure functions have **no side effects**, making them perfect for threaded code that should be unconcerned with code other than itself.* "Each thread processes one client request, with all of its required data coming from an unshared source and stored as local variables." This lets us not have to worry about needing synchronised blocks of code.
+
+## Know Your Library
+
+Talks about language-specific (Java, in this case) features for more-easily writing threaded code:
+
+- Thread-safe collections (e.g., [`ConcurrentHashMap`](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ConcurrentHashMap.html))
+- Executor framework for executing unrelated tasks
+- Use nonblocking solutions when possible
+
+When writing threaded code, be sure to check whether the data structures you are using are thread safe *(e.g., [checking whether Python's `dict` is thread-safe](https://stackoverflow.com/questions/6953351/thread-safety-in-pythons-dictionary))*. *JavaScript running in the browser is always single-threaded, so we'll never need to worry about thread safety issues there (aside from not blocking the event loop (try running `while(true) {}` in your browser console... notice that your current website becomes completely locked up until you refresh the page)). In other languages where concurrency is more commonly found, like Go, there is built-in mechanisms like Goroutines and Channels.*
+
+## Know Your Execution Models
+
+Some prerequisite definitions:
+
+- Bound Resources — Resources that have a fixed size (quantity of said resource (e.g., a set number of database connections) or actual size of said resource (e.g., fixed-size read/write buffers))
+- Mutual Exclusion / Mutex — The concept of only one thread being able to access some shared data or a shared resource at a time
+- Starvation — "One thread or a group of threads is prohibited from proceeding for an excessively long time or forever. For example, always letting fast-running threads through first could starve out longer running threads if there is no end to the fast-running threads."
+- Deadlock — "Two or more threads waiting for each other to finish. Each thread has a resource that the other thread requires and neither can finish until it gets the other resource."
+- Livelock — *Easiest explained with an example: two polite midwesterners run into each other in a narrow corridor, each trying to let the other pass by moving to the side (saying "ope, let me sneak right past ya there"), but they keep moving to the wrong side, perpetually blocking the other person from actually passing by. "Livelock is a risk with some algorithms that detect and recover from deadlock. If more than one process takes action \[e.g., the polite midwesterners side-stepping from the prior example], the deadlock detection algorithm can be repeatedly triggered." (ref, [SO](https://stackoverflow.com/a/6155978/14708097), [Wikipedia](https://en.wikipedia.org/wiki/Deadlock_(computer_science)#Livelock))*
+- *(Added by Cameron) [Critical Section](https://en.wikipedia.org/wiki/Critical_section) (a.k.a. Critical Region) — A section of code that accesses a shared resource that can only be entered by one process or thread at a time; other processes or threads are suspended until the first leaves the critical section.*
+- *(Added by Cameron) [Race Condition](https://en.wikipedia.org/wiki/Race_condition#In_software) — When code is doing multiple things and expects them to be done in a specific order, without special care taken to ensure they happen in that order. Sometimes, the code completes in the correct order and the race condition goes unnoticed. Other times, the code may complete in an unexpected order, leading to undefined behaviour (e.g., invalid/bad data, fatal program crash, logic bugs, or otherwise).*
+
+With the above definitions, the following are some common execution models used in concurrent programming (*each with their own respective algorithms solving their core issues*).
+
+### Producer-consumer
+
+(*a.k.a., the Bounded-buffer Problem*)
+
+> One or more producer threads create some work and place it in a buffer or queue. One or more consumer threads acquire that work from the queue and complete it. The queue between the producers and consumers is a *bound resource*. This means producers must wait for free space in the queue before writing and consumers must wait until there is something in the queue to consumer. Coordination between the producers and consumers via the queue involves producers and consumers signalling each other. The producers write to the queue and signal that the queue is no longer empty. Consumers read from the queue and signal that the queue is no longer full. Both potentially wait to be notified when they can continue.
+
+[*Producer-consumer Problem Example Solutions*](https://en.wikipedia.org/wiki/Producer–consumer_problem)
+
+### Readers-writers
+
+> When you have a shared resource that primarily serves as a source of information for readers, but which is occasionally updated by writers, throughput is an issue. Emphasizing throughput can cause starvation and the accumulation of stale information. Allowing updates can impact throughput. Coordinating readers so they do not read something a writer is updating and vice versa is a tough balancing act. Writers tend to block many readers for a long period of time, thus causing throughput issues.
+>
+> The challenge is to balance the needs of both readers and writers to satisfy correct operation, provide reasonable throughput and avoiding starvation. A simple strategy makes writers wait until there are no readers before allowing the writer to perform an update. If there are continuous readers, however, the writers will be starved. On the other hand, if there are frequent writers and they are given priority, throughput will suffer. Finding that balance and avoiding concurrent update issues is what the problem addresses.
+
+[*Readers-writers Problem Example Solutions*](https://en.wikipedia.org/wiki/Readers–writers_problem)
+
+### Dining Philosophers
+
+From [Wikipedia](https://en.wikipedia.org/wiki/Dining_philosophers_problem#Problem_statement),
+
+> Five [philosophers](https://en.wikipedia.org/wiki/Philosopher "Philosopher") dine together at the same table. Each philosopher has their own plate at the table. There is a fork between each plate. The dish served is a kind of [spaghetti](https://en.wikipedia.org/wiki/Spaghetti "Spaghetti") which has to be eaten with two forks. Each philosopher can only alternately think and eat. Moreover, a philosopher can only eat their spaghetti when they have both a left and right fork. Thus two forks will only be available when their two nearest neighbours are thinking, not eating. After an individual philosopher finishes eating, they will put down both forks. The problem is how to design a regimen (a [concurrent](https://en.wikipedia.org/wiki/Concurrency_(computer_science) "Concurrency (computer science)") algorithm) such that any philosopher will not starve; *i.e.*, each can forever continue to alternate between eating and thinking, assuming that no philosopher can know when others may want to eat or think (an issue of [incomplete information](https://en.wikipedia.org/wiki/Incomplete_information "Incomplete information")).
+
+The idea is to avoid deadlock, livelock, and throughput and/or efficiency degradation.
+
+[*Dining Philosopher Problem Example Solutions*](https://en.wikipedia.org/wiki/Dining_philosophers_problem#Solutions)
+
+### *Cameron's Thoughts on Execution Models*
+
+*The point here isn't for us to develop novel solutions/algorithms to each problem. While we could likely come up with something workable, or at least a naïve solution, computer scientists like Dijkstra spend their entire lives developing [solutions](https://en.wikipedia.org/wiki/Dining_philosophers_problem#Dijkstra's_solution) to these problems. With that said, it's common for engineers in the industry to use these formally-verified algorithms, translating them from a pseudocode implementation, or simply use a pre-written implementation from a 3rd party or a language's standard library.*
+
+*With that said, engineers often need to take these concurrent algorithms or design patterns and implement them in production systems. As a takeaway, we should remember to take special care to ensure we don't fall trap to the common aforementioned pitfalls, like deadlock, starvation, or race conditions.*
+
+## Beware Dependencies Between Synchronised Methods
+
+*This section is quite Java-specific...*
+
+Essentially just saying if you have multiple methods on the same class that are `synchronized`, ensure you aren't calling both at once as they both would need to hold a lock on the same monitor, and only one can have that lock at a time. Therefore, one method would block until the other is finished ([ref](https://stackoverflow.com/a/15438741/14708097)).
+
+Says to either avoid calling more than one `synchronized` method on a shared object at once, or employ a locking solution so that both methods aren't called at the same time.
+
+## Keep Synchronised Sections Small
+
+Too many critical sections is bad because they create delays and add overhead, but out of necessity for guarding them. As such, keep the number of them as small as possible. ***This is not always easy**; it's trivial to just shove all your code in a `synchronized` block, but that'll get you nowhere, performance-wise. Code with intention.*
+
+## Writing Correct Shut-Down Code Is Hard
+
+Bob provides two common examples where in a naïvely implemented concurrent system, shut-down could easily be written incorrectly.
+
+> Think about shut-down early and get it working early. It’s going to take longer than you expect. Review existing algorithms because this is probably harder than you think.
+
+## Testing Threaded Code
+
+Since it's impractical to formally prove that \[multi-threaded] code is correct, testing is the most comprehensive tool we have to guarantee program correctness.
+
+> Recommendation: Write tests that have the potential to expose problems and \[...] run them frequently, with different programatic \[...] and system configurations and load\[s]. If tests ever fail, track down the failure. Don't ignore a failure just because the tests pass on a subsequent run.
+
+*The above is incredibly important. E.g., don't simply re-run tests that are failing due to a timeout failure until they pass; they're failing for a reason, and in many cases the solution isn't increasing the timeout in application logic.*
+
+Bob's recommendations (*and my takeaways/comments on each*):
+
+- Treat spurious failures as candidate threading issues (*i.e., if you see a "one-off" issue/glitch only every once in awhile, it's worth investigating as a threading issue*)
+- Get your non-threaded code working first (*imagine how frustrating it would be to be debugging a threading issue, only to realise it was an error in your program logic all along*)
+- Make your threaded code "pluggable" (*i.e., design it such that it can run in many configurations—with real and test dummies (e.g., a real database in prod or a fake database in tests), with test dummies of varying speeds (to catch a bug that may only occur when things are working fast or slow, respectively), and with varying numbers of threads (a single thread or many)*).
+- Make your threaded code tuneable (*similar to the previous point, design your system to run with different threading configurations, like number of threads, thread pool size, number of processors, etc.*)
+- Run with more threads than processors (*this case will force the system to switch between tasks (scheduling), which will encourage any errors related to task swapping to present themselves, leading to faster realisation that the source code is missing a critical section or causes deadlock*)
+- Run on different platforms (*since different OS' have different threading implementations, certain bugs may not present themselves when running on one versus another. Be sure to test threaded code on all target platforms early and often.*)
+- \[Write] your code to try and force failures (*this might seem obvious, or like more generally-applicable testing advice, and it is. Only ever testing the happy-path and forgetting to comprehensively test edge cases is obviously bad practise, but here Bob highlights the difficulties of testing the edge cases in multithreaded code and provides Java-specific examples of ways to force spurious failures to present themselves. Takeaway: you can temporarily manually adjust threading code (by adding a `sleep` or otherwise) at critical points to further test it to be ultimately robust.*)
+
+## *Extra Thoughts from Cameron on Chapter 13*
+
+- Semaphores — from [Wikipedia](https://en.wikipedia.org/wiki/Semaphore_(programming)), "a variable or abstract data type used to control access to a common resource by multiple threads and avoid critical section problems in a concurrent system". It's essentially just a non-negative integer that can only ever be incremented or decremented by one at any time (see also: [atomic operation](https://en.wikipedia.org/wiki/Linearizability)). A fun relation for Spanish speakers is the word *Semáforo*, meaning 'traffic light' in English. Traffic intersections are a great example of real-world concurrency for multiple reasons:
+  - A traffic intersection is a *critical section* that must only be accessed by one direction of traffic at a time. The privilege for traffic to flow through said intersection is a shared resource.
+  - Intersections can experience deadlock if errors occur. For example, in heavy traffic, sometimes there is not enough room on the far side of a traffic intersection to accommodate for another car to come through (due to backed-up traffic due to another red light down the road, a drawbridge, railroad crossing, or otherwise). If a car tries to squeeze through the intersection while their light is green, but there is not enough room on the other side and the signal changes in the process, letting the perpendicular flow of traffic proceed, that car would be taking up space in the intersection, impeding traffic flow in the perpendicular direction. While there could be enough room for cars to go around the impeding vehicle, in an extreme case of this, the flow of traffic in both directions will be blocked, causing a **deadlock**. Multiple intersections with deadlock can form a type of traffic congestion known as [gridlock](https://en.wikipedia.org/wiki/Gridlock). I digress, but it's worth taking a look at the related [Prisoner's Dilemma](https://en.wikipedia.org/wiki/Prisoner%27s_dilemma) thought experiment from economics/game theory for the unfamiliar.
+- [Monitors](https://en.wikipedia.org/wiki/Monitor_(synchronization))
+
+## *Higher-level Concurrency*
+
+*A section I'm adding for completeness in 2024; Clean Code was written a bit before today's conveniences.*
+
+Many of us nowadays aren't using low-level concurrency primitives like mutexes and locks in our daily work. It's excellent to have knowledge of them, but most of us are simply using futures and promises or an `async`/`await` syntax.
+
+If we have a task we need the answer from that takes time, we can tell our program to pause execution until that task is complete and gives us our answer. In JavaScript, that looks like the following ([ref](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function#try_it)):
+
+```js
+function someTask() {
+  return new Promise((resolve) => {
+    console.log('working...')
+    setTimeout(() => {
+      resolve('done!');
+    }, 2000);
+  });
+}
+
+async function asyncCall() {
+  console.log('calling `someTask`...');
+  const result = await someTask();
+  console.log(result);
+}
+
+asyncCall();
+```
+
+That's excellent that languages have constructs for waiting on a task to happen, but what if we wanted multiple of these tasks to happen at the same time? In Python, for example, we can use `asyncio.gather()` to easily run awaitable tasks **concurrently**. For example ([ref](https://docs.python.org/3/library/asyncio-task.html#asyncio.gather)),
+
+```python
+import asyncio
+
+async def factorial(name, number):
+    f = 1
+    for i in range(2, number + 1):
+        print(f"Task {name}: Compute factorial({number}), currently i={i}...")
+        await asyncio.sleep(1)
+        f *= i
+    print(f"Task {name}: factorial({number}) = {f}")
+    return f
+
+async def main():
+    # Schedule three calls *concurrently*:
+    L = await asyncio.gather(
+        factorial("A", 2),
+        factorial("B", 3),
+        factorial("C", 4),
+    )
+    print(L)
+
+asyncio.run(main())
+```
+
+## *Conclusion: Call to Action*
+
+As programmers, we'll never get better at things until we do them ourselves. Reading Bob's advice here is great, but if we don't have practise implementing it, the concepts won't fully lock in. For many of us, we aren't writing low-level concurrency primitives on the regular, but we should, at bare minimum, be familiar with the high-level concurrency paradigms in the languages we speak. With that, I highly encourage you to get hands-on practise with concurrency. Below are resources for practising concurrency in various languages to take a look at:
+
+- [JavaScript Concurrency](https://tsh.io/blog/simple-guide-concurrency-node-js/)
+- [Java's Concurrency Tutorial Pages](https://docs.oracle.com/javase/tutorial/essential/concurrency/index.html)
+- [A Tour of Go: Concurrency](https://go.dev/tour/concurrency/1)
+- Python's [`asyncio` library](https://docs.python.org/3/library/asyncio.html)
