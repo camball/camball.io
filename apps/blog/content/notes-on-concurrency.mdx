@@ -5,7 +5,7 @@ tags:
     - Threading
 author: Cameron Ball
 created: 2024-09-01
-modified: 2024-09-02
+modified: 2024-09-05
 ---
 
 *My personal notes following Chapter 13 – Concurrency, of 'Clean Code' by Robert C. Martin, for my software engineering book club.*
@@ -125,7 +125,7 @@ With the above definitions, the following are some common execution models used 
 
 (*a.k.a., the Bounded-buffer Problem*)
 
-> One or more producer threads create some work and place it in a buffer or queue. One or more consumer threads acquire that work from the queue and complete it. The queue between the producers and consumers is a *bound resource*. This means producers must wait for free space in the queue before writing and consumers must wait until there is something in the queue to consumer. Coordination between the producers and consumers via the queue involves producers and consumers signalling each other. The producers write to the queue and signal that the queue is no longer empty. Consumers read from the queue and signal that the queue is no longer full. Both potentially wait to be notified when they can continue.
+> One or more producer threads create some work and place it in a buffer or queue. One or more consumer threads acquire that work from the queue and complete it. The queue between the producers and consumers is a *bound resource*. This means producers must wait for free space in the queue before writing and consumers must wait until there is something in the queue to consume. Coordination between the producers and consumers via the queue involves producers and consumers signalling each other. The producers write to the queue and signal that the queue is no longer empty. Consumers read from the queue and signal that the queue is no longer full. Both potentially wait to be notified when they can continue.
 
 [*Producer-consumer Problem Example Solutions*](https://en.wikipedia.org/wiki/Producer–consumer_problem)
 
@@ -189,11 +189,31 @@ Bob's recommendations (*and my takeaways/comments on each*):
 - Run on different platforms (*since different OS' have different threading implementations, certain bugs may not present themselves when running on one versus another. Be sure to test threaded code on all target platforms early and often.*)
 - \[Write] your code to try and force failures (*this might seem obvious, or like more generally-applicable testing advice, and it is. Only ever testing the happy-path and forgetting to comprehensively test edge cases is obviously bad practise, but here Bob highlights the difficulties of testing the edge cases in multithreaded code and provides Java-specific examples of ways to force spurious failures to present themselves. Takeaway: you can temporarily manually adjust threading code (by adding a `sleep` or otherwise) at critical points to further test it to be ultimately robust.*)
 
+## *Semaphores*
+
+From [Wikipedia](https://en.wikipedia.org/wiki/Semaphore_(programming)), "a variable or abstract data type used to control access to a common resource by multiple threads and avoid critical section problems in a concurrent system". It's essentially just a non-negative integer that can only ever be incremented or decremented by one at any time (see also: [atomic operation](https://en.wikipedia.org/wiki/Linearizability)). A fun relation for Spanish speakers is the word *Semáforo*, meaning 'traffic light' in English. Traffic intersections are a great example of real-world concurrency for multiple reasons:
+
+- A traffic intersection is a *critical section* that must only be accessed by one direction of traffic at a time. The privilege for traffic to flow through said intersection is a shared resource.
+- Intersections can experience deadlock if errors occur. For example, in heavy traffic, sometimes there is not enough room on the far side of a traffic intersection to accommodate for another car to come through (due to backed-up traffic due to another red light down the road, a drawbridge, railroad crossing, or otherwise). If a car tries to squeeze through the intersection while their light is green, but there is not enough room on the other side and the signal changes in the process, letting the perpendicular flow of traffic proceed, that car would be taking up space in the intersection, impeding traffic flow in the perpendicular direction. While there could be enough room for cars to go around the impeding vehicle, in an extreme case of this, the flow of traffic in both directions will be blocked, causing a **deadlock**. Multiple intersections with deadlock can form a type of traffic congestion known as [gridlock](https://en.wikipedia.org/wiki/Gridlock). I digress, but it's worth taking a look at the related [Prisoner's Dilemma](https://en.wikipedia.org/wiki/Prisoner%27s_dilemma) thought experiment from economics/game theory for the unfamiliar.
+
+### Example
+
+Recall that a Semaphore is simply a non-negative integer. Let's say we want to solve the producer-consumer problem. We'll initialise two semaphores:
+
+- The producer's semaphore to `1` (full)
+- The consumer's semaphore to `0` (empty)
+
+The producer has `1` in its semaphore, so it holds a resource to be consumed. The consumer can then wait in line by calling `wait()`, telling the producer it wants to use its resource. Since the producer has its resource available, it decrements its semaphore to `0` and gives its resource to the consumer who increments their semaphore to `1`, indicating it currently has possession. When it's done, the consumer `signal()`s to the producer that it's done, decrements its semaphore back to `0`, and the producer increments theirs back to `1` when they receive the resource.
+
+You could also have semaphores represent values other than just the binary `0` and `1`. Initialising a semaphore to `5` could mean there are five resources (maybe threads) to be consumed.
+
+## *Semaphores vs Mutexes*
+
+- Semaphores are favourable when there are multiple resources to be shared.
+- Mutexes are favourable when there is only one resource to be shared.
+
 ## *Extra Thoughts from Cameron on Chapter 13*
 
-- Semaphores — from [Wikipedia](https://en.wikipedia.org/wiki/Semaphore_(programming)), "a variable or abstract data type used to control access to a common resource by multiple threads and avoid critical section problems in a concurrent system". It's essentially just a non-negative integer that can only ever be incremented or decremented by one at any time (see also: [atomic operation](https://en.wikipedia.org/wiki/Linearizability)). A fun relation for Spanish speakers is the word *Semáforo*, meaning 'traffic light' in English. Traffic intersections are a great example of real-world concurrency for multiple reasons:
-  - A traffic intersection is a *critical section* that must only be accessed by one direction of traffic at a time. The privilege for traffic to flow through said intersection is a shared resource.
-  - Intersections can experience deadlock if errors occur. For example, in heavy traffic, sometimes there is not enough room on the far side of a traffic intersection to accommodate for another car to come through (due to backed-up traffic due to another red light down the road, a drawbridge, railroad crossing, or otherwise). If a car tries to squeeze through the intersection while their light is green, but there is not enough room on the other side and the signal changes in the process, letting the perpendicular flow of traffic proceed, that car would be taking up space in the intersection, impeding traffic flow in the perpendicular direction. While there could be enough room for cars to go around the impeding vehicle, in an extreme case of this, the flow of traffic in both directions will be blocked, causing a **deadlock**. Multiple intersections with deadlock can form a type of traffic congestion known as [gridlock](https://en.wikipedia.org/wiki/Gridlock). I digress, but it's worth taking a look at the related [Prisoner's Dilemma](https://en.wikipedia.org/wiki/Prisoner%27s_dilemma) thought experiment from economics/game theory for the unfamiliar.
 - [Monitors](https://en.wikipedia.org/wiki/Monitor_(synchronization))
 
 ## *Higher-level Concurrency*
