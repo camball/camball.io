@@ -16,6 +16,7 @@ export async function load({ params }) {
     try {
         const mdxSvelteComponent = await (imports[importPath]() as Promise<MdxSvelteComponent>);
         return {
+            slug: params.slug,
             metadata: mdxSvelteComponent.metadata,
             mdxComponent: mdxSvelteComponent.default
         };
