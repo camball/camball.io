@@ -2,9 +2,13 @@
 	import BinaryTextOverlay from '$lib/components/BinaryTextOverlay.svelte';
 	import { Badge, Button, Drawer, Separator } from '$lib/components/ui';
 	import { Socials } from '$lib/components';
-	import { ArrowDown, Menu } from 'lucide-svelte/icons';
+	import { ArrowUp, Menu } from 'lucide-svelte/icons';
 	import { toggleMode, mode } from 'mode-watcher';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+
+	const links = {
+		Blog: 'https://blog.camball.io'
+	};
 </script>
 
 <div class="flex h-screen flex-row justify-between bg-neutral-50 dark:bg-neutral-900">
@@ -38,25 +42,27 @@
 		class="object-cover"
 	/>
 </div>
-<div class="fixed bottom-9 right-8 sm:hidden">
-	<Drawer.Root>
-		<Drawer.Trigger>
-			<Button variant="ghost" class="h-fit border p-1.5 backdrop-blur-sm">
-				<Menu color="#000" size="28" strokeWidth="2.5" class="m-1" />
-			</Button>
-		</Drawer.Trigger>
-		<Drawer.Content class="space-y-5 p-6 font-sans">
+<Drawer.Root direction="top">
+	<Drawer.Trigger class="fixed right-8 top-9 sm:hidden">
+		<Button variant="ghost" class="dark h-fit border p-1.5 backdrop-blur-sm">
+			<Menu color="#000" size="28" strokeWidth="2.5" class="m-1" />
+		</Button>
+	</Drawer.Trigger>
+	<!-- TODO: use Overlay instead of modifying the default drawer implementation -->
+	<!-- <Drawer.Overlay class="fixed inset-0 bg-black/40" /> -->
+	<Drawer.Content class="space-y-5 p-6 font-sans">
+		<Socials imageSize="30px" class="space-x-4" />
+		<Button on:click={toggleMode} variant="outline">
+			{#if $mode === 'dark'}Toggle Light{:else}Toggle Dark{/if}
+		</Button>
+		{#each Object.entries(links) as [title, link]}
 			<p class="pr-1 text-xl font-semibold">
-				<a href="https://blog.camball.io">Blog</a>
+				<a href={link}>{title}</a>
 			</p>
-			<Button on:click={toggleMode} variant="outline">
-				{#if $mode === 'dark'}Toggle Light{:else}Toggle Dark{/if}
-			</Button>
-			<Socials imageSize="30px" class="space-x-4" />
-			<Drawer.Close><ArrowDown size="28px" /></Drawer.Close>
-		</Drawer.Content>
-	</Drawer.Root>
-</div>
+		{/each}
+		<Drawer.Close><ArrowUp size="28px" /></Drawer.Close>
+	</Drawer.Content>
+</Drawer.Root>
 <div
 	class="fixed bottom-6 mx-4 hidden w-[calc(100vw-2rem)] rounded-2xl bg-white bg-opacity-80 px-7 py-2 font-sans backdrop-blur-[3px] dark:bg-neutral-800 dark:bg-opacity-80 sm:flex sm:items-center sm:justify-between"
 >
@@ -65,9 +71,11 @@
 	>
 		<!-- TODO: Logo goes here -->
 		<p class="font-serif">camball.io</p>
-		<p class="text-xl font-semibold">
-			<a href="https://blog.camball.io">Blog</a>
-		</p>
+		{#each Object.entries(links) as [title, link]}
+			<p class="text-xl font-semibold">
+				<a href={link}>{title}</a>
+			</p>
+		{/each}
 	</div>
 	<div class="flex items-center space-x-2">
 		<ThemeToggle variant="ghost" />
