@@ -1,0 +1,395 @@
+---
+title: 'CLI Design: Crafting an Elegant Command Line UX in Python'
+tags:
+    - Python
+    - CLI
+    - UX
+author: Cameron Ball
+created: 2024-09-17
+modified: 2024-09-19
+---
+
+## Agenda
+
+- CLI Tool Design Patterns
+- Arguments
+- CLI UI Elements
+- Refactor: Sample Project
+
+---
+
+## CLI Tool Design Patterns
+
+- REPL
+- Subcommand-based
+- Script (the no-design pattern)
+
+---
+
+### REPL
+
+"*Read-Eval-Print Loop*"
+
+Pros:
+
+- State management (in-memory)
+
+Cons:
+
+- State management (ugh)
+- Require user input – 👎 for CI pipelines
+
+**Takeaway**: Consider whether you need to track program state, or if it could be written to disk instead
+
+---
+
+### Subcommand-based
+
+Top-level command, then subcommand(s) (e.g., `git`)
+
+```sh
+git commit -m "My commit message"
+```
+
+As if `git commit` is a command on its own, completely different from `git push`. `man` takes a hyphenated version of the subcommands:
+
+```sh
+man git-commit
+man git-push
+```
+
+---
+
+### Script
+
+A simple script.
+
+Do you want to take on the complexity of developing a subcommand-based or REPL CLI tool?
+
+Consider how your project will scale (adding more CLI options, etc.). Maybe you just need a couple scripts.
+
+---
+
+### Design Patterns: In Summary
+
+- REPL: If tracking program state is necessary (and can't be kept on disc); not run in CI
+- Subcommand-based: King of CLI design patterns
+- Simple script: If a CLI tool isn't worth the engineering effort, or doesn't need to scale
+
+---
+
+## Arguments
+
+---
+
+### Nomenclature
+
+- **Argument**/**Arg**: A value passed to a CLI program to modify functionality or provide required data
+- **Positional Arg**: An arg only specified by its order
+- **Keyword Arg**: A named arg that takes its own arg
+- **Flag**: Implies binary functionality. Either *on* or *off*.
+- **Option**: Refers to a **kwarg** or a **flag**; options should be *optional*, as implied by the name
+
+(all are usually colloquially interchangeable)
+
+---
+
+| Type                | Example                               | When to Use                              |
+| :------------------ | :------------------------------------ | :--------------------------------------- |
+| Positional; Unnamed | <code>grep "harry&nbsp;potter"</code> | Required, simple/important arguments     |
+| Keyword; Named      | `git commit -m "some text"`           | Optional behaviour requiring a parameter |
+| Flag; Boolean       | `ls -a`                               | Simple on/off                            |
+
+---
+
+### Full Example
+
+```sh
+npm run myscript --script-shell /bin/bash --if-present
+```
+
+| Command                    | Description                                 |
+| :------------------------- | :------------------------------------------ |
+| `npm`                      | Top-level command                           |
+| `run`                      | Subcommand                                  |
+| `myscript`                 | Positional (unnamed) argument               |
+| `--script-shell /bin/bash` | Keyword (named) argument w/ value specified |
+| `--if-present`             | Flag (boolean argument)                     |
+
+---
+
+### CLI Argument Best Practices
+
+- Make short-form (single-character) aliases
+  - `-h`/`--help`, `-q`/`--quiet`, `-v`/`--verbose`
+- Allow combining short-form arguments
+  - `curl -Zks https://camball.io https://blog.camball.io`
+- Use conventional verbiage
+  - Don't call `--verbose` "`--include-debug-output`"
+
+---
+
+### CLI Argument Code Smells
+
+(i.e., you likely can come up with a better design)
+
+- Lots of positional arguments
+- Positional arguments coming after options
+- Required keyword arguments
+- If ordering of options (any non-positional arguments (flags, kwargs)) matters
+  - ✅ Commutative: `curl -ks` == `curl -sk`
+
+---
+
+### Argument Parsing
+
+- Python's built-in `argparse` module
+  - [Can't handle](https://github.com/python/cpython/issues/101337) nested mutex arg groups
+- `click` – Great for complex projects
+- `docopt` – Cleanest solution for most projects
+  - Declarative; documentation as code
+
+---
+
+### Feature: Help Messages
+
+All the major arg parsing libraries enable auto-generation of help messages (`-h`/`--help`).
+
+By convention, users expect `-h`/`--help`.
+
+```sh
+npm -h
+npm install -h
+```
+
+Trivially easy: **Support it**. Support it well.
+
+Your tools are only as good as their documentation.
+
+---
+
+## CLI UI Elements
+
+---
+
+### Catalog
+
+- Loading-related
+  - \[Parallel] Progress Bar
+  - Spinner Wheels
+- Confirmation (simple `[Y/n]`)
+- Select
+- MultiSelect
+- Password Input
+- Questionnaire
+- Table
+- Coloured/Styled Output
+
+---
+
+Putting it all together: a CLI "UI Component Library"
+
+[python-prompt-toolkit](https://github.com/prompt-toolkit/python-prompt-toolkit)
+
+---
+
+[UI Component Demos](https://github.com/camball/python-cli-ux-demos)
+
+---
+
+## Sample Project
+
+Let's start with a basic command line tool.
+
+Initially it has a quite crude implementation; we'll refactor it using techniques we've discussed so that it's not only a joy to use, but also has an improved DX.
+
+---
+
+Purpose of tool: provide information on words. Goals:
+
+- Print definitions of words
+  - Support looking up in [alternate languages](https://github.com/meetDeveloper/freeDictionaryAPI/blob/4f274a853dd7a352aa2a349d1b92624ff18a36a8/modules/utils.js#L10-L27)
+- Print versions of words (plural, prefixed with indefinite article, ordinal numbers)
+- Potentially more actions to take on words down the road...
+- **Question**: What type of CLI tool should we implement, given the above requirements?
+
+---
+
+### Datasources and Libraries
+
+---
+
+[Free Dictionary API](https://dictionaryapi.dev)
+
+```sh
+curl -ks https://api.dictionaryapi.dev/api/v2/entries/en/dog | jq
+```
+
+```json
+[
+  {
+    "meanings": [
+      {
+        "definitions": [
+          {
+            "definition": "A mammal, Canis familiaris or Canis lupus familiaris, that has been domesticated for thousands of years, of highly variable appearance due to human breeding.",
+            "example": "The dog barked all night long.",
+            ...
+          },
+          ...
+        ],
+        ...
+      },
+      ...
+    ],
+    ...
+  }
+]
+```
+
+---
+
+The [inflect](https://github.com/jaraco/inflect) library
+
+```python
+>>> import inflect
+>>> inf = inflect.engine()
+>>> 
+>>> num_dogs = 2
+>>> f"The {inf.ordinal(num_dogs)} dog is the last dog in line."
+'The 2nd dog is the last dog in line.'
+>>> f"There {inf.plural_verb("is", num_dogs)} {inf.number_to_words(num_dogs)} {inf.plural_noun("dog", num_dogs)} total."
+'There are two dogs total.'
+>>> 
+>>> num_dogs = 1
+>>> f"The {inf.ordinal(num_dogs)} dog is the last dog in line."
+'The 1st dog is the last dog in line.'
+>>> f"There {inf.plural_verb("is", num_dogs)} {inf.number_to_words(num_dogs)} {inf.plural_noun("dog", num_dogs)} total."
+'There is one dog total.'
+```
+
+---
+
+The [codebase](https://github.com/camball/python-cli-demo).
+
+---
+
+### For Us to Improve
+
+- Use `docopt` for easy argument parsing
+- Add a `--help` command
+- Display spinner wheels while waiting on individual API response
+- Display progress bar when awaiting multiple words to be defined from API
+
+---
+
+### Argument Parsing – Before
+
+```python
+from sys import argv
+from typing import Sequence
+
+def parse_arguments(
+    args: Sequence[str],
+) -> tuple[list[str], dict[str, str | bool]]:
+    """Parse arguments.
+
+    Keyword arguments must follow positional arguments.
+
+    Flag arguments are treated as keyword arguments, with a value of `True`.
+
+    Keyword arguments and flags are a dictionary, i.e., duplicate kwargs are silently ignored.
+
+    ### Parameters
+    - :param `Sequence[str]` `args`: List of arguments.
+
+    ### Returns
+    :return: Tuple containing positional arguments and keyword arguments, respectively.
+    :rtype: `tuple[list[str], dict[str, str | bool]]`
+    """
+    keyword_args: dict[str, str | bool] = dict()
+    positional_args: list[str] = list()
+
+    is_processing_keyword_args = False
+    last_keyword_arg = ""
+
+    for arg in args[1:]:
+        # Consume keyword args
+        if arg.startswith("-"):
+            is_processing_keyword_args = True
+
+            if arg.startswith("--"):
+                keyword_args[arg] = ""
+                last_keyword_arg = arg
+            else:  # arg starts with only '-'
+                keyword_args[arg] = True
+
+            continue
+
+        # Consume arguments passed to keyword args
+        if is_processing_keyword_args:
+            if (val := keyword_args[last_keyword_arg]) and isinstance(val, str):
+                val += f" {arg}"
+            else:
+                val = arg
+
+            keyword_args[last_keyword_arg] = val
+            continue
+
+        # Consume positional args
+        positional_args.append(arg)
+
+    return positional_args, keyword_args
+
+
+def usage():
+    print(
+        """usage:
+  wordinfo define <words>... [--language <language_code>]
+  wordinfo plural <word>
+  wordinfo indefinite <noun>
+  wordinfo ordinal <number>
+"""
+    )
+
+
+positional_args, keyword_args = parse_arguments(argv)
+```
+
+---
+
+### Argument Parsing – After
+
+```python
+USAGE = """Word Information
+
+Usage:
+ wordinfo define <words>... [--language <language_code>]
+ wordinfo plural <word>
+ wordinfo indefinite <noun>
+ wordinfo ordinal <number>
+ wordinfo (-h | --help)
+
+Options:
+ -h --help                    Show this help message.
+ --language <language_code>   Specify a language code.
+"""
+
+arguments = docopt(USAGE)
+```
+
+- 62 fewer lines of code
+- Added help message support
+
+---
+
+## Uncovered Topics
+
+Not enough time!
+
+- Installation & Distribution
+- Config Management
+- Cross-Platform Support
+- Warning and Error Messages
+- Logging & Error Reporting
+- ...so much more
