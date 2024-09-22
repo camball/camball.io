@@ -6,7 +6,7 @@ tags:
     - Monorepo
 author: Cameron Ball
 created: 2024-07-13
-modified: 2024-07-15
+modified: 2024-09-22
 ---
 
 This article is for you if...
@@ -176,6 +176,34 @@ apps
     └── tsconfig.json
 ```
 
+### `tailwind.config.ts`
+
+I have a base tailwind config in my root directory with global configuration, as well as tailwind configs in each subproject directory. A minimal tailwind config used on subprojects that don't need custom tailwind configuration simply looks like:
+
+```ts
+import baseConfig from '../../tailwind.config.ts';
+
+export default baseConfig;
+```
+
+A truncated version of a subproject directory config that needed customisation looks like:
+
+```ts
+import baseConfig from '../../tailwind.config.ts';
+
+export default {
+  ...baseConfig,
+  exampleKey: 'an example custom value',
+  theme: {
+    ...baseConfig.theme,
+    extend: {
+      ...baseConfig.theme.extend,
+      exampleNestedKey: 'another example custom value,
+    },
+  },
+};
+```
+
 ### Vitest
 
 Simply create a file `vitest.workspace.ts` in the project root ([source](https://vitest.dev/guide/workspace)), populated with:
@@ -190,10 +218,17 @@ Now, `npm test` will work as expected when run from anywhere in your project, te
 
 ## Hosting & DNS Record Configuration
 
-After pushing to main, I immediately got a build failure as the root directory was not configured for our new monorepo structure. In Vercel's general settings, I was able to [specify the proper root directory](https://vercel.com/docs/monorepos#using-monorepos-with-vercel-dashboard):
+After pushing to main, I immediately got a build failure as the root directory was not configured for our new monorepo structure. In Vercel's general settings, I simply had to [specify the proper root directory](https://vercel.com/docs/monorepos#using-monorepos-with-vercel-dashboard):
 
 ![Setting the root directory in Vercel's web UI](./assets/vercel_root_dir.png)
 
 After this, I went to the failed deployment, clicked redeploy, and everything was smooth sailing, first try. That was fairly relieving, lol.
 
-To deploy my blog subproject, `blog.mysite.io`, I created a new Vercel project. On setup, I specified my build command as per usual (`npm install`), but also specified my root directory, `apps/blog`. On project initialisation, the first build was a success. At this point, the only thing I had to do was add a DNS CNAME record for `blog` under my main `mysite.io` domain. Once done, both `mysite.io` and `blog.mysite.io` were fully in business, and I could hit both live.
+To deploy my blog subproject, `blog.mysite.io`, I...
+
+1. Added a DNS CNAME record for `blog` under my main `mysite.io` domain
+2. Created a new Vercel project. On setup...
+3. I specified my install command (`npm install`) and my root directory, `apps/blog`
+4. Once the Vercel project was initialised, I navigated to Settings > Domains and added my target domain to the list (`blog.mysite.io`)
+
+With that, both `mysite.io` and `blog.mysite.io` were fully in business, and I could hit both live.
