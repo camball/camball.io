@@ -15,17 +15,13 @@
 			<h1 class="text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]">
 				𐙚 ࣪ ⟡
 				<br />
-				cameron ball
+				get in touch
 			</h1>
 			<Separator />
 			<div
 				class="space-y-3 rounded-md bg-black bg-opacity-[0.01] p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur sm:m-1 sm:px-3 sm:py-3 dark:sm:bg-white dark:sm:bg-opacity-[0.01] sm:dark:text-neutral-400"
 			>
-				<p>Full-stack software engineer based out of Scottsdale, AZ.</p>
-				<p>
-					Obsessed with design, architecture, and fashion. Avid skier and guitarist. Can unicycle.
-					&lt;3
-				</p>
+				<p>*page still under development*</p>
 			</div>
 		</div>
 	</div>
