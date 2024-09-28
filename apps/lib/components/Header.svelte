@@ -6,8 +6,9 @@
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 
 	const links = {
-		Archive: 'https://archive.camball.io',
-		Blog: 'https://blog.camball.io'
+		Home: 'https://camball.io',
+		Blog: 'https://blog.camball.io',
+		Archive: 'https://archive.camball.io'
 		// Contact: 'https://contact.camball.io',
 		// Resume: 'https://resume.camball.io'
 	};
