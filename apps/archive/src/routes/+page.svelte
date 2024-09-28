@@ -25,6 +25,13 @@
 					</Carousel.Item>
 				</div>
 			{/each}
+			<Carousel.Item class="max-h-[677px] min-w-[326px] basis-1/2 overflow-y-scroll">
+				<a href="https://www.instagram.com/cameron_archives">
+					<div class="flex min-h-[677px] w-[326px] items-center justify-center border">
+						<p>...see more on @cameron_archives</p>
+					</div>
+				</a>
+			</Carousel.Item>
 		</Carousel.Content>
 		<Carousel.Previous class="flex" />
 		<Carousel.Next class="flex" />
@@ -38,4 +45,11 @@
 			<InstagramEmbed url={reelUrl} />
 		</div>
 	{/each}
+	<div class="max-h-[677px] min-w-[326px] basis-1/2 overflow-y-scroll">
+		<a href="https://www.instagram.com/cameron_archives">
+			<div class="flex min-h-[677px] w-[326px] items-center justify-center border">
+				<p>...see more on @cameron_archives</p>
+			</div>
+		</a>
+	</div>
 </div>
