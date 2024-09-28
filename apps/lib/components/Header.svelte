@@ -6,6 +6,7 @@
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 
 	const links = {
+		Archive: 'https://archive.camball.io',
 		Blog: 'https://blog.camball.io'
 		// Contact: 'https://contact.camball.io',
 		// Resume: 'https://resume.camball.io'
@@ -34,7 +35,7 @@
 	</Drawer.Content>
 </Drawer.Root>
 <div
-	class="fixed bottom-6 mx-4 hidden w-[calc(100vw-2rem)] rounded-2xl bg-white bg-opacity-80 px-7 py-2 font-sans backdrop-blur-[3px] dark:bg-neutral-800 dark:bg-opacity-80 sm:flex sm:items-center sm:justify-between"
+	class="fixed bottom-6 z-50 mx-4 hidden w-[calc(100vw-2rem)] rounded-2xl bg-white bg-opacity-80 px-7 py-2 font-sans backdrop-blur-[3px] dark:bg-neutral-800 dark:bg-opacity-80 sm:flex sm:items-center sm:justify-between"
 >
 	<div
 		class="hover:[&>*]:text-shadow flex items-center space-x-6 [&>*]:transition-all [&>*]:ease-in-out hover:[&>*]:transition-all hover:[&>*]:ease-in-out"
