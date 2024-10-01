@@ -1,0 +1,2 @@
+# To not skew repo language percentage calculation heavily toward MDX files (since this is a Svelte project)
+*.mdx linguist-documentation
