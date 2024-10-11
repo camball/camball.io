@@ -5,6 +5,7 @@ export default interface MdxSvelteComponent {
     metadata: {
         title: string,
         tags: Array<string>,
+        description: string,
         author: string,
         created: string,
         modified: string,

@@ -1,5 +1,6 @@
 <script lang="ts">
 	export let data;
+	const { articles } = data;
 
 	import BinaryTextOverlay from '$lib/components/BinaryTextOverlay.svelte';
 	import { Card, ScrollArea, Separator } from '$lib/components/ui';
@@ -26,19 +27,20 @@
 		</h1>
 		<Separator />
 		<ScrollArea
-			class="mx-1 h-[30rem] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(90vh-18rem)] sm:max-w-[22rem] sm:dark:text-neutral-400"
+			class="mx-1 h-[30rem] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(90vh-18rem)] sm:max-w-[24rem]"
 			scrollbarYClasses="hidden"
 		>
 			<div class="space-y-2">
-				{#each data.articles as article}
+				{#each articles as article}
 					<Card.Root class="opacity-90">
 						<a href={getFilenameFromPath(article.filePath)}>
 							<Card.Header class="pb-3">
 								<Card.Title class="font-medium tracking-[0.023em]">
 									{article.metadata.title}
 								</Card.Title>
-								<Card.Description>
-									{moment(article.metadata.created).add(1, 'days').format('MMMM D, YYYY')}
+								<Card.Description class="space-y-1">
+									<p>{moment(article.metadata.created).add(1, 'days').format('MMMM D, YYYY')}</p>
+									<p class="tracking-wide">{article.metadata.description}</p>
 								</Card.Description>
 							</Card.Header>
 							<Card.Content>

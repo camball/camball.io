@@ -11,7 +11,7 @@
 	import { fade } from 'svelte/transition';
 	import moment from 'moment';
 
-	const { title, author, created, modified, tags } = data.metadata;
+	const { title, author, description, created, modified, tags } = data.metadata;
 
 	const dateCreated = new Date(created);
 	const dateModified = new Date(modified);
@@ -39,8 +39,7 @@
 	<meta property="og:url" content={`https://blog.camball.io/${data.slug}`} />
 	<meta property="og:image" content="$lib/assets/sitting-on-couch.jpeg" />
 	<meta property="og:site_name" content="Blog – Cameron Ball" />
-	<!-- TODO: Add when article descriptions implemented -->
-	<!-- <meta property="og:description" content={description} /> -->
+	<meta property="og:description" content={description} />
 	<meta property="article:author" content="https://camball.io" />
 	<meta property="article:publisher" content="https://camball.io" />
 	{#each tags as tag}
@@ -49,8 +48,7 @@
 
 	<meta name="twitter:card" content="summary" />
 	<meta name="twitter:title" content={title} />
-	<!-- TODO: Add when article descriptions implemented -->
-	<!-- <meta name="twitter:description" content={description} /> -->
+	<meta name="twitter:description" content={description} />
 	<meta name="twitter:image" content="$lib/assets/sitting-on-couch.jpeg" />
 	<meta name="twitter:site" content="@camba1l" />
 	<meta name="twitter:creator" content="@camba1l" />
@@ -67,6 +65,10 @@
 		</button>
 	</div>
 </header>
+<Separator />
+<div class="mx-5 my-6 sm:mx-48">
+	<p class="font-medium">{description}</p>
+</div>
 <Separator />
 <div
 	in:fade|global={{ delay: 150, duration: 350 }}
