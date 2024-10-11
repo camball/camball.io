@@ -19,19 +19,19 @@
 		<BinaryTextOverlay text={'discipline'} />
 	</div>
 	<div
-		class="text-shadow absolute m-auto ml-5 space-y-4 p-3 pl-0 text-neutral-700 sm:ml-5 sm:text-right sm:text-neutral-900 sm:dark:text-neutral-50"
+		class="text-shadow absolute mx-5 my-3 space-y-4 text-neutral-700 sm:ml-5 sm:text-right sm:text-neutral-900 sm:dark:text-neutral-50"
 	>
 		<h1 class="mb-4 mt-20 font-serif text-6xl font-bold tracking-tighter sm:text-9xl">
 			blog.camball.io
 		</h1>
 		<Separator />
 		<ScrollArea
-			class="mx-1 h-[30rem] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(90vh-18rem)] sm:dark:text-neutral-400"
+			class="mx-1 h-[30rem] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(90vh-18rem)] sm:max-w-[22rem] sm:dark:text-neutral-400"
 			scrollbarYClasses="hidden"
 		>
 			<div class="space-y-2">
 				{#each data.articles as article}
-					<Card.Root class="max-w-[22rem] opacity-90">
+					<Card.Root class="opacity-90">
 						<a href={getFilenameFromPath(article.filePath)}>
 							<Card.Header class="pb-3">
 								<Card.Title class="font-medium tracking-[0.023em]">
