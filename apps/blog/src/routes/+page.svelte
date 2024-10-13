@@ -27,7 +27,7 @@
 		</h1>
 		<Separator />
 		<ScrollArea
-			class="mx-1 h-[30rem] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(90vh-18rem)] sm:max-w-[24rem]"
+			class="mx-1 h-[30rem] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(90vh-18rem)] sm:max-w-sm"
 			scrollbarYClasses="hidden"
 		>
 			<div class="space-y-2">
