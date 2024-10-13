@@ -5,6 +5,7 @@
 Supports...
 
 - My engineering blog ([`blog.camball.io`](https://blog.camball.io))
+- A showcase of my guitar-playing endeavours ([`archive.camball.io`](https://archive.camball.io))
 - ...more to follow soon
 
 ## 📚 Tech Stack & Credits
