@@ -7,7 +7,7 @@ tags:
 description: A quick, seamless solution for auto-generating documentation sites for Python codebases.
 author: Cameron Ball
 created: 2024-11-15
-modified: 2024-11-15
+modified: 2024-11-18
 ---
 
 Under 10 minutes? Yes. (if you've already been diligent about adding docstrings to your codebase).
@@ -33,10 +33,10 @@ Before we discuss how we'll create auto-generating docs, let's go over the requi
     - [reStructuredText](https://marketplace.visualstudio.com/items?itemName=lextudio.restructuredtext) – language server support
     - [Esbonio](https://marketplace.visualstudio.com/items?itemName=swyddfa.esbonio) – to preview your Sphinx doc site preview from within VS Code
     - [Python Docstring Highlighter](https://marketplace.visualstudio.com/items?itemName=rodolphebarbanneau.python-docstring-highlighter) – to highlight Sphinx-style docstrings in source code
-2. Add dependencies ([sphinx](https://www.sphinx-doc.org/en/master/), [sphinx-autoapi](https://sphinx-autoapi.readthedocs.io/en/stable/), [myst-parser](https://myst-parser.readthedocs.io)):
+2. Add dependencies ([sphinx](https://www.sphinx-doc.org/en/master/), [sphinx-autoapi](https://sphinx-autoapi.readthedocs.io/en/stable/), [myst-parser](https://myst-parser.readthedocs.io), [esbonio](https://github.com/swyddfa/esbonio)):
 
     ```sh
-    poetry add sphinx sphinx-autoapi myst-parser --group dev
+    poetry add sphinx sphinx-autoapi myst-parser esbonio --group dev
     ```
 
 3. Run `poetry run sphinx-quickstart` from the project root directory
