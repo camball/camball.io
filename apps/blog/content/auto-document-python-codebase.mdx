@@ -32,10 +32,13 @@ Before we discuss how we'll create auto-generating docs, let's go over the requi
     - [autoDocstring](https://marketplace.visualstudio.com/items?itemName=njpwerner.autodocstring) – to automatically generate docstrings for functions
     - [reStructuredText](https://marketplace.visualstudio.com/items?itemName=lextudio.restructuredtext) – language server support
     - [Esbonio](https://marketplace.visualstudio.com/items?itemName=swyddfa.esbonio) – to preview your Sphinx doc site preview from within VS Code
-2. Install the following to your project:
-    - [sphinx](https://www.sphinx-doc.org/en/master/): `poetry add sphinx --group dev`
-    - [sphinx-autoapi](https://sphinx-autoapi.readthedocs.io/en/stable/): `poetry add sphinx-autoapi --group dev`
-    - [myst-parser](https://myst-parser.readthedocs.io): `poetry add myst-parser --group dev`
+    - [Python Docstring Highlighter](https://marketplace.visualstudio.com/items?itemName=rodolphebarbanneau.python-docstring-highlighter) – to highlight Sphinx-style docstrings in source code
+2. Add dependencies ([sphinx](https://www.sphinx-doc.org/en/master/), [sphinx-autoapi](https://sphinx-autoapi.readthedocs.io/en/stable/), [myst-parser](https://myst-parser.readthedocs.io)):
+
+    ```sh
+    poetry add sphinx sphinx-autoapi myst-parser --group dev
+    ```
+
 3. Run `poetry run sphinx-quickstart` from the project root directory
     - `Separate source and build directories (y/n) [n]: y`
 4. In the generated `Makefile`, modify the `SPHINXBUILD` value to run scripts from the Poetry virtual environment:
@@ -79,10 +82,7 @@ Before we discuss how we'll create auto-generating docs, let's go over the requi
     ```json
     {
       "autoDocstring.docstringFormat": "one-line-sphinx",
-      "autoDocstring.includeExtendedSummary": true,
-      "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
-      }
+      "autoDocstring.includeExtendedSummary": true
     }
     ```
 
@@ -110,3 +110,21 @@ Before we discuss how we'll create auto-generating docs, let's go over the requi
 10. View your documentation...
     - In your browser from the root directory with `open build/html/index.html`
     - To the side in VS Code by entering [^K V] (via Esbonio extension)
+
+## Custom Themes
+
+Everyone knows the classic [Alabaster](https://sphinx-themes.org/sample-sites/default-alabaster/) theme, but there's so many great (and potentially more modern-looking) themes [available](https://sphinx-themes.org). I'm personally a fan of Pradyun Gedam's [Furo](https://github.com/pradyunsg/furo) theme, which also provides a light/dark mode feature.
+
+Installation is a breeze: simply add your theme as a dependency:
+
+```sh
+poetry add furo --group dev
+```
+
+, then modify your `source/conf.py` to use it:
+
+```python
+html_theme = "furo"
+```
+
+![Furo Sphinx Theme Example](./assets/furo-sphinx-theme.png)
