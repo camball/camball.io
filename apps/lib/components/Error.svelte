@@ -5,9 +5,9 @@
 </script>
 
 <div class="grid h-screen font-sans sm:grid-cols-3">
-	<div class="col-span-2 content-center bg-neutral-900 px-14 sm:px-40">
+	<div class="col-span-2 content-center bg-neutral-900 px-14 text-stone-100 sm:px-40">
 		<h1 class="text-7xl font-bold">{$page.status}</h1>
-		<span class="mt-1 block text-2xl">{$page.error.message}</span>
+		<span class="mt-1 block text-2xl">{$page.error?.message}</span>
 		{#if String($page.status).startsWith('4')}
 			<a class="mt-3 block" href="/">
 				<House class="dark:invert-0" />
