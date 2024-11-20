@@ -2,9 +2,8 @@
 	export let data;
 	const { articles } = data;
 
-	import BinaryTextOverlay from '$lib/components/BinaryTextOverlay.svelte';
+	import { BinaryTextOverlay, Header } from '$lib/components';
 	import { Card, ScrollArea, Separator } from '$lib/components/ui';
-	import { Header } from '../lib';
 	import Tags from '../components/Tags.svelte';
 	import moment from 'moment';
 
@@ -20,14 +19,16 @@
 		<BinaryTextOverlay text={'discipline'} />
 	</div>
 	<div
-		class="text-shadow absolute mx-5 my-3 space-y-4 text-neutral-700 sm:ml-5 sm:text-right sm:text-neutral-900 sm:dark:text-neutral-50"
+		class="text-shadow absolute mx-5 my-3 space-y-4 text-neutral-700 sm:relative sm:mx-7 sm:w-full sm:text-neutral-900 sm:dark:text-neutral-50"
 	>
-		<h1 class="mb-4 mt-20 font-serif text-6xl font-bold tracking-tighter sm:text-9xl">
+		<h1 class="mb-4 mt-20 font-serif text-6xl font-bold tracking-tighter sm:text-[7rem]/[7rem]">
+			𐙚 ࣪ ⟡
+			<br />
 			blog.camball.io
 		</h1>
 		<Separator />
 		<ScrollArea
-			class="mx-1 h-[30rem] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(90vh-18rem)] sm:max-w-sm"
+			class="mx-1 h-[calc(91vh-17rem)] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(85vh-18rem)] sm:max-w-sm sm:text-right"
 			scrollbarYClasses="hidden"
 		>
 			<div class="space-y-2">
