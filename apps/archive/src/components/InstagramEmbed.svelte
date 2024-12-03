@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { Jellyfish } from 'svelte-loading-spinners';
+	// See my GitHub issue for why we are using our own instead of the package's
+	// https://github.com/Schum123/svelte-loading-spinners/issues/59
+	// import { Jellyfish } from 'svelte-loading-spinners';
+	import { Jellyfish } from './Loaders';
 
 	export let url: string;
 </script>

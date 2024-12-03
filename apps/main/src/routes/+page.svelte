@@ -19,7 +19,7 @@
 		<div class="space-y-3 sm:max-w-[45rem]">
 			<Separator />
 			<div
-				class="space-y-3 rounded-md bg-black bg-opacity-[0.01] p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur sm:m-1 sm:px-3 sm:py-3 sm:shadow-lg dark:sm:bg-white dark:sm:bg-opacity-[0.013] sm:dark:text-neutral-400"
+				class="space-y-3 rounded-md bg-black bg-opacity-[0.01] p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur-sm sm:m-1 sm:px-3 sm:py-3 sm:shadow-lg dark:sm:bg-white dark:sm:bg-opacity-[0.013] sm:dark:text-neutral-400"
 			>
 				<p>Full-stack software engineer based out of Scottsdale, AZ.</p>
 				<p>
