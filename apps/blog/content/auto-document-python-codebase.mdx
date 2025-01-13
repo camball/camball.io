@@ -77,10 +77,11 @@ Before we discuss how we'll create auto-generating docs, let's go over the requi
     ```
 
     The bottom `include` directive will automatically pull in our project's README as our documentation site's homepage, so that we only have to specify project documentation in a single place.
-7. Create a file `.vscode/settings.json`, and place the following content in it:
+7. Either create a `.vscode/settings.json` in your project root directory with the following content, or add to your user `settings.json`:
 
     ```json
     {
+      "python.analysis.supportRestructuredText": true,
       "autoDocstring.docstringFormat": "one-line-sphinx",
       "autoDocstring.includeExtendedSummary": true
     }
