@@ -26,6 +26,9 @@
     }
 }
 
+html {
+    scroll-behavior: smooth;
+}
 
 .text-shadow {
     text-shadow: 1px 1px 25px var(--color-neutral-500, #737373);
