@@ -26,6 +26,30 @@
     }
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+span.icon-link::before {
+    content: '#';
+    color: hsl(var(--accent));
+    position: absolute;
+    left: -23px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+h2:hover span.icon-link::before,
+h3:hover span.icon-link::before,
+h4:hover span.icon-link::before {
+    opacity: 1;
+}
+
+h2,
+h3,
+h4 {
+    position: relative;
+}
 
 .text-shadow {
     text-shadow: 1px 1px 25px var(--color-neutral-500, #737373);
@@ -76,7 +100,7 @@ nav> :last-child.toc-level {
         --secondary: 60 4.8% 95.9%;
         --secondary-foreground: 24 9.8% 10%;
 
-        --accent: 60 4.8% 95.9%;
+        --accent: 60 0% 50%;
         --accent-foreground: 24 9.8% 10%;
 
         --destructive: 0 72.2% 50.6%;
@@ -109,7 +133,7 @@ nav> :last-child.toc-level {
         --secondary: 12 6.5% 15.1%;
         --secondary-foreground: 60 9.1% 97.8%;
 
-        --accent: 12 6.5% 15.1%;
+        --accent: 12 0% 50%;
         --accent-foreground: 60 9.1% 97.8%;
 
         --destructive: 0 62.8% 30.6%;
