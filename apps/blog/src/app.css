@@ -51,6 +51,12 @@ h4 {
     position: relative;
 }
 
+::selection {
+    /* `!important` to override Prism theme that I can't customise */
+    background: #ffc533 !important;
+    color: #000;
+}
+
 .text-shadow {
     text-shadow: 1px 1px 25px var(--color-neutral-500, #737373);
 }
