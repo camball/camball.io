@@ -1,0 +1,149 @@
+---
+title: Context Managers in Python
+tags:
+    - Python
+description: My personal notes/learnings on this advanced Python feature.
+author: Cameron Ball
+created: 2022-05-03
+modified: 2022-05-03
+---
+
+TL;DR: skip to the [very bottom](#the-best-of-all-worlds) to see the best way to create a custom context manager. If you want to follow along as to *why* that is the best way to create a context manager, keep reading from the beginning.
+
+## Defining Context Managers with a Class
+
+The first way we can make a context manager is by defining a class that implements the `__enter__()` and `__exit__()` dunder methods. Take a look at the following example:
+
+```py
+class ContextManager:
+    def __init__(self, arg: str) -> None:
+        self.arg = arg
+        print(f"Object {self.arg} being created")
+    
+    def __enter__(self):
+        print("Entering Managed State")
+        return self
+    
+    def __exit__(self, exception_type, exception_value, exception_traceback) -> bool:
+        print("Exiting Managed State")
+    
+    def __str__(self) -> str:
+        return f"Hello from ContextManager instance {self.arg}"
+
+    def __del__(self) -> None:
+        print(f"Deleting ContextManager {self.arg}")
+
+
+with ContextManager("myObject") as myCM:
+    print(myCM)
+
+print(myCM)
+```
+
+When the above code is run, the following output is produced:
+
+```txt
+Object myObject being created
+Entering Managed State
+Hello from ContextManager instance myObject
+Exiting Managed State
+Hello from ContextManager instance myObject
+Deleting Context Manager myObject
+```
+
+So what can we learn from this example?
+
+- We implement the `__enter__()` and `__exit__()` dunder methods to properly define a `ContextManager` as a context manager.
+- The order of execution...
+    1. Starts with object instantiation
+    2. Executes `obj.__enter__()`
+    3. Executes the code block within the `with` statement
+    4. Executes `obj.__exit__()`
+    5. Continues code execution after `with` statement. When `obj` goes out of scope/the program ends, `__del__()` is run.
+- As an aside, we implement `__del__()` to show that the object created by the `with` statement persists after the `with` statement ends. The difference is that the *context is no longer managed*.
+
+> Note: `__enter__()` does not necessarily have to return `self`; that is just how this example does it. We haven't covered `@contextmanager`-decorated functions yet, but for example, `open(file: str)` from the Python standard library returns a `TextIOWrapper`, which itself implements `__enter__()` and `__exit__()` (or they are implemented in a parent class).
+
+## Defining context managers using `contextlib.contextmanager()`
+
+Now, we can look at a shorthand way to define context managers. Take a look at the following code:
+
+```py
+from contextlib import contextmanager
+
+@contextmanager
+def context_manager(arg: str):
+    print("Entering Managed State")
+    yield arg
+    print("Exiting Managed State")
+
+with context_manager("hello"):
+    print("Inside with block")
+```
+
+Output:
+
+```txt
+Entering Managed State
+Inside with block
+Exiting Managed State
+```
+
+## Handling Exceptions Inside Context Managers
+
+Notice the prototype of `__exit__()` from earlier:
+
+```py
+def __exit__(self, exception_type, exception_value, exception_traceback) -> bool:
+    ...
+```
+
+If no exception is raised in the `with` block, then the last three parameters are set to `None`. So if we want to check whether an exception was raised, we could say something like the following:
+
+```py
+def __exit__(self, exception_type, exception_value, exception_traceback) -> bool:
+    if exception_type:
+        ...
+```
+
+But many times we will instead want to check for specific exception types, so the following would work for that (we check for `IndexError` here for example):
+
+```py
+def __exit__(self, exception_type, exception_value, exception_traceback) -> bool:
+    if isinstance(exception_value, IndexError):
+        ...
+```
+
+Side note: checking `if exception_type is IndexError` may also work, but don't fall prey to [this type checking fallacy](/python-type-checking-fallacy).
+
+A *Real Python* [tutorial](https://realpython.com/python-with-statement/#coding-class-based-context-managers) explains the return value of `__exit__()` very nicely:
+
+> If the `.__exit__()` method returns `True`, then any exception that occurs in the `with` block is swallowed and the execution continues at the next statement after `with`. If `.__exit__()`returns `False`, then exceptions are propagated out of the context. This is also the default behavior when the method doesn’t return anything explicitly. You can take advantage of this feature to encapsulate exception handling inside the context manager.
+
+So if we want to completely handle an exception and have our program continue normally, we need to return True once we handle the exception, like in the following code:
+
+```py
+def __exit__(self, exception_type, exception_value, exception_traceback) -> bool:
+    if isinstance(exception_value, IndexError):
+        # handle exception here in some way
+        return True
+```
+
+### The Best of All Worlds
+
+When using `contextlib.contextmanager()`, it is common to use a `try...except...finally` block to manage resources. The benefit here is that the user doesn't have to type out the verbose `t...e...f` block and can use a simple `with` statement, AND the author of the context manager has a cleaner definition using the `@contextmanager` syntax, without the oddities of manual type-checking in `__exit__()`. See the following example ([source](https://realpython.com/python-with-statement/#opening-files-for-writing-second-version)):
+
+```py
+from contextlib import contextmanager
+
+@contextmanager
+def writable_file(file_path):
+    file = open(file_path, mode="w")
+    try:
+        yield file
+    finally:
+        file.close()
+
+with writable_file("hello.txt") as file:
+    file.write("Hello, World!")
+```

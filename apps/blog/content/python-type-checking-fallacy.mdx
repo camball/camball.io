@@ -1,0 +1,32 @@
+---
+title: A Common Type Checking Fallacy in Python
+tags:
+    - Python
+description: Learn when to use `is` versus `isinstance` in Python when comparing types.
+author: Cameron Ball
+created: 2022-05-04
+modified: 2024-03-31
+---
+
+> Checking Types with `is` versus `isinstance()`
+
+```py
+>>> class MyError(IndexError):
+...     pass
+...
+>>> e = MyError()
+>>> type(e)
+<class '__main__.MyError'>
+>>> isinstance(e, MyError)
+True
+>>> isinstance(e, IndexError)
+True
+>>> type(e) is MyError
+True
+>>> type(e) is IndexError
+False
+```
+
+As you can see, `is` only checks whether the *exact* type is the same, whereas `isinstance()` will also check for subclasses of a type.
+
+This isn't a bad thing—just be aware of which you intend to use... and in the vast majority of cases, `isinstance()` is probably the one you intend to use.
