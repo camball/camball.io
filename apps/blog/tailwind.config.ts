@@ -1,4 +1,4 @@
-import baseConfig from '../../tailwind.config.ts'
+import baseConfig from '../../tailwind.config'
 import tailwindTypography from '@tailwindcss/typography'
 
 // from https://github.com/tailwindlabs/tailwindcss-typography/blob/7b43b3b33bb74c57a68852330105bb34d11a806a/src/styles.js#L3C1-L7C25
