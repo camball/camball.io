@@ -18,7 +18,7 @@ const config = {
 		// markdown into pure svelte
 		mdsvex({
 			extension: '.mdx',
-			layout: "src/layouts/article.svelte",
+			layout: './src/layouts/article.svelte',
 			remarkPlugins: [remarkGfm],
 			rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeWidont, [rehypeToc, rehypeTocOpts]]
 		}),
