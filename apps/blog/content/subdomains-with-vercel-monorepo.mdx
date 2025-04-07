@@ -107,7 +107,7 @@ Simply,
 Each subproject needs its own `vite.config.ts`, so we'll just extend a common one into each subproject. I don't (currently) have any subproject-specific Vite setup, so I simply left my base `vite.config.ts` as is in my root directory and created one for each subproject with the following content:
 
 ```ts
-import baseConfig from "../../vite.config.ts";
+import baseConfig from "../../vite.config";
 
 export default baseConfig;
 ```
@@ -182,7 +182,7 @@ apps
 I have a base tailwind config in my root directory with global configuration, as well as tailwind configs in each subproject directory. A minimal tailwind config used on subprojects that don't need custom tailwind configuration simply looks like:
 
 ```ts
-import baseConfig from '../../tailwind.config.ts';
+import baseConfig from '../../tailwind.config';
 
 export default baseConfig;
 ```
@@ -190,7 +190,7 @@ export default baseConfig;
 A truncated version of a subproject directory config that needed customisation looks like:
 
 ```ts
-import baseConfig from '../../tailwind.config.ts';
+import baseConfig from '../../tailwind.config';
 
 export default {
   ...baseConfig,

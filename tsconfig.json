@@ -4,7 +4,6 @@
         "checkJs": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "allowImportingTsExtensions": true,
         "paths": {
             "$lib": [
                 "./apps/lib"
@@ -19,7 +18,24 @@
         "strict": true,
         "module": "ESNext",
         "moduleResolution": "Bundler"
-    }
+    },
+    "exclude": [
+        "node_modules", // node_modules itself
+        "**/node_modules", // node_modules in any subdirectory
+        "dist",
+        "build",
+        ".svelte-kit",
+        ".vercel",
+        "**/*.test.ts",
+        "**/*.spec.ts",
+        "**/svelte.config.js" // Exclude Svelte config files
+    ],
+    "include": [
+        "apps/**/*.ts",
+        "apps/**/*.js",
+        "apps/**/*.svelte",
+        "apps/**/*.d.ts"
+    ]
     // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
     // except $lib which is handled by https://kit.svelte.dev/docs/configuration#files
     //
