@@ -4,16 +4,7 @@ export default {
     './src/**/*.{html,js,svelte,ts}',
     '../lib/**/*.{html,js,svelte,ts}',
   ],
-  darkMode: ["class"],
-  safelist: ["dark"],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px"
-      }
-    },
     extend: {
       colors: {
         border: "hsl(var(--border) / <alpha-value>)",
@@ -50,17 +41,7 @@ export default {
           foreground: "hsl(var(--card-foreground) / <alpha-value>)"
         }
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)"
-      },
-      fontFamily: {
-        'serif': ['"IM Fell English"', '"serif"'],
-        'sans': ['"Hind"', '"sans"'],
-      },
     },
   },
-  plugins: [],
 }
 

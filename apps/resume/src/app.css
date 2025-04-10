@@ -1,6 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@config '../tailwind.config.ts';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-serif: "IM Fell English", "serif";
+    --font-sans: "Hind", "sans";
+}
 
 @layer base {
 
@@ -13,26 +20,22 @@
         -webkit-font-smoothing: antialiased;
     }
 
-    .binary-text-overlay {
-        mask-image: linear-gradient(to top,
-                transparent 25%,
-                black 75%);
-    }
-
-    .binary-text-overlay-lg {
-        mask-image: linear-gradient(to top,
-                transparent 10%,
-                black 75%);
-    }
-
-    .text-shadow {
-        text-shadow: 1px 1px 25px var(--color-neutral-500, #737373);
+    ::selection {
+        background-color: #ffc533;
+        color: #000;
     }
 }
 
-::selection {
-    background-color: #ffc533;
-    color: #000;
+@utility binary-text-overlay {
+    mask-image: linear-gradient(to top, transparent 25%, black 75%);
+}
+
+@utility binary-text-overlay-lg {
+    mask-image: linear-gradient(to top, transparent 10%, black 75%);
+}
+
+@utility text-shadow {
+    text-shadow: 1px 1px 25px var(--color-neutral-500, #737373);
 }
 
 @layer base {
