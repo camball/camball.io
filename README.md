@@ -30,3 +30,16 @@ There's currently no back end for this project.
 ## 🗓️ Roadmap
 
 See the [`camball.io` GitHub Project](https://github.com/users/camball/projects/1) for planned features and what's currently in-progress.
+
+## Installation and Running
+
+```sh
+# Install
+npm ci
+
+# Run the main site (`camball.io`)
+npm run dev:main
+
+# Run the blog (`blog.camball.io`)
+npm run dev:blog
+```
