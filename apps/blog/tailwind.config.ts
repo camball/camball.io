@@ -1,5 +1,3 @@
-import tailwindTypography from '@tailwindcss/typography'
-
 // from https://github.com/tailwindlabs/tailwindcss-typography/blob/7b43b3b33bb74c57a68852330105bb34d11a806a/src/styles.js#L3C1-L7C25
 const round = (num: number) =>
   num.toFixed(7)
@@ -18,15 +16,7 @@ export default {
     './src/**/*.{html,js,svelte,ts}',
     '../lib/**/*.{html,js,svelte,ts}',
   ],
-  plugins: [tailwindTypography],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px"
-      }
-    },
     extend: {
       colors: {
         border: "hsl(var(--border) / <alpha-value>)",
@@ -62,15 +52,6 @@ export default {
           DEFAULT: "hsl(var(--card) / <alpha-value>)",
           foreground: "hsl(var(--card-foreground) / <alpha-value>)"
         }
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)"
-      },
-      fontFamily: {
-        'serif': ['"IM Fell English"', '"serif"'],
-        'sans': ['"Hind"', '"sans"'],
       },
       typography: {
         DEFAULT: {

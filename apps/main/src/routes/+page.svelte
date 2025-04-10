@@ -5,7 +5,7 @@
 
 <Header />
 <div class="flex h-screen bg-neutral-50 dark:bg-neutral-900">
-	<div class="absolute sm:ml-[5.5rem] sm:mt-20">
+	<div class="absolute sm:mt-20 sm:ml-[5.5rem]">
 		<BinaryTextOverlay text={'discipline'} />
 	</div>
 	<div
@@ -19,7 +19,7 @@
 		<div class="space-y-3 sm:max-w-[45rem]">
 			<Separator />
 			<div
-				class="space-y-3 rounded-md bg-black bg-opacity-[0.01] p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur-sm sm:m-1 sm:px-3 sm:py-3 sm:shadow-lg dark:sm:bg-white dark:sm:bg-opacity-[0.013] sm:dark:text-neutral-400"
+				class="space-y-3 rounded-md bg-black/1 p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur-sm sm:m-1 sm:px-3 sm:py-3 sm:shadow-lg dark:sm:bg-white/1 sm:dark:text-neutral-400"
 			>
 				<p>Full-stack software engineer based out of Scottsdale, AZ.</p>
 				<p>
