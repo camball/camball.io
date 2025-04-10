@@ -4,8 +4,6 @@ export default {
     './src/**/*.{html,js,svelte,ts}',
     '../lib/**/*.{html,js,svelte,ts}',
   ],
-  darkMode: ["class"],
-  safelist: ["dark"],
   theme: {
     container: {
       center: true,
