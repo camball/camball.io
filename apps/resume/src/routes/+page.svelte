@@ -10,7 +10,7 @@
 			<BinaryTextOverlay text={'discipline'} />
 		</div>
 		<div
-			class="text-shadow absolute m-auto mt-20 ml-5 space-y-3 p-3 pl-0 text-neutral-700 sm:relative sm:ml-7 sm:text-neutral-900 sm:dark:text-neutral-50"
+			class="text-shadow-6xl absolute m-auto mt-20 ml-5 space-y-3 p-3 pl-0 text-neutral-700 sm:relative sm:ml-7 sm:text-neutral-900 sm:dark:text-neutral-50"
 		>
 			<h1 class="font-serif text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]">
 				𐙚 ࣪ ⟡

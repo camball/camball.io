@@ -12,7 +12,7 @@
 		class="absolute m-auto mx-5 mt-[5.75rem] space-y-3 text-neutral-700 sm:relative sm:mx-7 sm:w-full sm:text-neutral-900 sm:dark:text-neutral-50"
 	>
 		<h1
-			class="text-shadow font-serif text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]"
+			class="text-shadow-6xl font-serif text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]"
 		>
 			𐙚 ࣪ ⟡
 			<br />
