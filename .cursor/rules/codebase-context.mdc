@@ -1,0 +1,39 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Codebase Context
+
+## Tech Stack
+
+See [README.md](mdc:README.md). We currently use `npm`, but may switch to another package manager in the future.
+
+## Codebase Structure and Configuration
+
+This repo is set up as a monorepo. The following directories are projects deployed as subdomains, contained in this repo:
+
+- [+page.svelte](mdc:apps/main/src/routes/+page.svelte) supports the site home, camball.io
+- [+page.svelte](mdc:apps/blog/src/routes/+page.svelte) supports my blog site, blog.camball.io
+- [+page.svelte](mdc:apps/archive/src/routes/+page.svelte) supports archive.camball.io, a showcase of Instagram videos embedded with the embed API
+- [+page.svelte](mdc:apps/contact/src/routes/+page.svelte) supports a page for others to contact me, contact.camball.io
+- [+page.svelte](mdc:apps/resume/src/routes/+page.svelte) supports a resume of my work, resume.camball.io
+
+The sub-repositories in this repo share several things:
+
+- TypeScript config: [tsconfig.json](mdc:tsconfig.json)
+- Tailwind config: [tailwind.config.ts](mdc:tailwind.config.ts)
+- `app/lib`, a shared library directory
+    - CSS styles: [app.css](mdc:apps/lib/app.css)
+    - shadcn-svelte components that have been installed with `npx` and live in my codebase, such as [card.svelte](mdc:apps/lib/components/ui/card/card.svelte). See all available components in [index.ts](mdc:apps/lib/components/index.ts). Install new shadcn-svelte components with `npx shadcn-svelte@latest add <component>`, where `<component>` is a shadcn-svelte component, such as `accordion`
+    - Assets, like PNG images used in components used across the sub-repositories
+    - [utils.ts](mdc:apps/lib/utils.ts), containing global utility functions
+- A `package.json` (and lock file), Vite config, Vitest config, ESLint config
+
+Notably, Svelte config files are scoped per sub-repository, such as [svelte.config.js](mdc:apps/blog/svelte.config.js) for the blog.
+
+## Coding Practices and Style
+
+- Use shadcn-svelte components, when applicable, before creating our own
+- This repo uses Tailwind v4, not v3. This means that [tailwind.config.ts](mdc:tailwind.config.ts) is legacy and should not be updated unless absolutely necessary. Use Tailwind styles, and only create our own if absolutely necessary. If we need to create custom CSS for any reason or customise Tailwind, configuration should go in [app.css](mdc:apps/lib/app.css), unless it is specific to only a single sub-repo, in which case it should go in that sub-repo's app.css file.
+- Until we migrate to Svelte 5, ensure we are using Svelte 4 syntax
