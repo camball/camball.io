@@ -5,47 +5,45 @@
 
 @plugin "@tailwindcss/typography";
 
-@layer utilities {
-    span.icon-link::before {
-        content: '#';
-        color: hsl(var(--accent));
-        position: absolute;
-        left: -23px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
+span.icon-link::before {
+    content: '#';
+    color: hsl(var(--accent));
+    position: absolute;
+    left: -23px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-    h2:hover span.icon-link::before,
-    h3:hover span.icon-link::before,
-    h4:hover span.icon-link::before {
-        opacity: 1;
-    }
+h2:hover span.icon-link::before,
+h3:hover span.icon-link::before,
+h4:hover span.icon-link::before {
+    opacity: 1;
+}
 
-    h2,
-    h3,
-    h4 {
-        position: relative;
-    }
+h2,
+h3,
+h4 {
+    position: relative;
+}
 
-    .toc {
-        @apply sm:basis-1/4 p-3 hidden sm:block;
-    }
+.toc {
+    @apply sm:basis-1/4 p-3 hidden sm:block;
+}
 
-    .toc-link {
-        @apply inline-block mb-3;
-    }
+.toc-link {
+    @apply inline-block mb-3;
+}
 
-    .toc-level {
-        @apply sm:sticky sm:top-48 sm:max-h-[calc(100vh-16rem)] sm:overflow-y-auto;
-    }
+.toc-level {
+    @apply sm:sticky sm:top-48 sm:max-h-[calc(100vh-16rem)] sm:overflow-y-auto;
+}
 
-    .toc-level-2,
-    .toc-level-3,
-    .toc-level-4 {
-        @apply ml-3;
-    }
+.toc-level-2,
+.toc-level-3,
+.toc-level-4 {
+    @apply ml-3;
+}
 
-    nav> :last-child.toc-level {
-        @apply mb-0;
-    }
+nav> :last-child.toc-level {
+    @apply mb-0;
 }
