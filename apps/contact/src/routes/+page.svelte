@@ -6,20 +6,20 @@
 <Header />
 <div class="flex h-screen flex-row justify-between bg-neutral-50 dark:bg-neutral-900">
 	<div>
-		<div class="absolute sm:ml-[5.5rem] sm:mt-20">
+		<div class="absolute sm:mt-20 sm:ml-[5.5rem]">
 			<BinaryTextOverlay text={'discipline'} />
 		</div>
 		<div
-			class="text-shadow absolute m-auto ml-5 mt-20 space-y-3 p-3 pl-0 text-neutral-700 sm:relative sm:ml-7 sm:text-neutral-900 sm:dark:text-neutral-50"
+			class="text-shadow-6xl absolute m-auto mt-20 ml-5 space-y-3 p-3 pl-0 text-neutral-700 sm:relative sm:ml-7 sm:text-neutral-900 sm:dark:text-neutral-50"
 		>
-			<h1 class="text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]">
+			<h1 class="font-serif text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]">
 				𐙚 ࣪ ⟡
 				<br />
 				get in touch
 			</h1>
 			<Separator />
 			<div
-				class="space-y-3 rounded-md bg-black bg-opacity-[0.01] p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur sm:m-1 sm:px-3 sm:py-3 dark:sm:bg-white dark:sm:bg-opacity-[0.01] sm:dark:text-neutral-400"
+				class="space-y-3 rounded-md bg-black/1 p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur-sm sm:m-1 sm:px-3 sm:py-3 sm:shadow-lg dark:sm:bg-white/1 sm:dark:text-neutral-400"
 			>
 				<p>*page still under development*</p>
 			</div>

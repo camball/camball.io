@@ -7,7 +7,7 @@
 	export let imageSize: string;
 </script>
 
-<div class={cn('my-1 inline-flex space-x-2', className)}>
+<div class={cn('my-1 flex flex-row', className)}>
 	<a href="https://github.com/camball">
 		{#if $mode === 'dark'}
 			<img src="$lib/assets/github-logo-light.png" alt="GitHub logo" width={imageSize} />

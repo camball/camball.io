@@ -21,7 +21,7 @@
 			{#each reelUrls as reelUrl}
 				<div>
 					<Carousel.Item
-						class="visible max-h-[677px] overflow-y-scroll transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800 lg:basis-1/2 xl:basis-1/3"
+						class="visible max-h-[677px] overflow-y-scroll transition-colors hover:bg-neutral-100 lg:basis-1/2 xl:basis-1/3 dark:hover:bg-neutral-800"
 					>
 						<InstagramEmbed url={reelUrl} />
 					</Carousel.Item>
@@ -31,7 +31,7 @@
 				class="max-h-[677px] max-w-[326px] basis-1/2 overflow-y-scroll transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800"
 			>
 				<a href="https://www.instagram.com/cameron_archives" target="_blank">
-					<div class="flex min-h-[677px] w-[326px] items-center justify-center border">
+					<div class="flex min-h-[677px] w-[326px] items-center justify-center border font-serif">
 						<p>...see more on <span class="underline">@cameron_archives</span></p>
 					</div>
 				</a>
@@ -51,7 +51,7 @@
 	{/each}
 	<div class="max-h-[677px] max-w-[326px] basis-1/2 overflow-y-scroll">
 		<a href="https://www.instagram.com/cameron_archives" target="_blank">
-			<div class="flex min-h-[677px] w-[326px] items-center justify-center border">
+			<div class="flex min-h-[677px] w-[326px] items-center justify-center border font-serif">
 				<p>...see more on <span class="underline">@cameron_archives</span></p>
 			</div>
 		</a>

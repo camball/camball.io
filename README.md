@@ -10,7 +10,7 @@ Supports...
 
 ## 📚 Tech Stack & Credits
 
-- [SvelteKit](https://kit.svelte.dev) ([Svelte](https://svelte.dev), [Vite](https://vitejs.dev))
+- [Svelte/SvelteKit](https://svelte.dev) and [Vite](https://vitejs.dev)
 - [shadcn-svelte](https://www.shadcn-svelte.com) Components, modified as needed
 - [Lucide](https://lucide.dev) Icons
 - [TailwindCSS](https://tailwindcss.com) for Styling

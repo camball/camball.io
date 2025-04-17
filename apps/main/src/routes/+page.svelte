@@ -5,13 +5,15 @@
 
 <Header />
 <div class="flex h-screen bg-neutral-50 dark:bg-neutral-900">
-	<div class="absolute sm:ml-[5.5rem] sm:mt-20">
+	<div class="absolute sm:mt-20 sm:ml-[5.5rem]">
 		<BinaryTextOverlay text={'discipline'} />
 	</div>
 	<div
 		class="absolute m-auto mx-5 mt-[5.75rem] space-y-3 text-neutral-700 sm:relative sm:mx-7 sm:w-full sm:text-neutral-900 sm:dark:text-neutral-50"
 	>
-		<h1 class="text-shadow text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]">
+		<h1
+			class="text-shadow-6xl font-serif text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]"
+		>
 			𐙚 ࣪ ⟡
 			<br />
 			cameron ball
@@ -19,7 +21,7 @@
 		<div class="space-y-3 sm:max-w-[45rem]">
 			<Separator />
 			<div
-				class="space-y-3 rounded-md bg-black bg-opacity-[0.01] p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur sm:m-1 sm:px-3 sm:py-3 sm:shadow-lg dark:sm:bg-white dark:sm:bg-opacity-[0.013] sm:dark:text-neutral-400"
+				class="space-y-3 rounded-md bg-black/1 p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur-sm sm:m-1 sm:px-3 sm:py-3 sm:shadow-lg dark:sm:bg-white/1 sm:dark:text-neutral-400"
 			>
 				<p>Full-stack software engineer based out of Scottsdale, AZ.</p>
 				<p>

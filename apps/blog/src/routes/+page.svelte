@@ -15,20 +15,20 @@
 
 <Header />
 <div class="flex h-screen bg-neutral-50 dark:bg-neutral-900">
-	<div class="absolute sm:ml-20 sm:mt-20">
+	<div class="absolute sm:mt-20 sm:ml-20">
 		<BinaryTextOverlay text={'discipline'} />
 	</div>
 	<div
-		class="text-shadow absolute mx-5 my-3 space-y-4 text-neutral-700 sm:relative sm:mx-7 sm:w-full sm:text-neutral-900 sm:dark:text-neutral-50"
+		class="text-shadow-6xl absolute mx-5 my-3 space-y-4 text-neutral-700 sm:relative sm:mx-7 sm:w-full sm:text-neutral-900 sm:dark:text-neutral-50"
 	>
-		<h1 class="mb-4 mt-20 font-serif text-6xl font-bold tracking-tighter sm:text-[7rem]/[7rem]">
+		<h1 class="mt-20 mb-4 font-serif text-6xl font-bold tracking-tighter sm:text-[7rem]/[7rem]">
 			𐙚 ࣪ ⟡
 			<br />
 			blog.camball.io
 		</h1>
 		<Separator />
 		<ScrollArea
-			class="mx-1 h-[calc(91vh-17rem)] rounded-md text-lg backdrop-blur-sm sm:float-right sm:h-[calc(85vh-18rem)] sm:max-w-sm sm:text-right"
+			class="mx-1 h-[calc(91vh-17rem)] rounded-md text-lg backdrop-blur-xs sm:float-right sm:h-[calc(85vh-18rem)] sm:max-w-sm sm:text-right"
 			scrollbarYClasses="hidden"
 		>
 			<div class="space-y-2">
