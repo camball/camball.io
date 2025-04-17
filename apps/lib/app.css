@@ -100,7 +100,7 @@
         --secondary: 60 4.8% 95.9%;
         --secondary-foreground: 24 9.8% 10%;
 
-        --accent: 60 4.8% 95.9%;
+        --accent: 60 0% 50%;
         --accent-foreground: 24 9.8% 10%;
 
         --destructive: 0 72.2% 50.6%;
@@ -133,7 +133,7 @@
         --secondary: 12 6.5% 15.1%;
         --secondary-foreground: 60 9.1% 97.8%;
 
-        --accent: 12 6.5% 15.1%;
+        --accent: 12 0% 50%;
         --accent-foreground: 60 9.1% 97.8%;
 
         --destructive: 0 62.8% 30.6%;
