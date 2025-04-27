@@ -7,8 +7,17 @@ import rehypeToc from 'rehype-toc';
 import rehypeWidont from 'rehype-widont';
 import remarkGfm from 'remark-gfm';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { join } from 'node:path';
 
 const rehypeTocOpts = { position: 'beforeend' };
+
+/** @type {import('mdsvex').MdsvexOptions} */
+const mdsvexConfig = {
+	extension: '.mdx',
+	layout: join(import.meta.dirname, 'src/layouts/article.svelte'),
+	remarkPlugins: [remarkGfm],
+	rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeWidont, [rehypeToc, rehypeTocOpts]]
+}
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,12 +25,7 @@ const config = {
 	preprocess: [
 		// Order matters; `mdsvex` must occur before `vitePreprocess` to turn
 		// markdown into pure svelte
-		mdsvex({
-			extension: '.mdx',
-			layout: './src/layouts/article.svelte',
-			remarkPlugins: [remarkGfm],
-			rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeWidont, [rehypeToc, rehypeTocOpts]]
-		}),
+		mdsvex(mdsvexConfig),
 		vitePreprocess(),
 		importAssets(),
 	],
