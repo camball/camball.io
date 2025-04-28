@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import { mode } from 'mode-watcher';
 
 	let previousScrollPosition = 0;
 	let header: HTMLDivElement, spacer: HTMLDivElement;
@@ -34,14 +35,15 @@
 
 <div
 	bind:this={header}
-	class="left-0 top-0 z-50 flex w-full items-center justify-between bg-stone-100 p-3 dark:bg-stone-900"
+	class="top-0 left-0 z-50 flex w-full items-center justify-between bg-stone-100 px-3 py-2 dark:bg-stone-900"
 >
-	<div>
-		<!-- TODO: Put logo here -->
-		<p class="tracking-wide">
-			<a href="/">blog.camball.io</a>
-		</p>
-	</div>
+	<a href="/">
+		{#if $mode === 'dark'}
+			<img src="$lib/assets/cb_logo_light.svg" alt="Logo Light" class="h-11" />
+		{:else}
+			<img src="$lib/assets/cb_logo_dark.svg" alt="Logo Dark" class="h-11" />
+		{/if}
+	</a>
 	<ThemeToggle variant="outline" />
 </div>
-<div bind:this={spacer} class="left-0 top-0 hidden h-16 w-full" />
+<div bind:this={spacer} class="top-0 left-0 hidden h-16 w-full" />

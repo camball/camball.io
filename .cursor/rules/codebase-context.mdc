@@ -36,4 +36,6 @@ Notably, Svelte config files are scoped per sub-repository, such as [svelte.conf
 
 - Use shadcn-svelte components, when applicable, before creating our own
 - This repo uses Tailwind v4, not v3. This means that [tailwind.config.ts](mdc:tailwind.config.ts) is legacy and should not be updated unless absolutely necessary. Use Tailwind styles, and only create our own if absolutely necessary. If we need to create custom CSS for any reason or customise Tailwind, configuration should go in [app.css](mdc:apps/lib/app.css), unless it is specific to only a single sub-repo, in which case it should go in that sub-repo's app.css file.
-- Until we migrate to Svelte 5, ensure we are using Svelte 4 syntax
+- Until we migrate to Svelte 5, ensure we are using Svelte 4 syntax.
+- Images are stored in lib/assets and can be imported like `src="$lib/assets/example.png"`.
+- The whole site supports dark and light mode. Usually this can be handled by specifying the `dark:` variant in Tailwind, but if the theme needs to be used explicitly, it can be done with `import { mode } from 'mode-watcher';`, then checking like `{#if $mode === 'dark'}`.
