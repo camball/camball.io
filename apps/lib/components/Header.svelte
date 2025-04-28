@@ -41,8 +41,11 @@
 	<div
 		class="*:hover:text-shadow-6xl flex items-center space-x-6 *:transition-all *:ease-in-out *:hover:transition-all *:hover:ease-in-out"
 	>
-		<!-- TODO: Logo goes here -->
-		<p class="font-serif">camball.io</p>
+		{#if $mode === 'dark'}
+			<img src="$lib/assets/cb_logo_light.svg" alt="Logo Light" class="h-10" />
+		{:else}
+			<img src="$lib/assets/cb_logo_dark.svg" alt="Logo Dark" class="h-10" />
+		{/if}
 		{#each Object.entries(links) as [title, link]}
 			<p class="text-xl font-semibold">
 				<a href={link}>{title}</a>

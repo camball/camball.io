@@ -7,7 +7,7 @@ tags:
 description: How I create an excellent DX and keep my codebase DRY for many subdomains of a SvelteKit project.
 author: Cameron Ball
 created: 2024-07-13
-modified: 2024-09-22
+modified: 2025-04-27
 ---
 
 This article is for you if...
@@ -89,7 +89,17 @@ As described in the above section, we installed [svelte-preprocess-import-assets
 + <img src="$lib/assets/my-image.jpeg" />
 ```
 
-Unfortunately, I wasn't able to get that nice syntax working for the `href` of images in any non-Svelte files (i.e., my program entry, `app.html`), for importing favicons. I tried many setups and syntaxes, but the only thing I could get working was duplicating the originally root-level `static/` directory to each subproject root. With that setup, the value `%sveltekit.assets%` would resolve to this directory, just like it would in the non-monorepo setup.
+For things like favicons, we can use Svelte's `<svelte:head>` feature for inserting elements into the document `<head>` from a `.svelte` file (instead of sourcing from `static/` via `%sveltekit.assets%` in a raw `app.html` file). This enables us to store favicon images under `lib/assets` (removing the need for the `static/` directory entirely), and in each subproject's root `layout.tsx`, we can reference the favicons like any other images:
+
+```svelte
+<svelte:head>
+    <link rel="icon" type="image/svg+xml" href="$lib/assets/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="$lib/assets/favicon_16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="$lib/assets/favicon_32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="$lib/assets/favicon_48.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="$lib/assets/favicon_64.png" />
+</svelte:head>
+```
 
 ### `.gitignore`
 
