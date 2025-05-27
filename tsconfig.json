@@ -4,6 +4,8 @@
     "checkJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "target": "esnext",
+    "noEmit": true,
     "paths": {
       "$lib": ["./apps/lib"],
       "$lib/*": ["./apps/lib/*"]
@@ -13,14 +15,14 @@
     "sourceMap": true,
     "strict": true,
     "module": "ESNext",
-    "moduleResolution": "Bundler"
+    "moduleResolution": "Bundler",
+    "lib": ["esnext", "DOM", "DOM.Iterable"]
   },
   "exclude": [
     "node_modules", // node_modules itself
     "**/node_modules", // node_modules in any subdirectory
     "dist",
     "build",
-    ".svelte-kit",
     ".vercel",
     "**/*.test.ts",
     "**/*.spec.ts",
