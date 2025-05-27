@@ -1,1 +1,1 @@
-export { default as Jellyfish } from './Jellyfish.svelte';
+export { default as Jellyfish } from "./Jellyfish.svelte";

@@ -1,12 +1,12 @@
 /* Explicitly import only this project root's src to not bundle unneeded styles */
 /* from other monorepo subprojects. `lib/` imported in the root `app.css`. */
-@import 'tailwindcss' source('../src');
-@import '../../lib/app.css';
+@import "tailwindcss" source("../src");
+@import "../../lib/app.css";
 
 @plugin "@tailwindcss/typography";
 
 span.icon-link::before {
-    content: '#';
+    content: "#";
     color: hsl(var(--accent));
     position: absolute;
     left: -23px;
@@ -27,11 +27,11 @@ h4 {
 }
 
 .toc {
-    @apply sm:basis-1/4 p-3 hidden sm:block;
+    @apply hidden p-3 sm:block sm:basis-1/4;
 }
 
 .toc-link {
-    @apply inline-block mb-3;
+    @apply mb-3 inline-block;
 }
 
 .toc-level {
@@ -44,6 +44,6 @@ h4 {
     @apply ml-3;
 }
 
-nav> :last-child.toc-level {
+nav > :last-child.toc-level {
     @apply mb-0;
 }
