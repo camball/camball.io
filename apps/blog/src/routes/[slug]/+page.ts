@@ -4,12 +4,12 @@
  * is passed to `+page.svelte`, where it is rendered on the screen.
  */
 import { error } from "@sveltejs/kit";
+import type { PageLoad } from "./$types";
 import type MdxSvelteComponent from "../../lib/MdxSvelteComponent";
 
 export const prerender = true;
 
-/** @type {import('./$types.js').PageLoad} */
-export async function load({ params }) {
+export const load: PageLoad = async ({ params }) => {
     const imports = import.meta.glob("../../../content/*.mdx");
     const importPath = `../../../content/${params.slug}.mdx`;
 
@@ -24,4 +24,4 @@ export async function load({ params }) {
         console.error(e);
         error(404, "Blog article not found");
     }
-}
+};
