@@ -1,4 +1,4 @@
 /* Explicitly import only this project root's src to not bundle unneeded styles */
 /* from other monorepo subprojects. `lib/` imported in the root `app.css`. */
-@import 'tailwindcss' source('../src');
-@import '../../lib/app.css';
+@import "tailwindcss" source("../src");
+@import "../../lib/app.css";
