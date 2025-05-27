@@ -35,11 +35,11 @@ See the [`camball.io` GitHub Project](https://github.com/users/camball/projects/
 
 ```sh
 # Install
-npm ci
+pnpm i
 
 # Run the main site (`camball.io`)
-npm run dev:main
+pnpm run dev:main
 
 # Run the blog (`blog.camball.io`)
-npm run dev:blog
+pnpm run dev:blog
 ```
