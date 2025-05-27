@@ -7,7 +7,7 @@ alwaysApply: true
 
 ## Tech Stack
 
-See [README.md](mdc:README.md). We currently use `npm`, but may switch to another package manager in the future.
+See [README.md](mdc:README.md). We use `pnpm` as our package manager.
 
 ## Codebase Structure and Configuration
 
