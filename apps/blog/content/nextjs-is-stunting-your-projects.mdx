@@ -1,0 +1,21 @@
+---
+title: Next.js is Stunting Your Projects
+tags:
+    - Next.js
+    - React
+    - Frontend
+description: An op-ed contrary to the hype on React's most popular meta-framework.
+author: Cameron Ball
+created: 2025-06-06
+modified: 2025-06-06
+---
+
+Next.js is one of the hottest frameworks around. The React meta-framework is used in countless production applications, and is excellent until projects mature to complexity. The following are five reasons I’m against Next.js.
+
+- Batteries included. In general, I can’t stand batteries included frameworks, as over time, they inevitably become monolithic nightmares where you’re handicapped at every corner (cough cough, Rails). I far prefer to assemble separate things together where each is the absolute best in class at what it is, instead of being locked-in to mediocre solutions bundled under one roof.
+- Essentially owned by Vercel, a private company. It’s probably not too hard to see why this might be bad. Yes, the framework is technically open source, but when the leading contributor behind it is motivated by profit, many people that are fans of *true* open source (gratis *and* libre) grow weary. Vercel has a vested interest in bringing people to their hosting platform from the Next.js ecosystem. Full disclosure: while I don’t like Next.js, I do love Vercel and think they have a great product. I, myself, am a Vercel user and my personal website is hosted on their platform, and I’ve chosen Vercel Functions over AWS Lambda in the past.
+- Uses Turbopack (faster than Webpack, but still follows the same principles). Nothing will compare to Vite for the best local dev DX. Vite’s goated.
+- I don’t like the App Router. Page routers are elite (IMHO) as they are mapped to how our minds think about things intuitively (as a tree). That’s admittedly a subjective point, but what’s not subjective is that most of the technical reasons Next pushes the App Router are performance-based. TanStack Router, for example, supports a page router and doesn’t suffer from the same performance issues. Why are we introducing complexity just for performance when there’s a best-of-both-worlds solution out there? (Shameless plug here for Svelte/SvelteKit, the unequivocally best web framework; if you want performance, head in that direction…)
+- Also regarding the router, Next heavily pushes SSR, and the App Router enables SSR by default. I don’t think SSR should be something added by default as it’s a level of “magic”, per se, that likely the majority of front-end devs haven’t taken the time to understand. It has a fairly steep learning curve and is added complexity for the vast majority of projects.
+
+In summary, by choosing Next.js, you’re locking into a suboptimal framework backed by a for-profit organisation. Next.js is currently winning the popularity contest, but falling behind in the other departments. Make the smart move when architecting your next (pun intended) front-end application and go with another stack.
