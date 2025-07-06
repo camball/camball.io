@@ -1,11 +1,12 @@
 <script lang="ts">
-    export let data;
-    const { articles } = data;
-
     import { BinaryTextOverlay, Header } from "$lib/components";
     import { Card, ScrollArea, Separator } from "$lib/components/ui";
     import Tags from "../components/Tags.svelte";
     import moment from "moment";
+
+    let { data } = $props();
+
+    const { articles } = data;
 
     const getFilenameFromPath = (filePath: string): string | null => {
         const filenameWithExtension = filePath.split("/").pop();
@@ -16,7 +17,7 @@
 <Header />
 <div class="flex h-[100svh] bg-neutral-50 sm:h-screen dark:bg-neutral-900">
     <div class="absolute sm:mt-20 sm:ml-20">
-        <BinaryTextOverlay text={"discipline"} />
+        <BinaryTextOverlay text="discipline" />
     </div>
     <div
         class="text-shadow-6xl absolute mx-5 my-3 space-y-4 text-neutral-700 sm:relative sm:mx-7 sm:w-full sm:text-neutral-900 sm:dark:text-neutral-50"
@@ -32,7 +33,7 @@
             scrollbarYClasses="hidden"
         >
             <div class="space-y-2">
-                {#each articles as article}
+                {#each articles as article (article.filePath)}
                     <Card.Root class="opacity-90">
                         <a href={getFilenameFromPath(article.filePath)}>
                             <Card.Header class="pb-3">
