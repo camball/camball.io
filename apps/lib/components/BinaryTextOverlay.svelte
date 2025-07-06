@@ -26,8 +26,8 @@
                     .charCodeAt(0)
                     .toString(2)
                     .padStart(8, "0")
-                    .split("")) as eightBitArray}
-            {#each eightBitArray as bit}
+                    .split("")) as eightBitArray, i (i)}
+            {#each eightBitArray as bit, j (j)}
                 <span class="sparkle transition-opacity duration-[700ms] ease-linear">{bit}</span>
             {/each}
         {/each}

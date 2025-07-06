@@ -29,7 +29,7 @@
         5}{unit}; --motionTwo: {+size / 4}{unit}; --motionThree: {-size /
         5}{unit}; --duration: {duration};"
 >
-    {#each range(6, 0) as version}
+    {#each range(6, 0) as version (version)}
         <div
             class="circle"
             class:pause-animation={pause}

@@ -47,7 +47,7 @@
     <meta property="og:description" content={description} />
     <meta property="article:author" content="https://camball.io" />
     <meta property="article:publisher" content="https://camball.io" />
-    {#each tags as tag}
+    {#each tags as tag (tag)}
         <meta property="article:tag" content={tag} />
     {/each}
 

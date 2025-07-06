@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from "$app/state";
     import { Separator } from "$lib/components/ui";
-    import { House } from "lucide-svelte/icons";
+    import { House } from "@lucide/svelte";
 </script>
 
 <div class="grid h-screen font-sans sm:grid-cols-3">

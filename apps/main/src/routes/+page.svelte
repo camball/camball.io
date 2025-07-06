@@ -6,7 +6,7 @@
 <Header />
 <div class="flex h-screen bg-neutral-50 dark:bg-neutral-900">
     <div class="absolute sm:mt-20 sm:ml-[5.5rem]">
-        <BinaryTextOverlay text={"discipline"} />
+        <BinaryTextOverlay text="discipline" />
     </div>
     <div
         class="absolute m-auto mx-5 mt-[5.75rem] space-y-3 text-neutral-700 sm:relative sm:mx-7 sm:w-full sm:text-neutral-900 sm:dark:text-neutral-50"

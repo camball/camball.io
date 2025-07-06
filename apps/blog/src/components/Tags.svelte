@@ -9,7 +9,7 @@
 </script>
 
 <div class="space-x-2">
-    {#each tags as tag}
+    {#each tags as tag (tag)}
         <Badge>
             <!-- TODO: Make tags a link to filtered article list with tag -->
             <p class="pt-[2px] text-sm">{tag}</p>
