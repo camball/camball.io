@@ -1,7 +1,11 @@
 <script lang="ts">
-    export let tags: string[];
-
     import { Badge } from "$lib/components/ui";
+
+    interface Props {
+        tags: string[];
+    }
+
+    let { tags }: Props = $props();
 </script>
 
 <div class="space-x-2">

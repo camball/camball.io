@@ -4,7 +4,8 @@
     import { mode } from "mode-watcher";
 
     let previousScrollPosition = 0;
-    let header: HTMLDivElement, spacer: HTMLDivElement;
+    let header: HTMLDivElement = $state();
+    let spacer: HTMLDivElement = $state();
 
     const handleScroll = () => {
         const scrollPosition = window.scrollY || document.documentElement.scrollTop;
@@ -46,4 +47,4 @@
     </a>
     <ThemeToggle variant="outline" />
 </div>
-<div bind:this={spacer} class="top-0 left-0 hidden h-16 w-full" />
+<div bind:this={spacer} class="top-0 left-0 hidden h-16 w-full"></div>

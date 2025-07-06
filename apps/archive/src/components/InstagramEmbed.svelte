@@ -4,7 +4,11 @@
     // import { Jellyfish } from 'svelte-loading-spinners';
     import { Jellyfish } from "./Loaders";
 
-    export let url: string;
+    interface Props {
+        url: string;
+    }
+
+    let { url }: Props = $props();
 </script>
 
 <div class="flex items-center justify-center">

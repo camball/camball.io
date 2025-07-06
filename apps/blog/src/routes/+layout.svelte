@@ -1,7 +1,9 @@
-<script>
+<script lang="ts">
     import "../app.css";
     import "prism-themes/themes/prism-vsc-dark-plus.css";
     import { ModeWatcher } from "mode-watcher";
+
+    let { children } = $props();
 </script>
 
 <svelte:head>
@@ -12,4 +14,4 @@
     <link rel="icon" type="image/png" sizes="64x64" href="$lib/assets/cb_logo_favicon_64.png" />
 </svelte:head>
 <ModeWatcher />
-<slot />
+{@render children?.()}

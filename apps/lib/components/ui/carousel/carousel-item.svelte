@@ -1,8 +1,14 @@
 <script lang="ts">
     import { cn } from "$lib/utils.js";
 
-    let className: string | undefined | null = undefined;
-    export { className as class };
+    interface Props {
+        class?: string | undefined | null;
+        children?: import('svelte').Snippet;
+        [key: string]: any
+    }
+
+    let { class: className = undefined, children, ...rest }: Props = $props();
+    
 </script>
 
 <div
@@ -10,7 +16,7 @@
     aria-roledescription="slide"
     class={cn("min-w-0 shrink-0 grow-0 basis-full", className)}
     data-embla-slide=""
-    {...$$restProps}
+    {...rest}
 >
-    <slot />
+    {@render children?.()}
 </div>

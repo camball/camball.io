@@ -1,11 +1,12 @@
 <script lang="ts">
-    export let data;
-    const { articles } = data;
-
     import { BinaryTextOverlay, Header } from "$lib/components";
     import { Card, ScrollArea, Separator } from "$lib/components/ui";
     import Tags from "../components/Tags.svelte";
     import moment from "moment";
+
+    let { data } = $props();
+
+    const { articles } = data;
 
     const getFilenameFromPath = (filePath: string): string | null => {
         const filenameWithExtension = filePath.split("/").pop();

@@ -1,15 +1,20 @@
-<script>
-    /**
-     * Contains the rendered mdx file from `+page.ts`.
-     */
-    export let data;
-
+<script lang="ts">
     import Header from "../../lib/header.svelte";
     import { Separator } from "$lib/components/ui";
     import { Footer } from "$lib/components";
     import Tags from "../../components/Tags.svelte";
     import { fade } from "svelte/transition";
     import moment from "moment";
+    import type { PageData } from "./$types";
+
+    interface Props {
+        /**
+         * Contains the rendered mdx file from `+page.ts`.
+         */
+        data: PageData;
+    }
+
+    let { data }: Props = $props();
 
     const { title, author, description, created, modified, tags } = data.metadata;
 
@@ -20,7 +25,7 @@
 
     const CREATED = "Created";
     const LAST_MODIFIED = "Last modified";
-    let dateMessage = moment(date).add(1, "days").format("MMMM Do, YYYY");
+    let dateMessage = $state(moment(date).add(1, "days").format("MMMM Do, YYYY"));
 
     const computeDateMessage = () => {
         if (date === dateCreated) {
@@ -60,7 +65,7 @@
     <div class="flex space-x-2">
         <p>By {author}</p>
         <p>•</p>
-        <button on:click={computeDateMessage}>
+        <button onclick={computeDateMessage}>
             {dateMessage}
         </button>
     </div>
@@ -75,6 +80,6 @@
     out:fade|global={{ duration: 100 }}
     class="m-5 mt-7 mb-10 sm:mx-60 sm:flex sm:flex-row"
 >
-    <svelte:component this={data.mdxComponent} />
+    <data.mdxComponent />
 </div>
 <Footer />

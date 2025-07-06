@@ -2,9 +2,12 @@
     import { mode } from "mode-watcher";
     import { cn } from "$lib/utils";
 
-    let className: string | null | undefined = undefined;
-    export { className as class };
-    export let imageSize: string;
+    interface Props {
+        class?: string | null | undefined;
+        imageSize: string;
+    }
+
+    let { class: className = undefined, imageSize }: Props = $props();
 </script>
 
 <div class={cn("my-1 flex flex-row", className)}>

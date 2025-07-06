@@ -1,9 +1,9 @@
 <script lang="ts">
-    export let variant;
-
     import { Button } from "./ui";
     import { Moon, Sun } from "lucide-svelte/icons";
     import { toggleMode } from "mode-watcher";
+
+    let { variant } = $props();
 </script>
 
 <Button on:click={toggleMode} {variant} size="icon">

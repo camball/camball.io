@@ -1,7 +1,11 @@
 <script lang="ts">
     import { onMount } from "svelte";
 
-    export let text = "";
+    interface Props {
+        text?: string;
+    }
+
+    let { text = "" }: Props = $props();
 
     const sparkle = () =>
         document.querySelectorAll(".sparkle").forEach((element) => {
