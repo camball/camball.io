@@ -15,7 +15,7 @@
 </script>
 
 <Header />
-<div class="flex h-[100svh] bg-neutral-50 sm:h-screen dark:bg-neutral-900">
+<div class="screen-height flex bg-neutral-50 dark:bg-neutral-900">
     <div class="absolute sm:mt-20 sm:ml-20">
         <BinaryTextOverlay text="discipline" />
     </div>

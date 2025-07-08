@@ -4,7 +4,7 @@
     import { House } from "@lucide/svelte";
 </script>
 
-<div class="grid h-screen font-sans sm:grid-cols-3">
+<div class="screen-height grid font-sans sm:grid-cols-3">
     <div class="col-span-2 content-center bg-neutral-900 px-14 text-stone-100 sm:px-40">
         <h1 class="text-7xl font-bold">{page.status}</h1>
         <span class="mt-1 block text-2xl">{page.error?.message}</span>
