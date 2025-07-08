@@ -15,7 +15,7 @@
 
 <Header />
 <!-- Desktop -->
-<div class="hidden h-screen items-center justify-center sm:flex">
+<div class="screen-height hidden items-center justify-center sm:flex">
     <Carousel.Root class="w-full overflow-y-visible sm:max-w-[326px] lg:max-w-2xl xl:max-w-5xl">
         <Carousel.Content class="space-x-[18px]">
             {#each reelUrls as reelUrl (reelUrl)}
@@ -45,7 +45,7 @@
 </div>
 <!-- Mobile -->
 <!-- 326px / 2 => 163px to apply dynamic margin to centre first and last carousel items -->
-<div class="flex h-screen w-max items-center space-x-[18px] px-[calc(50vw-163px)] sm:hidden">
+<div class="screen-height flex w-max items-center space-x-[18px] px-[calc(50vw-163px)] sm:hidden">
     {#each reelUrls as reelUrl (reelUrl)}
         <div class="max-h-[677px] min-w-[326px] basis-1/2 overflow-y-scroll">
             <InstagramEmbed url={reelUrl} />

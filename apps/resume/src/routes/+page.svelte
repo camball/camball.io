@@ -4,7 +4,7 @@
 </script>
 
 <Header />
-<div class="flex h-screen flex-row justify-between bg-neutral-50 dark:bg-neutral-900">
+<div class="screen-height flex flex-row justify-between bg-neutral-50 dark:bg-neutral-900">
     <div>
         <div class="absolute sm:mt-20 sm:ml-[5.5rem]">
             <BinaryTextOverlay text="discipline" />
