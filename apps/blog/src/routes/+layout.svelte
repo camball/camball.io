@@ -2,8 +2,11 @@
     import "../app.css";
     import "prism-themes/themes/prism-vsc-dark-plus.css";
     import { ModeWatcher } from "mode-watcher";
+    import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
 
     let { children } = $props();
+
+    injectSpeedInsights();
 </script>
 
 <svelte:head>
