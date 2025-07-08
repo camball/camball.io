@@ -65,7 +65,7 @@
     <div class="flex space-x-2">
         <p>By {author}</p>
         <p>•</p>
-        <button onclick={computeDateMessage}>
+        <button onclick={computeDateMessage} class="cursor-pointer">
             {dateMessage}
         </button>
     </div>
