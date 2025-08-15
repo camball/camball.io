@@ -1,0 +1,151 @@
+---
+title: Terraform in Ten Minutes
+tags:
+    - Infra
+    - Terraform
+    - IaC
+description: A quick introduction to Terraform, the leading IaC tool in 2025.
+author: Cameron Ball
+created: 2025-08-15
+modified: 2025-08-15
+---
+
+**Terraform** is an *Infrastructure as Code (IaC)* tool that lets you write code to provision and manage infrastructure instead of having to manually make changes every time with a cloud provider's CLI or clunky web UI.
+
+The benefits of IaC are many: repeatable, idempotent, scalable, and provides a means for distributed team collaboration and visualizing change management. Changes are tracked in VCS and can provide an audit trail.
+
+IMHO—there's literally never a time *not* to use IaC (save yourself), and Terraform is one of the most well known. You also have OpenTofu (FOSS Terraform from the Linux Foundation), AWS CloudFormation and other cloud provider-specific IaC tools, IaC using conventional programming languages like AWS CDK (Cloud Development Kit), and options for K8s-based situations, like Helm.
+
+## Key Terms
+
+- **Providers:** Plugins for clouds/services, e.g., AWS, GCP, Azure, etc.
+- **Resources:** The infrastructure itself, e.g., VMs, buckets, databases, etc.
+- **Variables:** Self-explanatory, lol.
+- **Outputs:** Values returned by Terraform after running.
+- **Modules:** Reusable sets of resources. Conceptually like reusable functions, but for infra.
+- **Remote state:** Store state in a shared backend (S3/GCS/etc.) with **locking** for distributed team access (opposed to state living on a single developer's local machine).
+  - Common to have something like a `backend "s3"` with bucket + DynamoDB table for locking. Hashicorp also offers Terraform Cloud/Enterprise for this as well.
+
+    ```hcl
+    terraform {
+      backend "s3" {
+        bucket         = "my-tf-state-bucket"
+        key            = "envs/prod/terraform.tfstate"
+        region         = "us-west-2"
+        dynamodb_table = "my-tf-locks"   # enables state locking
+        encrypt        = true
+      }
+    }
+    ```
+
+## Core Concepts
+
+- Terraform follows a declarative paradigm. You say what you want, and Terraform figures out how to bring that to life.
+- We write our IaC in HCL (Hashicorp Configuration Language) in `.tf` files to define our infrastructure.
+- Terraform processes HCL files and keeps a running state of infrastructure (stored in `.tfstate` files). This is how Terraform knows when to add/remove/modify resources.
+- Terraform is idempotent. Running `terraform apply` a consecutive time without change makes no changes to actual infrastructure.
+
+### Analogy
+
+You can think of Terraform a little like `git` for infrastructure.
+
+- `terraform plan` == `git diff` (for human review of changes)
+- `terraform apply` == `git commit` + `push` (for actually making changes)
+
+## Essential Workflow/Lifecycle
+
+- `terraform init` – Set up providers/plugins.
+- `terraform plan` – Review what Terraform will do before `apply`ing.
+  - Alternatively, `terraform apply` will create a plan and present it to you when called, then ask for your approval (unless `-auto-approve` passed).
+- `terraform apply` – Actually make changes to resources.
+- `terraform destroy` – Actually delete resources (plans them, presents you the plan, and deletes on approval).
+
+## Crash Course in HCL Syntax
+
+Everything is blocks of the form:
+
+```hcl
+block_type "label1" "label2" {
+  argument_name = value
+}
+```
+
+where:
+
+- `block_type` is, for example, `resource`, `provider`, `module`, `variable`.
+- `label1` is often the provider/type (e.g., `aws_s3_bucket`).
+- `label2` is the local name we'll reference (e.g., `my_bucket`).
+
+For example,
+
+```hcl
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "my-example-bucket"
+}
+```
+
+We can reference the values like the following (for the above example):
+
+```hcl
+bucket = aws_s3_bucket.my_bucket.bucket
+```
+
+The syntax itself is `resource_type.local_name.attribute`.
+
+### Variables
+
+We can declare variables with a `variables` block, like
+
+```hcl
+variable "bucket_name" {
+  type        = string
+  description = "Name of the S3 bucket"
+  default     = "my-default-bucket"
+}
+```
+
+and reference like `var.bucket_name`. It's convention to define the structure of variables in a `variables.tf` file and provide actual values in a `terraform.tfvars` file.
+
+Providing values to the variables can be done in a variety of ways though, a `.tfvars` file isn't the only way to do it. Variables can also be passed via the CLI (e.g., `-var="region=us-west-2"`), environment variables, or by default values in `variables.tf`.
+
+### Outputs
+
+```hcl
+output "bucket_url" {
+  value = aws_s3_bucket.my_bucket.bucket_domain_name
+}
+```
+
+Look in the provider's documentation for all arguments (inputs) and attributes (outputs). You can also run `terraform state show aws_s3_bucket.my_bucket` to print everything Terraform tracks for that resource, including computed attributes (i.e., only exist after `apply`).
+
+If using modules, you only get what the module explicitly declares in its `output` blocks. E.g.,
+
+```hcl
+module "vpc" {
+  source = "terraform-aws-modules/vpc/aws"
+  version = "5.0.0"
+}
+
+output "my_vpc_id" {
+  value = module.vpc.vpc_id
+}
+```
+
+In the above, we'd only be able to reference `my_vpc_id`; we'd have no access to `source` or `version` of the module, for example.
+
+We can see outputs from Terraform in many ways, but one way is from the CLI:
+
+```sh
+# Specific output
+terraform output my_vpc_id
+
+# All outputs
+terraform output
+```
+
+### Extras
+
+- Conditionals (e.g., `instance_type = var.env == "prod" ? "m5.large" : "t3.micro"`)
+- Loops (e.g., `tags = { for k, v in var.common_tags : k => v }`, `list = [for x in var.instances : upper(x)]`)
+- Built-in functions (e.g., `lower`, `join`, `length`, `max`) and provider-defined functions ([ref](https://developer.hashicorp.com/terraform/language/functions))
+- Comments use any of the common styles (`//`, `#`, and `/* */`)
