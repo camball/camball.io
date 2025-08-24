@@ -1,19 +1,11 @@
 <script lang="ts">
-    import { Button, Drawer } from "$lib/components/ui";
-    import { ArrowUp, Menu } from "@lucide/svelte";
-    import { Socials } from "$lib/components";
+    import { Menu } from "@lucide/svelte";
+    import { mode } from "mode-watcher";
+    import { Drawer } from "$lib/components/ui";
     import { cn } from "$lib/utils";
-    import { toggleMode, mode } from "mode-watcher";
     import { buttonVariants } from "$lib/components/ui/button";
-    import ThemeToggle from "$lib/components/ThemeToggle.svelte";
-
-    const links = {
-        Home: "https://camball.io",
-        Blog: "https://blog.camball.io",
-        Archive: "https://archive.camball.io",
-        // Contact: 'https://contact.camball.io',
-        // Resume: 'https://resume.camball.io'
-    };
+    import { siteLinksEntries } from "$lib/shared/site-links";
+    import { HeaderDrawerContent, Socials, ThemeToggle } from "$lib/components";
 </script>
 
 <Drawer.Root direction="top">
@@ -30,18 +22,7 @@
             </div>
         {/snippet}
     </Drawer.Trigger>
-    <Drawer.Content class="flex flex-col items-end gap-5 p-6 font-sans">
-        <Socials imageSize="30px" class="space-x-4" />
-        <Button onclick={toggleMode} variant="outline">
-            {#if mode.current === "dark"}Toggle Light{:else}Toggle Dark{/if}
-        </Button>
-        {#each Object.entries(links) as [title, link] (link)}
-            <p class="pr-1 text-xl font-semibold">
-                <a href={link}>{title}</a>
-            </p>
-        {/each}
-        <Drawer.Close><ArrowUp size="28px" /></Drawer.Close>
-    </Drawer.Content>
+    <HeaderDrawerContent />
 </Drawer.Root>
 <div
     class="bg-opacity-80 dark:bg-opacity-80 fixed bottom-6 z-50 mx-4 hidden w-[calc(100vw-2rem)] rounded-2xl bg-white px-7 py-2 font-sans backdrop-blur-[3px] sm:flex sm:items-center sm:justify-between dark:bg-neutral-800"
@@ -54,7 +35,7 @@
         {:else}
             <img src="$lib/assets/cb_logo_dark.svg" alt="Logo Dark" class="h-10" />
         {/if}
-        {#each Object.entries(links) as [title, link] (link)}
+        {#each siteLinksEntries() as [title, link] (link)}
             <p class="text-xl font-semibold">
                 <a href={link}>{title}</a>
             </p>
