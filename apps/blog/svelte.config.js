@@ -4,7 +4,6 @@ import { importAssets } from "svelte-preprocess-import-assets";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeToc from "rehype-toc";
-import rehypeWidont from "rehype-widont";
 import remarkGfm from "remark-gfm";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import { join } from "node:path";
@@ -16,7 +15,7 @@ const mdsvexConfig = {
     extension: ".mdx",
     layout: join(import.meta.dirname, "src/layouts/article.svelte"),
     remarkPlugins: [remarkGfm],
-    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeWidont, [rehypeToc, rehypeTocOpts]],
+    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, [rehypeToc, rehypeTocOpts]],
 };
 
 /** @type {import('@sveltejs/kit').Config} */
