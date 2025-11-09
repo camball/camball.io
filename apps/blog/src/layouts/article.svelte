@@ -7,7 +7,7 @@
 </script>
 
 <main class="font-sans sm:basis-3/4">
-    <article class="prose dark:prose-invert mr-4 max-w-3xl">
+    <article class="prose dark:prose-invert mr-4 max-w-3xl text-pretty">
         {@render children?.()}
     </article>
 </main>
