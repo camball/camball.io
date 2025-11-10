@@ -28,6 +28,15 @@ export default [
 		}
 	},
 	{
+		rules: {
+			// Causes several issues across tsc and eslint; there's a type error in SvelteKit's
+			// implementation: https://github.com/sveltejs/kit/issues/14544
+			//
+			// Not even Svelte's own docs enforce this requirement, so disabling.
+			'svelte/no-navigation-without-resolve': 'off'
+		}
+	},
+	{
 		ignores: ['build/', '**/.svelte-kit/', '**/.vercel/', 'dist/']
 	}
 ];
