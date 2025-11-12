@@ -4,7 +4,9 @@
     import { Footer } from "$lib/components";
     import Tags from "../../components/Tags.svelte";
     import { fade } from "svelte/transition";
-    import moment from "moment";
+    import dayjs from "dayjs";
+    import advancedFormat from "dayjs/plugin/advancedFormat";
+
     import type { PageData } from "./$types";
 
     interface Props {
@@ -18,22 +20,25 @@
 
     const { title, author, description, created, modified, tags } = data.metadata;
 
+    dayjs.extend(advancedFormat);
+    const formatDate = (date: Date) => dayjs(date).add(1, "days").format("MMMM Do, YYYY");
+
     const dateCreated = new Date(created);
     const dateModified = new Date(modified);
 
-    let date = dateCreated;
+    let dateDisplayed = dateCreated;
 
     const CREATED = "Created";
     const LAST_MODIFIED = "Last modified";
-    let dateMessage = $state(moment(date).add(1, "days").format("MMMM Do, YYYY"));
+    let dateMessage = $state(formatDate(dateDisplayed));
 
     const computeDateMessage = () => {
-        if (date === dateCreated) {
-            date = dateModified;
-            dateMessage = `${LAST_MODIFIED} ${moment(date).add(1, "days").format("MMMM Do, YYYY")}`;
+        if (dateDisplayed === dateCreated) {
+            dateDisplayed = dateModified;
+            dateMessage = `${LAST_MODIFIED} ${formatDate(dateDisplayed)}`;
         } else {
-            date = dateCreated;
-            dateMessage = `${CREATED} ${moment(date).add(1, "days").format("MMMM Do, YYYY")}`;
+            dateDisplayed = dateCreated;
+            dateMessage = `${CREATED} ${formatDate(dateDisplayed)}`;
         }
     };
 </script>

@@ -2,7 +2,7 @@
     import { BinaryTextOverlay, Header } from "$lib/components";
     import { Card, ScrollArea, Separator } from "$lib/components/ui";
     import Tags from "../components/Tags.svelte";
-    import moment from "moment";
+    import dayjs from "dayjs";
 
     let { data } = $props();
 
@@ -42,7 +42,7 @@
                                 </Card.Title>
                                 <Card.Description class="space-y-1">
                                     <p>
-                                        {moment(article.metadata.created)
+                                        {dayjs(article.metadata.created)
                                             .add(1, "days")
                                             .format("MMMM D, YYYY")}
                                     </p>
