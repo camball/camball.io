@@ -31,7 +31,7 @@
     "prepare": "husky"
   },
   "engines": {
-    "node": ">=22"
+    "node": "^22"
   },
   "//": "Note that mdsvex is locked to 0.12.3. Any higher than that breaks where rehype-toc places the `<nav />`",
   "devDependencies": {
