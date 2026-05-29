@@ -67,6 +67,7 @@
   "type": "module",
   "dependencies": {
     "@lucide/svelte": "^0.553.0",
+    "@r4ai/remark-callout": "^0.6.2",
     "@vercel/speed-insights": "^1.2.0",
     "bits-ui": "^2.8.10",
     "clsx": "^2.1.1",

@@ -5,6 +5,8 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeToc from "rehype-toc";
 import remarkGfm from "remark-gfm";
+import remarkCallout from "@r4ai/remark-callout";
+import remarkCalloutFix from "./remark-callout-fix.js";
 import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import { join } from "node:path";
 
@@ -14,7 +16,7 @@ const rehypeTocOpts = { position: "beforeend" };
 const mdsvexConfig = {
     extension: ".mdx",
     layout: join(import.meta.dirname, "src/layouts/article.svelte"),
-    remarkPlugins: [remarkGfm],
+    remarkPlugins: [remarkCalloutFix, remarkCallout, remarkGfm],
     rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, [rehypeToc, rehypeTocOpts]],
 };
 
