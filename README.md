@@ -19,6 +19,7 @@ Supports...
   - [Tailwind Typography](https://github.com/tailwindlabs/tailwindcss-typography) for content styling
   - [prism-themes](https://github.com/prismjs/prism-themes) for syntax highlighting
   - [remark-gfm](https://github.com/remarkjs/remark-gfm) for GFM (GitHub Flavored Markdown) support
+  - [remark-callout](https://github.com/r4ai/remark-callout) for markdown callout support
   - [rehype-slug](https://github.com/rehypejs/rehype-slug) for auto-adding `id`s to headings
   - [rehype-autolink-headings](https://github.com/rehypejs/rehype-autolink-headings) for auto-adding anchor tags to headings
   - [rehype-toc](https://github.com/JS-DevTools/rehype-toc) for auto-generating a table of contents

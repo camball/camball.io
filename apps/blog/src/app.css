@@ -2,6 +2,7 @@
 /* from other monorepo subprojects. `lib/` imported in the root `app.css`. */
 @import "tailwindcss" source("../src");
 @import "../../lib/app.css";
+@import "./callouts.css";
 
 @plugin "@tailwindcss/typography";
 
