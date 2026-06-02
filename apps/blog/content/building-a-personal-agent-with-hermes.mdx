@@ -1,0 +1,296 @@
+---
+title: Building a Personal Agent With Hermes
+tags:
+    - AI
+    - Agentic Engineering
+description: Spinning up a personal assistant for daily life, engineering work, and beyond.
+author: Cameron Ball
+created: 2026-06-02
+modified: 2026-06-02
+---
+
+In this article, I delineate every step I took when creating my own personal agent. My goals and requirements for this project were to…
+
+- Keep costs reasonably similar to ChatGPT/Claude's $20/mo. subscription plan.
+- Be able to text my agent. More broadly, interact with my agent from any of my devices.
+- Store nightly data backups to prevent loss in the case that anything goes down or I lose access.
+- Have my agent know me, and communicate with me in a style that I prefer (generally, terse).
+- Have the agency to solve coding tasks at my request, and keep me in the PR review flow. More generally, be able to take actions on my behalf for simple tasks, namely web research and browsing, reading emails, etc.
+
+Bonus points if I can…
+
+- Interact via voice.
+- Transfer all my prior data from ChatGPT (particularly chat session data).
+
+Notably, I don't have a requirement right this second for parallel agents or subagents. Hermes (the agent harness we try in this blog post) does support these, but I simply haven't employed these techniques into my workflows yet.
+
+> [!info]
+> This article is a living document on creating a personal agent for myself. Some items are still in progress and will be added to this article as they are completed. Such topics include…
+>
+> - Memory provider setup (beyond Hermes' default)
+> - MCP and tool call integrations
+> - Data backups
+> - Addressing a critical bug where the model provider loses authentication and cannot be restarted without `ssh`ing in and re-authenticating
+> - ChatGPT data migration
+> - Having the agent send me generated files via Telegram
+
+## VPS / Cloud VM Hosting
+
+The following are some options I compared to host the agent:
+
+- [AWS Lightsail](https://aws.amazon.com/lightsail/) (pricing for Linux/Unix with public IPv4 address)
+    - $5/mo: 0.5 GB Memory, 2 vCPUs, 20 GB SSD, 1 TB Transfer
+    - $7/mo: 1 GB Memory, 2 vCPUs, 40 GB SSD, 2 TB Transfer
+    - $12/mo: 2 GB Memory, 2 vCPUs, 60 GB SSD, 3 TB Transfer
+    - $24/mo: 4 GB Memory, 2 vCPUs, 80 GB SSD, 4 TB Transfer
+    - Pricing is ever so slightly cheaper for IPv6-only, but still tracks close, linearly.
+- [Hostinger](https://www.hostinger.com/vps/docker/hermes-agent)
+    - KVM 1 ($11.99/mo): 4 GB Memory, 1 vCPU, 50 GB NVMe, 4 TB Transfer
+    - KVM 2 ($14.99/mo): 8 GB Memory, 2 vCPUs, 100 GB NVMe, 8 TB Transfer
+- [DigitalOcean Droplet](https://www.digitalocean.com/pricing/droplets) (regular CPU option)
+    - $6/mo: 1 GB Memory, 1 vCPU, 25 GB SSD, 1 TB Transfer
+    - $12/mo: 2 GB Memory, 1 vCPU, 50 GB SSD, 2 TB Transfer
+    - $18/mo: 2 GB Memory, 2 vCPUs, 60 GB SSD, 3 TB Transfer
+- [Hetzner](https://www.hetzner.com/cloud/cost-optimized)
+    - x86
+        - CX23 ($0.0090/hour, max $5.59/mo): 4 GB Memory, 2 vCPUs, 40 GB SSD
+        - CX33 ($0.0138/hour; max $8.59/mo): 8 GB Memory, 4 vCPUs, 80 GB SSD
+    - ARM64
+        - CAX11 ($0.0098/hour, max $6.09/mo): 4 GB Memory, 2 vCPUs, 40 GB SSD
+        - CAX21 ($0.0162/hour, max $10.09/mo): 8 GB Memory, 4 vCPUs, 80 GB SSD
+
+Hetzner CX33 or CAX21 seem to kill the competition here, price-wise at least. Until I'm positive every dependency I have is ARM-compatible, I'll default to the x86 setup. **CX33** it is. Only potential issue I see is latency from the server to me, since the only region where CX33 is in stock for is `eu-central` (Helsinki, Finland); likely an additional 100ms latency per request. Can change later if I decide this isn’t right for me.
+
+> [!NOTE]
+> One thing that I desire is scale-to-zero for cost optimisation. In the future, I can switch from my Hetzner VM to running on something like [Fly.io](https://fly.io). True scale-to-zero would imply "waking" and change how messaging providers would connect to Hermes; polling wouldn't work if the machine is scaled to zero, so I'd need [webhook mode](https://hermes-agent.nousresearch.com/docs/user-guide/messaging/telegram#webhook-mode), which would add additional complexity.
+
+Configuration:
+
+- **Region:** `eu-central`, Helsinki, Finland (since it's the only region that CX33 was available on at my time of server creation). If the extra ~100ms of latency becomes too much, I can switch my VPS provider.
+- **OS:** Ubuntu 26.04
+- **Networking:** Enabled both IPv4 + IPv6 (since IPv6 is free of charge)
+- Using SSH key (so no root creds sent via email)
+    ```sh
+    # Generate key
+    ssh-keygen -t ed25519 -f ~/.ssh/hetzner_personal_agent -C "hetzner-personal-agent"
+    
+    # Grab key to paste during Hetzner server creation
+    cat ~/.ssh/hetzner_personal_agent.pub
+    ```
+
+I can then connect to the server with
+
+```sh
+# Substitute `SERVER_IP` for the actual IP address (v4 or v6)
+ssh -i ~/.ssh/hetzner_personal_agent root@SERVER_IP
+```
+
+> [!TIP]
+> Want to keep things secure, but don't want to enter your passphrase every time you SSH into the server?
+>
+> On macOS, add the private key to Apple's keychain:
+>
+> ```sh
+> ssh-add --apple-use-keychain ~/.ssh/hetzner_personal_agent
+> ```
+>
+> Then add an entry to `~/.ssh/config` (with your own `SERVER_IP` substituted):
+>
+> ```text
+> Host *
+>   AddKeysToAgent yes
+>   UseKeychain yes
+>
+> Host agent
+>   HostName SERVER_IP
+>   User root
+>   IdentityFile ~/.ssh/hetzner_personal_agent
+> ```
+>
+> It's then dead simple to connect from the terminal with just
+>
+> ```sh
+> ssh agent
+> ```
+>
+> instead of needing to recall the hostname IP every time.
+
+### Initial VM Config
+
+We could set up Ansible/Chef/`cloud-init`, but we can save that for another time. Minimal config to set up the server to run Docker:
+
+```sh
+sudo apt update && sudo apt upgrade -y
+
+# Add Docker's apt repo (to install latest Docker version, straight from Docker)
+sudo apt install -y ca-certificates
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+sudo tee /etc/apt/sources.list.d/docker.sources > /dev/null <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Architectures: $(dpkg --print-architecture)
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+sudo apt update
+
+# Docker Engine + Compose Plugin
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+## Agent Harness
+
+I'll be going with [Hermes](https://hermes-agent.nousresearch.com), as I heard from reviews that it works better than [OpenClaw](https://openclaw.ai) out of the box.
+
+I tried [OpenHuman](https://tinyhumans.ai/openhuman) but met a fatal UI bug on account setup that I couldn't move past, so that was a non-starter.
+
+[pi](https://pi.dev) seems really intriguing and well-built as well, but Hermes is a bit more batteries-included, which is what I'm looking for (to save time). I saw [this YouTube video](https://youtu.be/RjfbvDXpFls) from pi's creator; cool (and very smart) guy. I like the way he reasons about software.
+
+Finally, [Goose](https://goose-docs.ai) seems solid as well. There's already many good competitors in this space; I simply like Hermes the most off the bat and wanted to dive in and see how it pans out.
+
+### Running Hermes on the Cloud VM
+
+We'll employ a Docker-based approach where Hermes itself is running in a container that is running on the cloud VM. Hermes has [docs](https://hermes-agent.nousresearch.com/docs/user-guide/docker) on exactly this.
+
+When done with the setup wizard, let's configure how we'll start Hermes from now on:
+
+```sh
+mkdir -p ~/hermes && vim ~/hermes/docker-compose.yml
+```
+
+In the text file, paste the following:
+
+```yaml
+services:
+  hermes:
+    image: nousresearch/hermes-agent:latest
+    container_name: hermes
+    command: gateway run
+    restart: unless-stopped
+    ports: []
+    volumes:
+      - /root/.hermes:/opt/data
+```
+
+### Setup Wizard Configuration
+
+Run the following:
+
+```sh
+# Where all config lives
+mkdir -p ~/.hermes
+
+# Run initial setup wizard
+docker run -it --rm \
+  -v ~/.hermes:/opt/data \
+  nousresearch/hermes-agent setup
+```
+
+Proceed with the setup wizard's steps as you wish. I answered prompts similar to the following:
+
+1. **How to set up:** Quick setup
+2. **Model Provider:** Nous Portal (Nous Research subscription)
+    - While there is a free plan, there may or not be any free models available to demo with. I went with the free plan for initial setup and continued to the $20/mo. plan soon after.
+3. **Terminal Backend:** Keep current (local)
+4. **Messaging Platforms:** Set up now; Telegram
+    1. Download the Telegram application on any platform and make an account.
+    2. Create a Telegram bot by following [step 1 of these instructions](https://hermes-agent.nousresearch.com/docs/user-guide/messaging/telegram#step-1-create-a-bot-via-botfather).
+    3. Send `/start` to `@userinfobot` to get your user ID.
+    4. Fill in Hermes' prompts with the requested info.
+
+We now have messaging ready to go :)
+
+## Model Provider
+
+Since I'm using Hermes, I'll start with the Nous Portal for a quick setup; $20/mo. subscription tier.
+
+Activate with `hermes model`, and pick your default model (I chose `google/gemini-3.1-flash-lite-preview`). Because I'm running with Nous Portal as my model provider, that takes care of several things for me, like allowing me to change/route to different models via `/model` in the chat ([docs](https://hermes-agent.nousresearch.com/docs/integrations/nous-portal#switching-models)).
+
+There's a chance I'll switch to OpenRouter in the future, but for quick startup, the Nous Portal subscription made the most sense for me.
+
+## Messaging Provider
+
+Telegram seems to make the most sense as my primary means of interacting with Hermes. I connected Hermes Messaging Gateway to my Telegram Bot which gives a great cross-platform UI, ChatGPT-style thread support, and even [voice mode](https://hermes-agent.nousresearch.com/docs/user-guide/features/voice-mode).
+
+As far as the chat model goes, using [**multi-session DM mode**](https://hermes-agent.nousresearch.com/docs/user-guide/messaging/telegram#multi-session-dm-mode-topic) provides something similar to ChatGPT, where we control sessions via "topics". Steps to implement this are…
+
+1. Open @BotFather → Bot Settings for the Hermes bot → Threads Settings → Turn on Threaded Mode.
+2. Type `/topic` in the root DM with the bot to enable it.
+3. Done. Any new message sent to the top-level Hermes bot will automatically start a new conversation. Play around with Telegram's UI and you can get all conversations to show in the left nav bar. `/topic help` can help if necessary.
+
+## Initial Run
+
+When finally ready to run Hermes, run the following:
+
+```sh
+cd ~/hermes && docker compose up -d && docker compose logs -f
+```
+
+## Connectivity
+
+An agent isn't an agent if it can't take actions on my behalf.
+
+Because I am using and paying for Nous Portal as my model provider, that comes with the [Nous Tool Gateway](https://hermes-agent.nousresearch.com/docs/user-guide/features/tool-gateway). That takes care of…
+
+- Web search & extraction (via [Firecrawl](https://www.firecrawl.dev))
+- Image generation
+- Text-to-speech
+- Browser automation (via [Browser Use](https://browser-use.com))
+
+Hermes allows configuring these individually if desired, usually in the form of providing a backend for each type (docs: [browser](https://hermes-agent.nousresearch.com/docs/user-guide/features/browser), [web search](https://hermes-agent.nousresearch.com/docs/user-guide/features/web-search)).
+
+I only really need web search, browser, and occasionally terminal access ([docs for terminal backends](https://hermes-agent.nousresearch.com/docs/user-guide/features/tools#terminal-backends)) for my non-coding tasks. I'll handle configuring the agent for coding tasks separately at a later time. Might be worth installing a local filesystem browser as well via MCP; we'll see:
+
+```yaml
+filesystem:
+    command: "npx"
+    args: ["-y", "@modelcontextprotocol/server-filesystem", "/home/user/projects"]
+```
+
+Other integrations I'll set up down the road are…
+
+- Personal Gmail
+- GitHub, via GitHub MCP
+- Work
+    - Linear: Read-only, via Linear MCP
+    - Slack: Read-only, via Slack MCP
+    - Gmail: Read-only
+    - Potentially work GitHub org access with the right controls in place
+
+### MCP Setup
+
+```sh
+cd ~/.hermes/hermes-agent
+uv pip install -e ".[mcp]"
+```
+
+Add servers to `~/.hermes/config.yaml`, e.g.:
+
+```yaml
+mcp_servers:
+  local_example:
+    command: "example"
+    args: ["-v"]
+    env:
+      EXAMPLE_VAR: "my_value"
+  network_example:
+    url: "https://mcp.example.com/mcp"  
+    headers:  
+      Authorization: "Bearer ***"
+```
+
+Reload MCP servers after adding any with `/reload-mcp`.
+
+## Final Cost Breakdown
+
+| Item                                           | Price / mo. |
+| :--------------------------------------------- | :---------- |
+| VPS / Cloud VM (Hetzner CX33)                  | $10.09      |
+| Model Provider (Nous Portal subscription)      | $20         |
+| Blob Storage (for data backup) (Cloudflare R2) | $0.00       |
+| **Total**                                      | **$30.09**  |
+
+Would love to get this down further via a scale-to-zero cloud VM.
