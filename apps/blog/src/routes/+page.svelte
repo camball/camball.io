@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { BinaryTextOverlay, Header } from "$lib/components";
+    import { BinaryTextOverlay, Header, SiteMeta } from "$lib/components";
     import { Card, ScrollArea, Separator } from "$lib/components/ui";
     import Tags from "../components/Tags.svelte";
     import dayjs from "dayjs";
@@ -14,6 +14,12 @@
     };
 </script>
 
+<SiteMeta
+    title="Blog – Cameron Ball"
+    description="Cameron's writing on software, career, learning, and more."
+    url="https://blog.camball.io"
+    siteName="Blog – Cameron Ball"
+/>
 <Header />
 <div class="screen-height flex bg-neutral-50 dark:bg-neutral-900">
     <div class="absolute sm:mt-20 sm:ml-20">

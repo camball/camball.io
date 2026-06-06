@@ -1,5 +1,6 @@
 <script lang="ts">
     import "../app.css";
+    import { SiteMeta } from "$lib/components";
     import { ModeWatcher } from "mode-watcher";
     import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
 
@@ -7,6 +8,12 @@
 
     injectSpeedInsights();
 </script>
+
+<SiteMeta
+    title="Archive – Cameron Ball"
+    description="Welcome to the archives."
+    url="https://archive.camball.io"
+/>
 
 <svelte:head>
     <link rel="icon" type="image/svg+xml" href="$lib/assets/cb_logo_favicon.svg" />
