@@ -23,7 +23,7 @@
             <div
                 class="space-y-3 rounded-md bg-black/1 p-2 font-sans text-base font-[500] tracking-[0.02em] backdrop-blur-sm sm:m-1 sm:px-3 sm:py-3 sm:shadow-lg dark:sm:bg-white/1 sm:dark:text-neutral-400"
             >
-                <p>Full-stack software engineer based out of Scottsdale, AZ.</p>
+                <p>Full-stack software engineer based out of Phoenix, AZ.</p>
                 <p>
                     Obsessed with design, architecture, and fashion. Avid skier and guitarist. Can
                     unicycle. &lt;3
