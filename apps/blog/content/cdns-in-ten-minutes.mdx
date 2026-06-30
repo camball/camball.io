@@ -1,0 +1,115 @@
+---
+title: 'CDNs in Ten Minutes'
+tags:
+    - System Design
+    - Caching
+description: A brief intro to CDNs and their usage for globally caching both static and dynamic content.
+author: Cameron Ball
+created: 2026-06-29
+modified: 2026-06-29
+---
+
+What actually is a Content Delivery Network (CDN)?
+
+- CDNs cache data from an origin in a geographically-dispersed manner.
+- Like all caches, the CDN will forward the request to the origin in the event of a cache miss.
+  - To avoid cold misses, developers can take an eager approach and pre-warm CDN caches in various edge locations. This helps fight instant, initial spikes in traffic (e.g., a product launch, Black Friday drop, software version release, etc.). This can be done in various ways, as simply as requesting hot assets in a variety of hot locations, but requires more setup than a simple fetch-on-miss approach.
+- By having edge-locations geographically-dispersed across the globe, clients can receive responses faster because of physical proximity to the cache server, rather than having to reach out to the origin.
+- Modern CDNs act as a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) regardless of the data origin, often handling additional functionality like TLS termination, typical API gateway responsibilities (e.g., rate limiting), DDoS mitigation, and other edge computing functionality.
+  - Older CDN approaches required re-writing URLs to dedicated servers (e.g., your app lives at `www.example.com`, whereas static assets live at `cdn.example.com`). Modern CDNs work at a DNS level, where, for example, `https://www.example.com/images/shoe.jpg` would resolve `www.example.com` to Cloudflare's CDN instead of an app server. While Cloudflare popularised this approach, all modern CDN providers support this.
+
+I find that there are two broad ways CDNs are used, differing in the *origin of the data being cached*. These approaches aren't mutually exclusive, as we'll see in a final "multi-origin" CDN implementation.
+
+## Object Storage-backed CDN
+
+With the CDN sitting in front of an object storage origin, a CDN acts as a globally-distributed cache for static assets. Used in this way, a CDN can significantly reduce or entirely eliminate object storage egress costs (Cloudflare R2 → Cloudflare CDN is free, and AWS S3 → CloudFront has special pricing). Cloudflare explicitly uses this as a marketing claim on their site:
+
+> We exist to help kill egregious cloud egress fees.[^1]
+
+**How it works:** The CDN is configured with some sort of object storage as its origin. When a client requests an asset, the CDN returns the asset immediately if it has it cached, or if not, pulls directly from object storage (incurring egress) and caches it for future cache hits. Using the official [CloudFront Terraform module](https://registry.terraform.io/modules/terraform-aws-modules/cloudfront/aws/latest), this would look something like the following:
+
+```hcl
+module "cdn" {
+  source  = "terraform-aws-modules/cloudfront/aws"
+  aliases = ["cdn.example.com"]
+
+  ...
+
+  origin = {
+    s3_assets = {
+      domain_name              = module.assets.s3_bucket_bucket_regional_domain_name
+      origin_access_control_id = "s3_oac"
+    }
+  }
+
+  default_cache_behavior = {
+    target_origin_id       = "s3_assets"
+    viewer_protocol_policy = "redirect-to-https"
+
+    allowed_methods = ["GET", "HEAD", "OPTIONS"]
+    cached_methods  = ["GET", "HEAD"]
+
+    compress = true
+  }
+}
+```
+
+## Application-backed CDN
+
+In this sense, a CDN sits in front of an application server, not just in front of object storage. This more modern approach can cache far more than just static assets; CDNs cache entire generated HTML pages, JSON responses, and other cacheable dynamic content.
+
+**How it works:** Clients send requests to the CDN, and if the request isn't already cached at the edge location serving the client, the CDN forwards the request through to the app server. The app server returns the response like normal, and the CDN caches the response for next time (assuming the request is cacheable per the configured cache rules).
+
+An example [CloudFront Terraform module](https://registry.terraform.io/modules/terraform-aws-modules/cloudfront/aws/latest) usage with multiple origins configured for multiple cache behaviours could look like:
+
+```hcl
+module "cdn" {
+  source  = "terraform-aws-modules/cloudfront/aws"
+  aliases = ["cdn.example.com"]
+
+  ...
+
+  origin = {
+    s3_assets = {
+      domain_name              = module.assets.s3_bucket_bucket_regional_domain_name
+      origin_access_control_id = "s3_oac"
+    }
+
+    app_server = {
+      domain_name = "api.example.com"
+      custom_origin_config = {
+        http_port              = 80
+        https_port             = 443
+        origin_protocol_policy = "https-only"
+        origin_ssl_protocols   = ["TLSv1.2"]
+      }
+    }
+  }
+
+  default_cache_behavior = {
+    target_origin_id       = "app_server"
+    viewer_protocol_policy = "redirect-to-https"
+  }
+
+  ordered_cache_behavior = [
+    {
+      path_pattern           = "/assets/*"
+      target_origin_id       = "s3_assets"
+      viewer_protocol_policy = "redirect-to-https"
+
+      allowed_methods = ["GET", "HEAD"]
+      cached_methods  = ["GET", "HEAD"]
+
+      compress = true
+    }
+  ]
+}
+```
+
+## Closing Remarks
+
+The two origins shown above aren't mutually exclusive, as we saw in the final multi-origin Terraform example. While CDNs might not be right for every application, CDNs become increasingly attractive at sufficient scale.
+
+A natural progression from learning about CDNs is to think about how since CDN-providers already have edge servers around the globe, it makes total sense why they've naturally expanded into edge computing services (e.g., Cloudflare Workers). We'll save that for a future article :)
+
+[^1]: https://www.cloudflare.com/products/cdn/, retrieved June 28, 2026
