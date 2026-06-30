@@ -48,3 +48,10 @@ h4 {
 nav > :last-child.toc-level {
     @apply mb-0;
 }
+
+/* Break anywhere for inline code (excluding `pre` blocks) to not introduce */
+/* horizontal scroll. `:not(pre) > code` skips code inside pre, while       */
+/* `:where()` keeps specificity low so prose styles win.                    */
+.prose :where(:not(pre) > code) {
+    overflow-wrap: anywhere;
+}
