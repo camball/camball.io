@@ -44,6 +44,9 @@ importers:
       rehype-toc:
         specifier: ^3.0.2
         version: 3.0.2
+      remark-footnotes:
+        specifier: 2.0.0
+        version: 2.0.0
       remark-gfm:
         specifier: ^4.0.0
         version: 4.0.1
@@ -1858,6 +1861,9 @@ packages:
   rehype-toc@3.0.2:
     resolution: {integrity: sha512-DMt376+4i1KJGgHJL7Ezd65qKkJ7Eqp6JSB47BJ90ReBrohI9ufrornArM6f4oJjP2E2DVZZHufWucv/9t7GUQ==}
     engines: {node: '>=10'}
+
+  remark-footnotes@2.0.0:
+    resolution: {integrity: sha512-3Clt8ZMH75Ayjp9q4CorNeyjwIxHFcTkaektplKGl2A1jNGEUey8cKL0ZC5vJwfcD5GFGsNLImLG/NGzWIzoMQ==}
 
   remark-gfm@4.0.1:
     resolution: {integrity: sha512-1quofZ2RQ9EWdeN34S79+KExV1764+wCUGop5CPL1WGdD0ocPpu91lzPGbwWMECpEpd42kJGQwzRfyov9j4yNg==}
@@ -3994,6 +4000,8 @@ snapshots:
   rehype-toc@3.0.2:
     dependencies:
       '@jsdevtools/rehype-toc': 3.0.2
+
+  remark-footnotes@2.0.0: {}
 
   remark-gfm@4.0.1:
     dependencies:
