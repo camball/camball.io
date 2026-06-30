@@ -34,7 +34,7 @@
 
 /* Ensure screen height is consistent across mobile and desktop, with no scrollbars */
 @utility screen-height {
-    @apply h-[100svh] sm:h-screen;
+    @apply h-svh sm:h-screen;
 }
 
 @utility binary-text-overlay {

@@ -35,14 +35,14 @@
         </h1>
         <Separator />
         <ScrollArea
-            class="mx-1 h-[calc(91vh-17rem)] rounded-md text-lg backdrop-blur-xs sm:float-right sm:h-[calc(85vh-18rem)] sm:max-w-sm sm:text-right"
+            class="mx-1 h-[calc(90svh-14rem)] rounded-md text-lg backdrop-blur-xs sm:float-right sm:h-[calc(85vh-18rem)] sm:max-w-sm sm:text-right"
             scrollbarYClasses="hidden"
         >
             <div class="space-y-2">
                 {#each articles as article (article.filePath)}
                     <Card.Root class="opacity-90">
                         <a href={getFilenameFromPath(article.filePath)}>
-                            <Card.Header class="pb-3">
+                            <Card.Header class="pb-3 text-pretty">
                                 <Card.Title class="font-medium tracking-[0.023em]">
                                     {article.metadata.title}
                                 </Card.Title>
