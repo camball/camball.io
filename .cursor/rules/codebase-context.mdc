@@ -7,35 +7,33 @@ alwaysApply: true
 
 ## Tech Stack
 
-See [README.md](mdc:README.md). We use `pnpm` as our package manager.
+See [README.md](mdc:README.md). We use `pnpm` as our package manager, with a pnpm workspace (`apps/*` + `packages/*`).
 
 ## Codebase Structure and Configuration
 
-This repo is set up as a monorepo. The following directories are projects deployed as subdomains, contained in this repo:
+This repo is a monorepo. Apps are workspace packages deployed as subdomains:
 
-- [+page.svelte](mdc:apps/main/src/routes/+page.svelte) supports the site home, camball.io
-- [+page.svelte](mdc:apps/blog/src/routes/+page.svelte) supports my blog site, blog.camball.io
-- [+page.svelte](mdc:apps/archive/src/routes/+page.svelte) supports archive.camball.io, a showcase of Instagram videos embedded with the embed API
-- [+page.svelte](mdc:apps/contact/src/routes/+page.svelte) supports a page for others to contact me, contact.camball.io
-- [+page.svelte](mdc:apps/resume/src/routes/+page.svelte) supports a resume of my work, resume.camball.io
+- [+page.svelte](mdc:apps/main/src/routes/+page.svelte) — camball.io (`@camball/main`), the site home
+- [+page.svelte](mdc:apps/blog/src/routes/+page.svelte) — blog.camball.io (`@camball/blog`), the blog site
+- [+page.svelte](mdc:apps/archive/src/routes/+page.svelte) — archive.camball.io (`@camball/archive`), a showcase of Instagram videos embedded with the embed API
+- [+page.svelte](mdc:apps/contact/src/routes/+page.svelte) — contact.camball.io (`@camball/contact`), a page for others to get in touch
+- [+page.svelte](mdc:apps/resume/src/routes/+page.svelte) — resume.camball.io (`@camball/resume`), a resume of work
 
-The sub-repositories in this repo share several things:
+Shared UI lives in [`packages/ui`](mdc:packages/ui) as `@camball/ui` (workspace dependency). Apps import from `@camball/ui/...` and keep a standard per-app `$lib` (`src/lib`) for local code.
 
-- TypeScript config: [tsconfig.json](mdc:tsconfig.json)
-- Tailwind config: [tailwind.config.ts](mdc:tailwind.config.ts)
-- `app/lib`, a shared library directory
-    - CSS styles: [app.css](mdc:apps/lib/app.css)
-    - shadcn-svelte components that have been installed with `npx` and live in my codebase, such as [card.svelte](mdc:apps/lib/components/ui/card/card.svelte). See all available components in [index.ts](mdc:apps/lib/components/index.ts). Install new shadcn-svelte components with `npx shadcn-svelte@latest add <component>`, where `<component>` is a shadcn-svelte component, such as `accordion`
-    - Assets, like PNG images used in components used across the sub-repositories
-    - [utils.ts](mdc:apps/lib/utils.ts), containing global utility functions
-- A `package.json` (and lock file), Vite config, Vitest config, ESLint config
+Shared package contents:
 
-Notably, Svelte config files are scoped per sub-repository, such as [svelte.config.js](mdc:apps/blog/svelte.config.js) for the blog.
+- CSS: [app.css](mdc:packages/ui/app.css)
+- shadcn-svelte components under [components/](mdc:packages/ui/components) (see [index.ts](mdc:packages/ui/components/index.ts)). Install new ones with `npx shadcn-svelte@latest add <component>` (aliases point at `@camball/ui` via [components.json](mdc:components.json))
+- Assets under [assets/](mdc:packages/ui/assets) — import via Vite, e.g., `import img from '@camball/ui/assets/example.png'`
+- Utils: [utils.ts](mdc:packages/ui/utils.ts)
+
+Also shared at the repo root: TypeScript config, Tailwind config, Vite/Vitest/ESLint tooling. Each app has its own `package.json`, `svelte.config.js`, `tsconfig.json`, and `vite.config.ts`.
 
 ## Coding Practices and Style
 
 - Use shadcn-svelte components, when applicable, before creating our own
-- This repo uses Tailwind v4, not v3. This means that [tailwind.config.ts](mdc:tailwind.config.ts) is legacy and should not be updated unless absolutely necessary. Use Tailwind styles, and only create our own if absolutely necessary. If we need to create custom CSS for any reason or customise Tailwind, configuration should go in [app.css](mdc:apps/lib/app.css), unless it is specific to only a single sub-repo, in which case it should go in that sub-repo's app.css file.
+- This repo uses Tailwind v4, not v3. This means that [tailwind.config.ts](mdc:tailwind.config.ts) is legacy and should not be updated unless absolutely necessary. Use Tailwind styles, and only create our own if absolutely necessary. If we need to create custom CSS for any reason or customise Tailwind, configuration should go in [app.css](mdc:packages/ui/app.css), unless it is specific to only a single app, in which case it should go in that app's `src/app.css`.
 - Ensure Svelte 5 syntax is used (no Svelte 4).
-- Images are stored in lib/assets and can be imported like `src="$lib/assets/example.png"`.
+- Shared images live in `@camball/ui/assets` and should be imported (not referenced as `$lib/assets/...` strings).
 - The whole site supports dark and light mode. Usually this can be handled by specifying the `dark:` variant in Tailwind, but if the theme needs to be used explicitly, it can be done with `import { mode } from 'mode-watcher';`, then checking like `{#if mode.current === 'dark'}`.

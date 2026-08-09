@@ -1,8 +1,13 @@
 <script lang="ts">
     import "../app.css";
-    import { SiteMeta } from "$lib/components";
+    import { SiteMeta } from "@camball/ui/components";
     import { ModeWatcher } from "mode-watcher";
     import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
+    import favicon from "@camball/ui/assets/cb_logo_favicon.svg";
+    import favicon16 from "@camball/ui/assets/cb_logo_favicon_16.png";
+    import favicon32 from "@camball/ui/assets/cb_logo_favicon_32.png";
+    import favicon48 from "@camball/ui/assets/cb_logo_favicon_48.png";
+    import favicon64 from "@camball/ui/assets/cb_logo_favicon_64.png";
 
     let { children } = $props();
 
@@ -16,11 +21,11 @@
 />
 
 <svelte:head>
-    <link rel="icon" type="image/svg+xml" href="$lib/assets/cb_logo_favicon.svg" />
-    <link rel="icon" type="image/png" sizes="16x16" href="$lib/assets/cb_logo_favicon_16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="$lib/assets/cb_logo_favicon_32.png" />
-    <link rel="icon" type="image/png" sizes="48x48" href="$lib/assets/cb_logo_favicon_48.png" />
-    <link rel="icon" type="image/png" sizes="64x64" href="$lib/assets/cb_logo_favicon_64.png" />
+    <link rel="icon" type="image/svg+xml" href={favicon} />
+    <link rel="icon" type="image/png" sizes="16x16" href={favicon16} />
+    <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
+    <link rel="icon" type="image/png" sizes="48x48" href={favicon48} />
+    <link rel="icon" type="image/png" sizes="64x64" href={favicon64} />
 </svelte:head>
 <ModeWatcher />
 {@render children?.()}

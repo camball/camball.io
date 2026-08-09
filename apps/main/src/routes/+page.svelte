@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { BinaryTextOverlay, Header } from "$lib/components";
-    import { Separator } from "$lib/components/ui";
+    import { BinaryTextOverlay, Header } from "@camball/ui/components";
+    import { Separator } from "@camball/ui/components/ui";
+    import sittingOnCouch from "@camball/ui/assets/sitting-on-couch.jpeg";
 </script>
 
 <Header />
@@ -32,7 +33,7 @@
         </div>
     </div>
     <img
-        src="$lib/assets/sitting-on-couch.jpeg"
+        src={sittingOnCouch}
         alt="Cameron, sitting on a couch in a tall, well-lit room, wearing a ball cap and crossing one leg over the other, looking out a large window."
         class="object-cover"
     />

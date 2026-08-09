@@ -37,16 +37,13 @@ const config = {
     extensions: [".svelte", ".mdx"],
     preprocess: [
         // Order matters; `mdsvex` must occur before `vitePreprocess` to turn
-        // markdown into pure svelte
+        // markdown into pure Svelte. `importAssets` resolves relative MDX images.
         mdsvex(mdsvexConfig),
         vitePreprocess(),
         importAssets(),
     ],
     kit: {
         adapter: adapter(),
-        files: {
-            lib: "../lib",
-        },
     },
 };
 

@@ -3,15 +3,15 @@
   "style": "default",
   "tailwind": {
     "config": "tailwind.config.ts",
-    "css": "apps/lib/app.css",
+    "css": "packages/ui/app.css",
     "baseColor": "stone"
   },
   "aliases": {
-    "components": "$lib/components",
-    "ui": "$lib/components/ui",
-    "utils": "$lib/utils",
-    "hooks": "$lib/hooks",
-    "lib": "$lib"
+    "components": "@camball/ui/components",
+    "ui": "@camball/ui/components/ui",
+    "utils": "@camball/ui/utils",
+    "hooks": "@camball/ui/hooks",
+    "lib": "@camball/ui"
   },
   "typescript": true,
   "registry": "https://shadcn-svelte.com/registry"

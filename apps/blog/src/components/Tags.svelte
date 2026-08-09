@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Badge } from "$lib/components/ui";
+    import { Badge } from "@camball/ui/components/ui";
 
     interface Props {
         tags: string[];

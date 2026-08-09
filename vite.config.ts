@@ -6,7 +6,8 @@ export default defineConfig({
     plugins: [sveltekit(), tailwindcss()],
     server: {
         fs: {
-            allow: ["content"], // allow blog content directory glob import
+            // blog content glob + monorepo packages/ui source
+            allow: ["content", "../.."],
         },
     },
     test: {

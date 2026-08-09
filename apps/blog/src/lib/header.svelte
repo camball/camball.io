@@ -2,11 +2,13 @@
     import { onMount } from "svelte";
     import { Menu } from "@lucide/svelte";
     import { mode } from "mode-watcher";
-    import { Drawer } from "$lib/components/ui";
-    import { cn } from "$lib/utils";
-    import { buttonVariants } from "$lib/components/ui/button";
-    import { siteLinksEntries } from "$lib/shared/site-links";
-    import { HeaderDrawerContent, Socials, ThemeToggle } from "$lib/components";
+    import { Drawer } from "@camball/ui/components/ui";
+    import { cn } from "@camball/ui/utils";
+    import { buttonVariants } from "@camball/ui/components/ui/button";
+    import { siteLinksEntries } from "@camball/ui/shared/site-links";
+    import { HeaderDrawerContent, Socials, ThemeToggle } from "@camball/ui/components";
+    import logoLight from "@camball/ui/assets/cb_logo_light.svg";
+    import logoDark from "@camball/ui/assets/cb_logo_dark.svg";
 
     let previousScrollPosition = 0;
     let header: HTMLDivElement | undefined = $state();
@@ -46,9 +48,9 @@
     <div class="flex items-center space-x-6">
         <a href="/">
             {#if mode.current === "dark"}
-                <img src="$lib/assets/cb_logo_light.svg" alt="Logo Light" class="h-11" />
+                <img src={logoLight} alt="Logo Light" class="h-11" />
             {:else}
-                <img src="$lib/assets/cb_logo_dark.svg" alt="Logo Dark" class="h-11" />
+                <img src={logoDark} alt="Logo Dark" class="h-11" />
             {/if}
         </a>
         <div
