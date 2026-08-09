@@ -1,7 +1,7 @@
 /**
  * This file loads metadata and filenames for all blog articles in the `content` directory.
  */
-import type MdxSvelteComponent from "../lib/MdxSvelteComponent";
+import type MdxSvelteComponent from "$lib/MdxSvelteComponent";
 
 export const prerender = true;
 

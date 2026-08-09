@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { BinaryTextOverlay, Header, SiteMeta } from "$lib/components";
-    import { Card, ScrollArea, Separator } from "$lib/components/ui";
+    import { BinaryTextOverlay, Header, SiteMeta } from "@camball/ui/components";
+    import { Card, ScrollArea, Separator } from "@camball/ui/components/ui";
     import Tags from "../components/Tags.svelte";
     import dayjs from "dayjs";
+    import sittingOnCouch from "@camball/ui/assets/sitting-on-couch.jpeg";
 
     let { data } = $props();
 
@@ -65,7 +66,7 @@
         </ScrollArea>
     </div>
     <img
-        src="$lib/assets/sitting-on-couch.jpeg"
+        src={sittingOnCouch}
         alt="Cameron, sitting on a couch in a tall, well-lit room, wearing a ball cap and crossing one leg over the other, looking out a large window."
         class="object-cover sm:ml-auto"
     />

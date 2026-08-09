@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Header from "../../lib/header.svelte";
-    import { Separator } from "$lib/components/ui";
-    import { Footer, SiteMeta } from "$lib/components";
+    import Header from "$lib/header.svelte";
+    import { Separator } from "@camball/ui/components/ui";
+    import { Footer, SiteMeta } from "@camball/ui/components";
     import Tags from "../../components/Tags.svelte";
     import { fade } from "svelte/transition";
     import dayjs from "dayjs";

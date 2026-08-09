@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Header } from "$lib/components";
-    import { Carousel } from "$lib/components/ui";
+    import { Header } from "@camball/ui/components";
+    import { Carousel } from "@camball/ui/components/ui";
 
     import InstagramEmbed from "../components/InstagramEmbed.svelte";
 

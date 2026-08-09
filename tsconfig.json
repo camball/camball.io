@@ -6,10 +6,6 @@
     "forceConsistentCasingInFileNames": true,
     "target": "esnext",
     "noEmit": true,
-    "paths": {
-      "$lib": ["./apps/lib"],
-      "$lib/*": ["./apps/lib/*"]
-    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -19,19 +15,23 @@
     "lib": ["esnext", "DOM", "DOM.Iterable"]
   },
   "exclude": [
-    "node_modules", // node_modules itself
-    "**/node_modules", // node_modules in any subdirectory
+    "node_modules",
+    "**/node_modules",
     "dist",
     "build",
     ".vercel",
     "**/*.test.ts",
     "**/*.spec.ts",
-    "**/svelte.config.js" // Exclude Svelte config files
+    "**/svelte.config.js"
   ],
-  "include": ["apps/**/*.ts", "apps/**/*.js", "apps/**/*.svelte", "apps/**/*.d.ts"]
-  // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
-  // except $lib which is handled by https://kit.svelte.dev/docs/configuration#files
-  //
-  // If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
-  // from the referenced tsconfig.json - TypeScript does not merge them in
+  "include": [
+    "apps/**/*.ts",
+    "apps/**/*.js",
+    "apps/**/*.svelte",
+    "apps/**/*.d.ts",
+    "packages/**/*.ts",
+    "packages/**/*.js",
+    "packages/**/*.svelte",
+    "packages/**/*.d.ts"
+  ]
 }
