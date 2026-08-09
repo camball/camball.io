@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://contact.camball.io/sitemap.xml

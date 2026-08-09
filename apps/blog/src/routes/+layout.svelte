@@ -20,6 +20,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href={favicon32} />
     <link rel="icon" type="image/png" sizes="48x48" href={favicon48} />
     <link rel="icon" type="image/png" sizes="64x64" href={favicon64} />
+    <link rel="alternate" type="application/rss+xml" title="Blog – Cameron Ball" href="/rss.xml" />
 </svelte:head>
 <ModeWatcher />
 {@render children?.()}
