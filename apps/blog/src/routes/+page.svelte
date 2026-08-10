@@ -8,11 +8,6 @@
     let { data } = $props();
 
     const { articles } = data;
-
-    const getFilenameFromPath = (filePath: string): string | null => {
-        const filenameWithExtension = filePath.split("/").pop();
-        return filenameWithExtension?.split(".").slice(0, -1).join(".") || null;
-    };
 </script>
 
 <SiteMeta
@@ -40,9 +35,9 @@
             scrollbarYClasses="hidden"
         >
             <div class="space-y-2">
-                {#each articles as article (article.filePath)}
+                {#each articles as article (article.slug)}
                     <Card.Root class="opacity-90">
-                        <a href={getFilenameFromPath(article.filePath)}>
+                        <a href={article.slug}>
                             <Card.Header class="pb-3 text-pretty">
                                 <Card.Title class="font-medium tracking-[0.023em]">
                                     {article.metadata.title}
