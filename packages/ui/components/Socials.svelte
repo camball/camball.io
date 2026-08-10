@@ -1,5 +1,6 @@
 <script lang="ts">
     import { mode } from "mode-watcher";
+    import { SITE_LINKS } from "@camball/ui/shared/site-links";
     import { cn } from "@camball/ui/utils";
 
     interface Props {
@@ -62,7 +63,7 @@
             />
         </svg>
     </a>
-    <a href="https://blog.camball.io/rss.xml" aria-labelledby="rss-logo">
+    <a href="{SITE_LINKS.Blog}/rss.xml" data-sveltekit-reload aria-labelledby="rss-logo">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             id="rss-logo"
