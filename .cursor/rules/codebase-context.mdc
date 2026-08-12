@@ -28,7 +28,7 @@ Shared package contents:
 - Assets under [assets/](mdc:packages/ui/assets) — import via Vite, e.g., `import img from '@camball/ui/assets/example.png'`
 - Utils: [utils.ts](mdc:packages/ui/utils.ts)
 
-Also shared at the repo root: TypeScript config, Tailwind config, Vite/Vitest/ESLint tooling. Each app has its own `package.json`, `svelte.config.js`, `tsconfig.json`, and `vite.config.ts`.
+Also shared at the repo root: TypeScript config, Tailwind config, Vite/Vitest/Oxlint tooling. Each app has its own `package.json`, `svelte.config.js`, `tsconfig.json`, and `vite.config.ts`.
 
 ## Coding Practices and Style
 
