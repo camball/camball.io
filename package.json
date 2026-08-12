@@ -27,13 +27,11 @@
     "check:main": "pnpm --filter @camball/main check",
     "check:resume": "pnpm --filter @camball/resume check",
     "test": "vitest",
-    "lint": "prettier --check apps packages && oxlint",
+    "lint": "oxfmt --check && oxlint",
     "lint:fix": "oxlint --fix",
-    "format": "prettier --write apps packages",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "prepare": "husky"
-  },
-  "engines": {
-    "node": "^24"
   },
   "devDependencies": {
     "@sveltejs/kit": "^2.70.2",
@@ -41,14 +39,15 @@
     "@tailwindcss/vite": "^4.3.3",
     "concurrently": "^10.0.4",
     "husky": "^9.1.7",
+    "oxfmt": "^0.63.0",
     "oxlint": "^1.78.0",
     "oxlint-tsgolint": "^7.0.2001",
-    "prettier": "^3.9.6",
-    "prettier-plugin-svelte": "^4.1.1",
-    "prettier-plugin-tailwindcss": "^0.8.1",
     "svelte": "^5.56.8",
     "typescript": "^6.0.3",
     "vite": "^8.2.1",
     "vitest": "^4.1.10"
+  },
+  "engines": {
+    "node": "^24"
   }
 }

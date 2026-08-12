@@ -1,3 +1,3 @@
 /* Explicitly import only this project root's src to not bundle unneeded styles */
-@import "tailwindcss" source("../src");
+@import "tailwindcss" source(".");
 @import "@camball/ui/app.css";
