@@ -5,13 +5,13 @@
 </script>
 
 <Header />
-<div class="screen-height flex flex-row justify-between bg-neutral-50 dark:bg-neutral-900">
+<div class="flex screen-height flex-row justify-between bg-neutral-50 dark:bg-neutral-900">
     <div>
         <div class="absolute sm:mt-20 sm:ml-[5.5rem]">
             <BinaryTextOverlay text="discipline" />
         </div>
         <div
-            class="text-shadow-6xl absolute m-auto mt-20 ml-5 space-y-3 p-3 pl-0 text-neutral-700 sm:relative sm:ml-7 sm:text-neutral-900 sm:dark:text-neutral-50"
+            class="absolute m-auto mt-20 ml-5 space-y-3 p-3 pl-0 text-neutral-700 text-shadow-6xl sm:relative sm:ml-7 sm:text-neutral-900 sm:dark:text-neutral-50"
         >
             <h1
                 class="font-serif text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]"
