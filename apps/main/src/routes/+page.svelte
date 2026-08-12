@@ -5,7 +5,7 @@
 </script>
 
 <Header />
-<div class="screen-height flex bg-neutral-50 dark:bg-neutral-900">
+<div class="flex screen-height bg-neutral-50 dark:bg-neutral-900">
     <div class="absolute sm:mt-20 sm:ml-[5.5rem]">
         <BinaryTextOverlay text="discipline" />
     </div>
@@ -13,7 +13,7 @@
         class="absolute m-auto mx-5 mt-[5.75rem] space-y-3 text-neutral-700 sm:relative sm:mx-7 sm:w-full sm:text-neutral-900 sm:dark:text-neutral-50"
     >
         <h1
-            class="text-shadow-6xl font-serif text-[60px]/[4rem] font-bold tracking-tighter sm:text-[7rem]/[7rem]"
+            class="font-serif text-[60px]/[4rem] font-bold tracking-tighter text-shadow-6xl sm:text-[7rem]/[7rem]"
         >
             𐙚 ࣪ ⟡
             <br />

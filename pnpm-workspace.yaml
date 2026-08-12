@@ -2,6 +2,6 @@ packages:
   - apps/*
   - packages/*
 onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - '@vercel/speed-insights'
+  - "@tailwindcss/oxide"
+  - "@vercel/speed-insights"
   - esbuild

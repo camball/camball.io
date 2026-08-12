@@ -54,7 +54,7 @@
             {/if}
         </a>
         <div
-            class="*:hover:text-shadow-6xl hidden items-center space-x-6 *:transition-all *:ease-in-out *:hover:transition-all *:hover:ease-in-out sm:flex"
+            class="hidden items-center space-x-6 *:transition-all *:ease-in-out *:hover:transition-all *:hover:ease-in-out *:hover:text-shadow-6xl sm:flex"
         >
             {#each siteLinksEntries() as [title, link] (link)}
                 <p class="text-xl font-semibold">

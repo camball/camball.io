@@ -30,7 +30,7 @@
     class="bg-opacity-80 dark:bg-opacity-80 fixed bottom-6 z-50 mx-4 hidden w-[calc(100vw-2rem)] rounded-2xl bg-white px-7 py-2 font-sans backdrop-blur-[3px] sm:flex sm:items-center sm:justify-between dark:bg-neutral-800"
 >
     <div
-        class="*:hover:text-shadow-6xl flex items-center space-x-6 *:transition-all *:ease-in-out *:hover:transition-all *:hover:ease-in-out"
+        class="flex items-center space-x-6 *:transition-all *:ease-in-out *:hover:transition-all *:hover:ease-in-out *:hover:text-shadow-6xl"
     >
         {#if mode.current === "dark"}
             <img src={logoLight} alt="Logo Light" class="h-10" />
