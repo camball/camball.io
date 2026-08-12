@@ -1,11 +1,12 @@
+import type MdxSvelteComponent from "$lib/MdxSvelteComponent";
 /**
  * This file parses the [slug] pattern provided in the URL path and retrieves
  * the corresponding rendered mdx file from the `content` directory. The result
  * is passed to `+page.svelte`, where it is rendered on the screen.
  */
 import { error } from "@sveltejs/kit";
+
 import type { PageLoad } from "./$types";
-import type MdxSvelteComponent from "$lib/MdxSvelteComponent";
 
 export const prerender = true;
 

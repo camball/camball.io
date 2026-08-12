@@ -1,15 +1,17 @@
+import { join } from "node:path";
+
+import remarkCallout from "@r4ai/remark-callout";
 import adapter from "@sveltejs/adapter-vercel";
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import { mdsvex } from "mdsvex";
-import { importAssets } from "svelte-preprocess-import-assets";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeToc from "rehype-toc";
 import remarkFootnotes from "remark-footnotes";
 import remarkGfm from "remark-gfm";
-import remarkCallout from "@r4ai/remark-callout";
+import { importAssets } from "svelte-preprocess-import-assets";
+
 import remarkCalloutFix from "./remark-callout-fix.js";
-import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
-import { join } from "node:path";
 
 const rehypeTocOpts = { position: "beforeend" };
 

@@ -1,12 +1,12 @@
 <script lang="ts">
     import Header from "$lib/header.svelte";
-    import { Separator } from "@camball/ui/components/ui";
     import { Footer, SiteMeta } from "@camball/ui/components";
-    import Tags from "../../components/Tags.svelte";
-    import { fade } from "svelte/transition";
+    import { Separator } from "@camball/ui/components/ui";
     import dayjs from "dayjs";
     import advancedFormat from "dayjs/plugin/advancedFormat";
+    import { fade } from "svelte/transition";
 
+    import Tags from "../../components/Tags.svelte";
     import type { PageData } from "./$types";
 
     interface Props {

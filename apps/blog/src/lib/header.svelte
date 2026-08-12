@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import { Menu } from "@lucide/svelte";
-    import { mode } from "mode-watcher";
+    import logoDark from "@camball/ui/assets/cb_logo_dark.svg";
+    import logoLight from "@camball/ui/assets/cb_logo_light.svg";
+    import { HeaderDrawerContent, Socials, ThemeToggle } from "@camball/ui/components";
     import { Drawer } from "@camball/ui/components/ui";
-    import { cn } from "@camball/ui/utils";
     import { buttonVariants } from "@camball/ui/components/ui/button";
     import { siteLinksEntries } from "@camball/ui/shared/site-links";
-    import { HeaderDrawerContent, Socials, ThemeToggle } from "@camball/ui/components";
-    import logoLight from "@camball/ui/assets/cb_logo_light.svg";
-    import logoDark from "@camball/ui/assets/cb_logo_dark.svg";
+    import { cn } from "@camball/ui/utils";
+    import { Menu } from "@lucide/svelte";
+    import { mode } from "mode-watcher";
+    import { onMount } from "svelte";
 
     let previousScrollPosition = 0;
     let header: HTMLDivElement | undefined = $state();
