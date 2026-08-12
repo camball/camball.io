@@ -1,8 +1,9 @@
 <script lang="ts">
+    import { Socials } from "@camball/ui/components";
     import { Button, Drawer } from "@camball/ui/components/ui";
     import { ArrowUp } from "@lucide/svelte";
-    import { Socials } from "@camball/ui/components";
     import { toggleMode, mode } from "mode-watcher";
+
     import { siteLinksEntries } from "../shared/site-links";
 </script>
 

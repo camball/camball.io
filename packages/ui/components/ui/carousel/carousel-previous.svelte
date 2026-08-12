@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { Button, type Props } from "@camball/ui/components/ui/button/index.js";
+    import { cn } from "@camball/ui/utils.js";
     import ArrowLeftIcon from "@lucide/svelte/icons/arrow-left";
     import type { WithoutChildren } from "bits-ui";
+
     import { getEmblaContext } from "./context.js";
-    import { cn } from "@camball/ui/utils.js";
-    import { Button, type Props } from "@camball/ui/components/ui/button/index.js";
 
     let {
         ref = $bindable(null),

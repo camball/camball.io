@@ -1,13 +1,13 @@
 <script lang="ts">
     import "../app.css";
-    import { SiteMeta } from "@camball/ui/components";
-    import { ModeWatcher } from "mode-watcher";
-    import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
     import favicon from "@camball/ui/assets/cb_logo_favicon.svg";
     import favicon16 from "@camball/ui/assets/cb_logo_favicon_16.png";
     import favicon32 from "@camball/ui/assets/cb_logo_favicon_32.png";
     import favicon48 from "@camball/ui/assets/cb_logo_favicon_48.png";
     import favicon64 from "@camball/ui/assets/cb_logo_favicon_64.png";
+    import { SiteMeta } from "@camball/ui/components";
+    import { injectSpeedInsights } from "@vercel/speed-insights/sveltekit";
+    import { ModeWatcher } from "mode-watcher";
 
     let { children } = $props();
 

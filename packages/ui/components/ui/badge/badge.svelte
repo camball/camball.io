@@ -23,8 +23,8 @@
 </script>
 
 <script lang="ts">
-    import type { HTMLAnchorAttributes } from "svelte/elements";
     import { cn, type WithElementRef } from "@camball/ui/utils.js";
+    import type { HTMLAnchorAttributes } from "svelte/elements";
 
     let {
         ref = $bindable(null),

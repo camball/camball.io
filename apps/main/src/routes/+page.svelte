@@ -1,7 +1,7 @@
 <script lang="ts">
+    import sittingOnCouch from "@camball/ui/assets/sitting-on-couch.jpeg";
     import { BinaryTextOverlay, Header } from "@camball/ui/components";
     import { Separator } from "@camball/ui/components/ui";
-    import sittingOnCouch from "@camball/ui/assets/sitting-on-couch.jpeg";
 </script>
 
 <Header />

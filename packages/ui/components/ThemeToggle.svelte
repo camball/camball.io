@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { Button } from "./ui";
     import { Moon, Sun } from "@lucide/svelte";
     import { toggleMode } from "mode-watcher";
+
+    import { Button } from "./ui";
 
     let { variant } = $props();
 </script>

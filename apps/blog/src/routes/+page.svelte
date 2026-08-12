@@ -1,9 +1,10 @@
 <script lang="ts">
+    import sittingOnCouch from "@camball/ui/assets/sitting-on-couch.jpeg";
     import { BinaryTextOverlay, Header, SiteMeta } from "@camball/ui/components";
     import { Card, ScrollArea, Separator } from "@camball/ui/components/ui";
-    import Tags from "../components/Tags.svelte";
     import dayjs from "dayjs";
-    import sittingOnCouch from "@camball/ui/assets/sitting-on-couch.jpeg";
+
+    import Tags from "../components/Tags.svelte";
 
     let { data } = $props();
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { mode } from "mode-watcher";
     import { SITE_LINKS } from "@camball/ui/shared/site-links";
     import { cn } from "@camball/ui/utils";
+    import { mode } from "mode-watcher";
 
     interface Props {
         class?: string | null | undefined;
