@@ -7,19 +7,41 @@ tags:
 description: How I create an excellent DX and keep my codebase DRY for many subdomains of a SvelteKit project.
 author: Cameron Ball
 created: 2024-07-13
-modified: 2025-04-27
+modified: 2026-08-13
 ---
 
-This article is for you if...
+> [!NOTE]
+> **Edit (August 2026):** I no longer recommend the approach outlined in this article, due to it being a non-standard monorepo structure.
+>
+> The non-standard approach outlined here does provide surface-level simplicity, but is outweighed by the following downsides:
+>
+> - Harder for both humans and AI agents to reason quickly about.
+> - Requires frequent re-engineering when a framework or dependency update is released.
+> - Relies on a feature that has been formally [deprecated](https://github.com/sveltejs/kit/issues/14151) by the Svelte team.
+>
+> **Solution:** Use [pnpm workspaces](https://pnpm.io/workspaces) instead, combined with Vercel's [Skipping Unaffected Projects](https://vercel.com/docs/monorepos#skipping-unaffected-projects) feature for monorepos (to only build/deploy specific changes, instead of the entire monorepo). Use a local package for shared code, like the following `package.json`:
+>
+> ```json
+> "dependencies": {
+>   "@example/ui": "workspace:*",
+>   ...,
+> }
+> ```
+>
+> The original article can be found below for posterity.
+
+---
+
+This article is for you if:
 
 - You want to have one cohesive site to navigate around subdomains with, e.g.,
   - `blog.yoursite.io` (instead of `yoursite.io/blog`)
   - `contact.yoursite.io` (instead of `yoursite.io/contact`)
   - etc.
-- You're using Svelte/SvelteKit (it'll likely be similar for other frameworks, but good to note).
-- You want all your code to be hosted in a single GitHub repo.
-- Your hosting is on Vercel.
-- You aren't interested in or can't use a pre-built solution like [Turborepo](https://turbo.build/repo) or [Nx](https://nx.dev). Honestly, I was very interested in using Nx, but as of the time of writing (July 15, 2024), Nx only supported Svelte and not SvelteKit.
+- You're using SvelteKit (it'll likely be similar for other frameworks, but good to note).
+- You want all your code to be hosted in a single monorepository.
+- You're hosting on Vercel.
+- You aren't interested in, or can't use a pre-built solution like [Turborepo](https://turbo.build/repo) or [Nx](https://nx.dev). Honestly, I was very interested in using Nx, but as of the time of writing (July 15, 2024), Nx does not have full SvelteKit support.
 
 ## Example Repo
 
