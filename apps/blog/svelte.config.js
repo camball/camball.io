@@ -14,6 +14,7 @@ import { importAssets } from "svelte-preprocess-import-assets";
 import remarkCalloutFix from "./remark-callout-fix.js";
 
 const rehypeTocOpts = { position: "beforeend" };
+const rehypeAutoLinkHeadingsOpts = { behavior: "append" };
 
 // `remark-footnotes` pinned to v2 only, as v3+ uses micromark and
 // won't hook into mdsvex's remark-parse v8.
@@ -31,7 +32,11 @@ const mdsvexConfig = {
         [remarkFootnotes, remarkFootnotesOpts],
         remarkGfm,
     ],
-    rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, [rehypeToc, rehypeTocOpts]],
+    rehypePlugins: [
+        rehypeSlug,
+        [rehypeAutolinkHeadings, rehypeAutoLinkHeadingsOpts],
+        [rehypeToc, rehypeTocOpts],
+    ],
 };
 
 /** @type {import('@sveltejs/kit').Config} */
