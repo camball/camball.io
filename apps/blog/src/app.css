@@ -5,18 +5,21 @@
 
 @plugin "@tailwindcss/typography";
 
-span.icon-link::before {
+span.icon-link::after {
     content: "#";
     color: hsl(var(--accent));
-    position: absolute;
-    left: -23px;
+    margin-left: 8px;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-h2:hover span.icon-link::before,
-h3:hover span.icon-link::before,
-h4:hover span.icon-link::before {
+a:has(> span.icon-link) {
+    text-decoration: none;
+}
+
+h2:hover span.icon-link::after,
+h3:hover span.icon-link::after,
+h4:hover span.icon-link::after {
     opacity: 1;
 }
 
