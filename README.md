@@ -39,8 +39,8 @@ See the [`camball.io` GitHub Project](https://github.com/users/camball/projects/
 pnpm i
 
 # Run the main site (`camball.io`)
-pnpm run dev:main
+pnpm dev:main
 
 # Run the blog (`blog.camball.io`)
-pnpm run dev:blog
+pnpm dev:blog
 ```
