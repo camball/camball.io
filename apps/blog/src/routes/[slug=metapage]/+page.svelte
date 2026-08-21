@@ -52,7 +52,7 @@
     {tags}
 />
 <Header />
-<header class="mx-5 my-7 space-y-3 font-medium sm:mx-48" id="article-header">
+<header class="mx-5 my-7 space-y-3 font-medium sm:mx-16 md:mx-32 lg:mx-48" id="article-header">
     <Tags {tags} />
     <h1 class="text-4xl">{title}</h1>
     <div class="flex space-x-2">
@@ -64,14 +64,14 @@
     </div>
 </header>
 <Separator />
-<div class="mx-5 my-6 sm:mx-48">
+<div class="mx-5 my-6 sm:mx-16 md:mx-32 lg:mx-48">
     <p class="font-medium">{description}</p>
 </div>
 <Separator />
 <div
     in:fade|global={{ delay: 150, duration: 350 }}
     out:fade|global={{ duration: 100 }}
-    class="m-5 mt-7 mb-10 sm:mx-60 sm:flex sm:flex-row"
+    class="m-5 mt-7 mb-10 min-w-0 sm:mx-16 sm:flex sm:flex-row md:mx-32 lg:mx-60"
 >
     <data.mdxComponent />
 </div>
