@@ -8,6 +8,11 @@
 @theme {
     --font-serif: "IM Fell English", "serif";
     --font-sans: "Hind", "sans";
+    --max-width-site: 1700px;
+}
+
+@utility site-container {
+    @apply mx-auto w-full max-w-site;
 }
 
 @layer base {

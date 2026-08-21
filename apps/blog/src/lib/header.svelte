@@ -41,47 +41,49 @@
     });
 </script>
 
-<div
-    bind:this={header}
-    class="top-0 left-0 z-50 flex w-full items-center justify-between bg-stone-100 px-3 py-2 sm:px-4 dark:bg-stone-900"
->
-    <div class="flex items-center space-x-6">
-        <a href="/">
-            {#if mode.current === "dark"}
-                <img src={logoLight} alt="Logo Light" class="h-11" />
-            {:else}
-                <img src={logoDark} alt="Logo Dark" class="h-11" />
-            {/if}
-        </a>
-        <div
-            class="hidden items-center space-x-6 *:transition-all *:ease-in-out *:hover:transition-all *:hover:ease-in-out *:hover:text-shadow-6xl sm:flex"
-        >
-            {#each siteLinksEntries() as [title, link] (link)}
-                <p class="text-xl font-semibold">
-                    <a href={link}>{title}</a>
-                </p>
-            {/each}
+<div bind:this={header} class="top-0 left-0 z-50 w-full bg-stone-100 dark:bg-stone-900">
+    <div class="site-container flex items-center justify-between px-3 py-2 sm:px-4">
+        <div class="flex items-center space-x-6">
+            <a href="/">
+                {#if mode.current === "dark"}
+                    <img src={logoLight} alt="Logo Light" class="h-11" />
+                {:else}
+                    <img src={logoDark} alt="Logo Dark" class="h-11" />
+                {/if}
+            </a>
+            <div
+                class="hidden items-center space-x-6 *:transition-all *:ease-in-out *:hover:transition-all *:hover:ease-in-out *:hover:text-shadow-6xl sm:flex"
+            >
+                {#each siteLinksEntries() as [title, link] (link)}
+                    <p class="text-xl font-semibold">
+                        <a href={link}>{title}</a>
+                    </p>
+                {/each}
+            </div>
         </div>
-    </div>
-    <div class="hidden items-center space-x-2 px-2 sm:flex">
-        <ThemeToggle variant="ghost" />
-        <Socials imageSize="25px" class="space-x-3" />
-    </div>
+        <div class="hidden items-center space-x-2 px-2 sm:flex">
+            <ThemeToggle variant="ghost" />
+            <Socials imageSize="25px" class="space-x-3" />
+        </div>
 
-    <Drawer.Root direction="top">
-        <Drawer.Trigger>
-            {#snippet child({ props })}
-                <div {...props} class={cn(buttonVariants({ variant: "ghost" }), "p-1 sm:hidden")}>
-                    <Menu
-                        color={mode.current === "dark" ? "#EEE" : "#111"}
-                        size="28"
-                        strokeWidth="2.5"
-                        class="m-1"
-                    />
-                </div>
-            {/snippet}
-        </Drawer.Trigger>
-        <HeaderDrawerContent />
-    </Drawer.Root>
+        <Drawer.Root direction="top">
+            <Drawer.Trigger>
+                {#snippet child({ props })}
+                    <div
+                        {...props}
+                        class={cn(buttonVariants({ variant: "ghost" }), "p-1 sm:hidden")}
+                    >
+                        <Menu
+                            color={mode.current === "dark" ? "#EEE" : "#111"}
+                            size="28"
+                            strokeWidth="2.5"
+                            class="m-1"
+                        />
+                    </div>
+                {/snippet}
+            </Drawer.Trigger>
+            <HeaderDrawerContent />
+        </Drawer.Root>
+    </div>
 </div>
 <div bind:this={spacer} class="top-0 left-0 hidden h-16 w-full"></div>
