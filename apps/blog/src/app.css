@@ -30,7 +30,7 @@ h4 {
 }
 
 .toc {
-    @apply ml-4 hidden p-3 sm:block sm:basis-1/4;
+    @apply ml-4 hidden shrink-0 p-3 sm:block sm:basis-1/4;
 }
 
 .toc-link {
