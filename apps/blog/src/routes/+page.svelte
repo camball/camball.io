@@ -8,7 +8,7 @@
 
     let { data } = $props();
 
-    const { articles } = data;
+    const articles = $derived(data.articles);
 </script>
 
 <SiteMeta

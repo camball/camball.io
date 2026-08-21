@@ -19,8 +19,9 @@
         size = "60",
         pause = false,
     }: Props = $props();
-    let durationUnit: string = duration.match(durationUnitRegex)?.[0] ?? "s";
-    let durationNum: string = duration.replace(durationUnitRegex, "");
+
+    const durationUnit = $derived(duration.match(durationUnitRegex)?.[0] ?? "s");
+    const durationNum = $derived(duration.replace(durationUnitRegex, ""));
 </script>
 
 <div
