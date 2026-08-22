@@ -57,3 +57,9 @@ nav > :last-child.toc-level {
 .prose :where(:not(pre) > code) {
     overflow-wrap: anywhere;
 }
+
+/* Prism TOML table headers use a `table` token class, which Tailwind also exposes as */
+/* `display: table`, thus erroneously putting `[`, `build`, and `]` on separate lines. */
+.prose :where(pre code .table) {
+    display: inline;
+}
