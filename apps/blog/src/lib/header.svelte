@@ -2,12 +2,18 @@
     import logoDark from "@camball/ui/assets/cb_logo_dark.svg";
     import logoLight from "@camball/ui/assets/cb_logo_light.svg";
     import { HeaderDrawerContent, Socials, ThemeToggle } from "@camball/ui/components";
-    import { Drawer } from "@camball/ui/components/ui";
+    import { Drawer, Separator } from "@camball/ui/components/ui";
     import { buttonVariants } from "@camball/ui/components/ui/button";
     import { siteLinksEntries } from "@camball/ui/shared/site-links";
     import { cn } from "@camball/ui/utils";
-    import { Menu } from "@lucide/svelte";
+    import { Menu, TableOfContents } from "@lucide/svelte";
     import { mode } from "mode-watcher";
+
+    interface Props {
+        tocOpen?: boolean;
+    }
+
+    let { tocOpen = $bindable(false) }: Props = $props();
 
     // Header initially flows with the document from the top to simply scroll off the page.
     // Once it leaves the viewport, it transitions to a fixed overlay, with animation to hide
@@ -25,6 +31,8 @@
     const onHashAnchorClick = (event: MouseEvent) => {
         const href = (event.target as Element).closest("a[href^='#']")?.getAttribute("href");
         if (!href || href === "#") return;
+
+        tocOpen = false;
         isNavigatingViaHashClick = true;
         shouldHideHeader = true; // Can always hide here; don't want to show when clicking a header above *or* below.
         shouldAnimateTransform = false;
@@ -92,24 +100,39 @@
             <Socials imageSize="25px" class="space-x-3" />
         </div>
 
-        <Drawer.Root direction="top">
-            <Drawer.Trigger>
-                {#snippet child({ props })}
-                    <div
-                        {...props}
-                        class={cn(buttonVariants({ variant: "ghost" }), "p-1 sm:hidden")}
-                    >
-                        <Menu
-                            color={mode.current === "dark" ? "#EEE" : "#111"}
-                            size="28"
-                            strokeWidth="2.5"
-                            class="m-1"
-                        />
-                    </div>
-                {/snippet}
-            </Drawer.Trigger>
-            <HeaderDrawerContent />
-        </Drawer.Root>
+        <div class="flex items-center sm:hidden">
+            <button
+                type="button"
+                class={cn(buttonVariants({ variant: "ghost" }), "p-1")}
+                aria-expanded={tocOpen}
+                aria-controls="mobile-toc"
+                aria-label="Table of contents"
+                onclick={() => (tocOpen = !tocOpen)}
+            >
+                <TableOfContents
+                    color={mode.current === "dark" ? "#EEE" : "#111"}
+                    size="28"
+                    strokeWidth="2.5"
+                    class="m-1"
+                />
+            </button>
+            <Separator orientation="vertical" decorative class="mx-1 h-6! w-0.5!" />
+            <Drawer.Root direction="top">
+                <Drawer.Trigger>
+                    {#snippet child({ props })}
+                        <div {...props} class={cn(buttonVariants({ variant: "ghost" }), "p-1")}>
+                            <Menu
+                                color={mode.current === "dark" ? "#EEE" : "#111"}
+                                size="28"
+                                strokeWidth="2.5"
+                                class="m-1"
+                            />
+                        </div>
+                    {/snippet}
+                </Drawer.Trigger>
+                <HeaderDrawerContent />
+            </Drawer.Root>
+        </div>
     </div>
 </div>
 <!-- If in `isFixedOverlay` mode, add a `headerHeight` spacer so the article doesn't jump. -->
