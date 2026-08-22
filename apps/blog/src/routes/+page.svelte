@@ -13,7 +13,7 @@
 
 <SiteMeta
     title="Blog – Cameron Ball"
-    description="Cameron's writing on software, career, learning, and more."
+    description="Cameron’s writing on software, career, learning, and more."
     url="https://blog.camball.io"
     siteName="Blog – Cameron Ball"
 />
