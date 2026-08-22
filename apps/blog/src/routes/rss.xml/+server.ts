@@ -6,7 +6,7 @@ export const prerender = true;
 
 const SITE_URL = SITE_LINKS["Blog"];
 const CHANNEL_TITLE = "Blog – Cameron Ball";
-const CHANNEL_DESCRIPTION = "Cameron's writing on software, career, learning, and more.";
+const CHANNEL_DESCRIPTION = "Cameron’s writing on software, career, learning, and more.";
 const ARTICLE_COUNT_LIMIT = 100;
 
 export async function GET() {
