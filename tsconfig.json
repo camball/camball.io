@@ -22,7 +22,8 @@
     ".vercel",
     "**/*.test.ts",
     "**/*.spec.ts",
-    "**/svelte.config.js"
+    "**/svelte.config.js",
+    "packages/ui/sync-favicons-plugin.js"
   ],
   "include": [
     "apps/**/*.ts",
