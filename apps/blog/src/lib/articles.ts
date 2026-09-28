@@ -23,6 +23,6 @@ export async function loadArticles(): Promise<Article[]> {
     }
 
     return articles.sort(
-        (a, b) => new Date(b.metadata.modified).getTime() - new Date(a.metadata.modified).getTime(),
+        (a, b) => new Date(b.metadata.created).getTime() - new Date(a.metadata.created).getTime(),
     );
 }
