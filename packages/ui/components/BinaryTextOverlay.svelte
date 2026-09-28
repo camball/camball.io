@@ -12,7 +12,7 @@
             (element as HTMLElement).style.opacity = Math.random().toString();
         });
 
-    onMount(() => setInterval(sparkle, 2000));
+    onMount(() => setInterval(sparkle, 1200));
 </script>
 
 <div class="binary-text-overlay sm:binary-text-overlay-lg">
@@ -26,9 +26,9 @@
                     .charCodeAt(0)
                     .toString(2)
                     .padStart(8, "0")
-                    .split("")) as eightBitArray, i (i)}
-            {#each eightBitArray as bit, j (j)}
-                <span class="sparkle transition-opacity duration-[700ms] ease-linear">{bit}</span>
+                    .split("")) as eightBitArray}
+            {#each eightBitArray as bit}
+                <span class="sparkle transition-opacity duration-[1200ms] ease-linear">{bit}</span>
             {/each}
         {/each}
     </div>
