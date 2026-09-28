@@ -1,0 +1,48 @@
+---
+title: Isolation Levels
+tags:
+    - Databases
+    - Concurrency & Parallelism
+description: My personal notes and learnings on this ACID property.
+author: Cameron Ball
+created: 2026-09-28
+modified: 2026-09-28
+---
+
+There are four isolation levels, and it can be useful to define them in terms of the problems they prevent[^1]. Taking a look at these problems:
+
+- **Dirty read:** One database transaction begins and updates some rows. Another transaction comes along before the earlier transaction has committed, reads the rows affected by the earlier update, then the earlier transaction is aborted or rolled back. The second transaction therefore acted on data that is considered to never have existed[^2], therefore violating [consistency](https://en.wikipedia.org/wiki/Consistency_(database_systems)).
+- **Non-repeatable read:** A transaction reads a row in one statement, another transaction updates that row, then the first transaction reads that same row again. The first transaction received differing values within the row the first and second times it read the row.
+- **Phantom read:** Similar to non-repeatable read, but instead of column values within a row differing, it is when entirely different sets of rows are returned.[^3]
+
+There are four isolation levels, each of which can prevent different subsets of the above.
+
+1. **Read uncommitted:** Transactions can see changes made by other transactions before they commit.
+2. **Read committed:** Transactions can only see changes that other transactions have committed. The default in Postgres.
+3. **Repeatable read:** Data within rows is guaranteed not to change within a transaction, even across separate statements within the transaction.
+4. **Serializable:** Transactions are *serial*, or run as if[^4] they take place in series (i.e., sequentially).
+
+Note that these are listed as an ordered list; the higher the number, the higher the degree of isolation. The isolation levels solve the problems above per the following matrix[^1]:
+
+| Isolation Level  | Dirty read  | Non-repeatable read | Phantom read |
+| :--------------- | :---------- | :------------------ | :----------- |
+| Read uncommitted | May occur   | May occur           | May occur    |
+| Read committed   | Don't occur | May occur           | May occur    |
+| Repeatable read  | Don't occur | Don't occur         | May occur    |
+| Serializable     | Don't occur | Don't occur         | Don't occur  |
+
+So why not always pick serializable if it solves all these potential problems? As with most things in software—it depends. Serializable is the safest option of the four, but also the slowest. Its extra checks slow down or block concurrency altogether.
+
+It is wise to pick an isolation level based on the minimum specific concurrency issues that need to be prevented, to take advantage of higher concurrency levels as much as possible.
+
+---
+
+Further topics for continued learning:
+
+- Justin Jaffray – [What Does Write Skew Look Like?](https://justinjaffray.com/what-does-write-skew-look-like/) ([mirror](https://www.cockroachlabs.com/blog/what-write-skew-looks-like/))
+- [Multiversion concurrency control (MVCC)](https://en.wikipedia.org/wiki/Multiversion_concurrency_control) and [its relation to](https://planetscale.com/blog/postgresql-mvcc) Postgres `VACUUM`
+
+[^1]: GeeksForGeeks – [Transaction Isolation Levels in DBMS](https://www.geeksforgeeks.org/dbms/transaction-isolation-levels-dbms/)
+[^2]: StackOverflow – [Dirty Reads](https://stackoverflow.com/a/23938461/14708097)
+[^3]: StackOverflow – [Non-repeatable vs Phantom Reads](https://stackoverflow.com/a/23138849/14708097)
+[^4]: The database does not necessarily literally have to run the transactions in series; it's fine if it runs them concurrently for performance optimisation, but the end result under this isolation level is that it must behave *as if* the transactions were run in series.
