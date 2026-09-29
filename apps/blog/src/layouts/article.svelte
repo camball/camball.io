@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { mountFootnoteTooltips } from "$lib/footnote-tooltip";
+    import { Tooltip } from "@camball/ui/components/ui";
+
     interface Props {
         children?: import("svelte").Snippet;
     }
@@ -7,7 +10,12 @@
 </script>
 
 <main class="min-w-0 font-sans sm:basis-3/4">
-    <article class="prose dark:prose-invert w-full max-w-3xl min-w-0 text-pretty">
-        {@render children?.()}
-    </article>
+    <Tooltip.Provider delayDuration={50}>
+        <article
+            class="prose dark:prose-invert w-full max-w-3xl min-w-0 text-pretty"
+            {@attach mountFootnoteTooltips()}
+        >
+            {@render children?.()}
+        </article>
+    </Tooltip.Provider>
 </main>
