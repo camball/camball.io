@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@camball/ui": ["."],
+      "@camball/ui/*": ["./*"],
+      "@camball/ui/components": ["./components"],
+      "@camball/ui/components/*": ["./components/*"],
+      "@camball/ui/components/ui": ["./components/ui"],
+      "@camball/ui/components/ui/*": ["./components/ui/*"],
+      "@camball/ui/utils": ["./utils.ts"],
+      "@camball/ui/hooks": ["./hooks"],
+      "@camball/ui/hooks/*": ["./hooks/*"]
+    }
+  }
+}
