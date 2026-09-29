@@ -24,7 +24,7 @@ Shared UI lives in [`packages/ui`](mdc:packages/ui) as `@camball/ui` (workspace 
 Shared package contents:
 
 - CSS: [app.css](mdc:packages/ui/app.css)
-- shadcn-svelte components under [components/](mdc:packages/ui/components) (see [index.ts](mdc:packages/ui/components/index.ts)). Install new ones with `npx shadcn-svelte@latest add <component>` (aliases point at `@camball/ui` via [components.json](mdc:components.json))
+- shadcn-svelte components under [components/](mdc:packages/ui/components) (see [index.ts](mdc:packages/ui/components/index.ts)). Install new ones from `packages/ui` with `pnpm dlx shadcn-svelte@latest add <component>` (aliases in [components.json](mdc:packages/ui/components.json))
 - Assets under [assets/](mdc:packages/ui/assets) — import via Vite, e.g., `import img from '@camball/ui/assets/example.png'`
 - Utils: [utils.ts](mdc:packages/ui/utils.ts)
 
