@@ -63,3 +63,22 @@ nav > :last-child.toc-level {
 .prose :where(pre code .table) {
     display: inline;
 }
+
+[data-slot="tooltip-content"].footnote-tooltip {
+    display: inline-block;
+    width: auto;
+    max-width: none;
+}
+
+.footnote-tooltip-body {
+    display: table;
+    width: auto;
+    max-width: 24rem;
+    /* Although we'd like to use `text-pretty` in the tooltip content, it
+       wraps the text against 24rem without shrinking the tooltip content
+       container itself, so the text simply is shortened and leaves a gap
+       to the right. As such, we override the article's `text-pretty` that
+       styles the main article content to only apply standard text wrapping
+       for tooltip content. */
+    text-wrap: wrap;
+}

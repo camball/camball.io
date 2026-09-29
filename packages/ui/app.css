@@ -161,3 +161,15 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Enables tooltip fade in / fade out. */
+/* bits-ui mount lifecycle: data-starting-style / data-ending-style (see bits-ui styling docs) */
+[data-slot="tooltip-content"] {
+    opacity: 1;
+    transition: opacity 100ms ease;
+}
+
+[data-slot="tooltip-content"][data-starting-style],
+[data-slot="tooltip-content"][data-ending-style] {
+    opacity: 0;
+}
