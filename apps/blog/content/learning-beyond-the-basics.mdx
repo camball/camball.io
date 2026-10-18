@@ -1,0 +1,48 @@
+---
+title: Learning, Beyond the Basics
+tags:
+    - Learning
+description: What ways are there to building deep knowledge?
+author: Cameron Ball
+created: 2026-10-18
+modified: 2026-10-18
+---
+
+While learning first steps for a technology is usually rather trivial (via “Getting Started” guides or the plethora of online tutorials), I usually find that without a proper mentor, many topics are hard to learn at a more advanced level. Since a mentor isn’t always available, what other ways are there to deeply learn a topic?
+
+## Understand Bad Habits and Anti-patterns
+
+In other words—learning what *not* to do. Finding good resources that delineate these can be hard to find, but when available, are some of the most valuable learning resources on a topic. Some examples of this include:
+
+- [PostgreSQL Wiki – *Don’t Do This*](https://wiki.postgresql.org/wiki/Don't_Do_This)
+- mCoding on Python:
+  - [*25 nooby Python habits you need to ditch*](https://m.youtube.com/watch?v=qUeud6DvOWI)
+  - [*21 MORE nooby Python habits*](https://m.youtube.com/watch?v=E8NijUYfyus)
+- [*100 Go Mistakes and How to Avoid Them*](https://100go.co)
+- Maneesh Chaturvedi – [*Common Caching Problems at Scale: A Guide For Backend Developers*](https://stackshala.medium.com/common-caching-problems-at-scale-a-guide-for-backend-developers-145f680fe10d)
+
+## Understand Failure Modes
+
+If a new engineer is immediately taught to create IDs with a key salt (e.g., `user_p7gg4B_1` and `user_p7gg4B_2`), they might go on to drop the salt in a sharded scenario where the salt is a good idea.
+
+If they are first taught what the celebrity / hot key problem is, it becomes immediately obvious why a more complex solution is employed, and when said solution is warranted or not.
+
+## Curiosity
+
+Curiosity is one of the most powerful traits an engineer can possess. Being curious leads to natural exploration of a topic and diving down seemingly “unrelated” rabbitholes, but this exposes one to far more than the learning happy path, and can help establish technical depth.
+
+## Repeated, Prolonged Exposure
+
+Likely the hardest to come by of all the methods here, there’s no substitute for what I’ll call “time in the booth”. Seeing the way a database schema evolves over time, and suffering through the pain points may make it plainly obvious why certain decisions are typically made. Those times of pain are the learnings that one takes forward.
+
+## Adjacent Knowledge
+
+Sometimes, it can be very hard for a concept to click until related concepts are also learned. For example, I recall having significant difficulty understanding the concept of pointers and address referencing in my first programming class in C++, and it wasn't until quite some time later when I learned related concepts such as pointer arithmetic, stack pointers, and pass-by-reference that it started to click. I distinctly recall the concept of pointers feeling very abstract and quite useless at first, simply because of a lack of exposure to use-cases and related concepts.
+
+As an honourable mention in this section, I'll list "transfer knowledge". If one already knows Python, C, and JavaScript, it'll be significantly easier to learn Java, as many concepts are shared between the languages. For example, likely one already knows control flow primitives that are then exposed in similar ways in their N+1th language that allows quick grokking. Special shoutout here to [Learn X in Y Minutes](https://learnxinyminutes.com).
+
+## A Common Thread
+
+Behind all of the above, the common trait is simple: going beyond simple exposure and understanding *why* something is the way it is creates deep knowledge.
+
+Most competent engineers understand that simple is better than complex, except for where complexity is warranted. Nonetheless, a system might immediately appear needlessly complex, when it is likely that the system *evolved to be* complex, rather than it being that way since inception. If design docs, RFCs, or other documentation were written, these artifacts produce a history of “why”, which is invaluable when tracing history. Following a commit log can have the same power, hence necessitating proper commit hygiene. I digress; the takeaway here remains that understanding *why* decisions are made is where depth in knowledge is built.
