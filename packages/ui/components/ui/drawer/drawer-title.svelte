@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { cn } from "@camball/ui/utils.js";
+    import { cn } from "tailwind-variants";
     import { Drawer as DrawerPrimitive } from "vaul-svelte";
 
     let {

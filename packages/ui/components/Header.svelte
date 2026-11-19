@@ -2,9 +2,9 @@
     import { HeaderDrawerContent, Socials, ThemeToggle } from "@camball/ui/components";
     import { Drawer } from "@camball/ui/components/ui";
     import { buttonVariants } from "@camball/ui/components/ui/button";
-    import { cn } from "@camball/ui/utils";
     import { Menu } from "@lucide/svelte";
     import { mode } from "mode-watcher";
+    import { cn } from "tailwind-variants";
 
     import logoDark from "../assets/cb_logo_dark.svg";
     import logoLight from "../assets/cb_logo_light.svg";

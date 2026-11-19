@@ -6,7 +6,7 @@ export default defineConfig({
     sortImports: true,
     sortTailwindcss: {
         stylesheet: "packages/ui/app.css",
-        functions: ["clsx", "cn"],
+        functions: ["cn"],
     },
     ignorePatterns: ["pnpm-lock.yaml", "*.mdx"],
     overrides: [
