@@ -1,6 +1,7 @@
 <script lang="ts">
-    import { cn, type WithoutChild } from "@camball/ui/utils.js";
+    import { type WithoutChild } from "@camball/ui/utils";
     import { ScrollArea as ScrollAreaPrimitive } from "bits-ui";
+    import { cn } from "tailwind-variants";
 
     let {
         ref = $bindable(null),

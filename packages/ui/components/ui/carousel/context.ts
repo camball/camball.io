@@ -1,4 +1,4 @@
-import type { WithElementRef } from "@camball/ui/utils.js";
+import type { WithElementRef } from "@camball/ui/utils";
 import type {
     EmblaCarouselSvelteType,
     default as emblaCarouselSvelte,

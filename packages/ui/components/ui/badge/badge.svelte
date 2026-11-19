@@ -23,8 +23,9 @@
 </script>
 
 <script lang="ts">
-    import { cn, type WithElementRef } from "@camball/ui/utils.js";
+    import { type WithElementRef } from "@camball/ui/utils";
     import type { HTMLAnchorAttributes } from "svelte/elements";
+    import { cn } from "tailwind-variants";
 
     let {
         ref = $bindable(null),

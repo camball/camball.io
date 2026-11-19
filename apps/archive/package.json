@@ -11,18 +11,18 @@
   },
   "dependencies": {
     "@camball/ui": "workspace:*",
-    "@vercel/speed-insights": "^2.0.0",
+    "@vercel/speed-insights": "^2.1.0",
     "mode-watcher": "^1.1.0"
   },
   "devDependencies": {
     "@sveltejs/adapter-vercel": "^6.3.4",
     "@sveltejs/kit": "^2.70.2",
-    "@sveltejs/vite-plugin-svelte": "7.3.0",
-    "@tailwindcss/vite": "^4.3.3",
-    "svelte": "^5.56.8",
-    "svelte-check": "^4.7.5",
-    "tailwindcss": "^4.3.3",
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "svelte": "^5.57.3",
+    "svelte-check": "^4.7.8",
+    "tailwindcss": "^4.3.5",
     "typescript": "^6.0.3",
-    "vite": "^8.2.1"
+    "vite": "^8.3.8"
   }
 }

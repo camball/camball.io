@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { cn } from "@camball/ui/utils.js";
     import { Separator as SeparatorPrimitive } from "bits-ui";
+    import { cn } from "tailwind-variants";
 
     let {
         ref = $bindable(null),

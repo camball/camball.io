@@ -5,9 +5,9 @@
     import { Drawer, Separator } from "@camball/ui/components/ui";
     import { buttonVariants } from "@camball/ui/components/ui/button";
     import { siteLinksEntries } from "@camball/ui/shared/site-links";
-    import { cn } from "@camball/ui/utils";
     import { Menu, TableOfContents } from "@lucide/svelte";
     import { mode } from "mode-watcher";
+    import { cn } from "tailwind-variants";
 
     interface Props {
         tocOpen?: boolean;

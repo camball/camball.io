@@ -1,6 +1,7 @@
 <script lang="ts" module>
-    import { cn, type WithElementRef } from "@camball/ui/utils.js";
+    import { type WithElementRef } from "@camball/ui/utils";
     import type { HTMLAnchorAttributes, HTMLButtonAttributes } from "svelte/elements";
+    import { cn } from "tailwind-variants";
     import { type VariantProps, tv } from "tailwind-variants";
 
     export const buttonVariants = tv({

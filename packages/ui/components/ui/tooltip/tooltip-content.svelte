@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { cn } from "@camball/ui/utils.js";
-    import type { WithoutChildrenOrChild } from "@camball/ui/utils.js";
+    import type { WithoutChildrenOrChild } from "@camball/ui/utils";
     import { Tooltip as TooltipPrimitive } from "bits-ui";
     import type { ComponentProps } from "svelte";
+    import { cn } from "tailwind-variants";
 
     import TooltipPortal from "./tooltip-portal.svelte";
 
